@@ -1,0 +1,36 @@
+.table-fixed {
+    position: relative;
+    min-width: 60vw;
+
+    thead th {
+        vertical-align: top;
+        font-size: 0.7rem;
+        text-align: center;
+        background: white;
+        position: sticky;
+        top: 65px;
+        white-space: nowrap;
+    }
+
+    td {
+        z-index: -1;
+        white-space: nowrap;
+    }
+}
+
+.ellipsis {
+    width: 120px !important;
+    position: relative;
+    &:before {
+        visibility: hidden;
+    }
+
+    span {
+        position: absolute;
+        left: .5rem;
+        right: .5rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
