@@ -2,7 +2,7 @@
     <div>
         <lightbox ref="lightbox" :photos="photos"></lightbox>
         <div v-for="(photo, index) in photos" class="photo-wrapper">
-            <img :src="photo"
+            <img :src="`/images/${photo}`"
                  class="photo"
                  v-on:click="() => { showLightbox(index) }"
             />

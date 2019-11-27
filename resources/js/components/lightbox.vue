@@ -30,7 +30,7 @@
         },
         computed: {
             url: function () {
-                return this.photos[this.index];
+                return `/images/${this.photos[this.index]}`;
             }
         },
         methods: {
@@ -54,5 +54,8 @@
         z-index: 1050;
         width: fit-content;
         max-width: 100vw;
+        img {
+            max-width: 80vw;
+        }
     }
 </style>

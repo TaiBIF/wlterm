@@ -9,7 +9,7 @@ class PhotoController extends Controller
 {
     public function index()
     {
-        $images = Storage::disk('public')->allFiles('/images/photos');
+        $images = Storage::disk('images')->allFiles('/photos');
         return response()->json([
             'data' => $images
         ]);
