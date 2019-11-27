@@ -5,7 +5,6 @@
 /public/css
 /storage/*.key
 /storage/logs
-/storage/framework
 /vendor
 .env
 .DS_Store
