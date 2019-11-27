@@ -103,7 +103,7 @@
 <style lang="scss" scoped>
     .blog-sidebar {
         background: white;
-        z-index: 1;
+        z-index: 10000;
         width: 160px;
         display: inline-block;
         position: fixed;
