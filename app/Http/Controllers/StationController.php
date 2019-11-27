@@ -11,8 +11,10 @@ class StationController extends Controller
 
     public function index(Request $request)
     {
-        $stationId = $request->get('station_id');
-        $localityName = $request->get('locality_name');
+        $stationId = $request->get('auto_id');
+        $localityName = $request->get('locality_chinese');
+        $sort = $request->get('sort');
+        $direction = $request->get('direction');
 
         $stationQuery = Station::query();
 
@@ -22,6 +24,10 @@ class StationController extends Controller
 
         if ($localityName) {
             $stationQuery->where('locality_chinese', 'like', '%' . $localityName . '%');
+        }
+
+        if ($sort) {
+            $stationQuery->orderBy($sort, $direction);
         }
 
         $stations = $stationQuery->paginate($this->perPage);
