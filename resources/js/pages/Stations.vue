@@ -2,8 +2,8 @@
     <div>
         <h6>測站資料&nbsp;<small class="text-muted">共 {{ total }} 筆</small></h6>
 
-        <div>
-            <table class="myexcel filter">
+        <div class="sheet-container">
+            <table class="filter">
                 <tr>
                     <td width="50">
                         <i class="fas fa-search"></i>
@@ -18,13 +18,17 @@
                     </td>
                 </tr>
             </table>
-            <div id="spreadsheet" ref="spreadsheet"></div>
-            <div class="myexcel spinner-container d-flex align-items-center" v-if="isLoading">
-                <strong>載入中...</strong>
-                <div class="spinner-border text-secondary ml-auto" role="status">
+            <div class="sheet-content">
+                <div id="spreadsheet" ref="spreadsheet"></div>
+                <div class="myexcel spinner-container d-flex align-items-center" v-if="isLoading">
+                    <strong>載入中...</strong>
+                    <div class="spinner-border text-secondary ml-auto" role="status">
+                    </div>
                 </div>
             </div>
-            <div class="myexcel text-muted caption">共 {{ total }} 筆</div>
+        </div>
+        <div class="myexcel text-muted caption">
+            測站資料&nbsp;共 {{ total }} 筆
         </div>
     </div>
 </template>
@@ -108,9 +112,6 @@
             intersectionObserver.observe(document.querySelector('.caption'));
         },
         methods: {
-            c() {
-                console.log('aaa');
-            },
             sort(instance, cellNum, order) {
                 this.params.direction = order ? 'asc' : 'desc';
                 this.params.sort = this.jExcelOptions.columns[cellNum].name;

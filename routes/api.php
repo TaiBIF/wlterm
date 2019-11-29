@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/photos', 'PhotoController@index');
 Route::get('/stations', 'StationController@index');
+Route::get('/stations-location', 'StationController@map');
 Route::get('/phylum', 'PhylumController@index');
 Route::get('/occurrences', 'OccurrenceController@index');
 Route::get('/classes', 'ClassController@index');

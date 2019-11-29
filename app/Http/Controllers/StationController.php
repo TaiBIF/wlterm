@@ -39,4 +39,19 @@ class StationController extends Controller
             'data' => $stations->items(),
         ]);
     }
+
+    public function map()
+    {
+        // SELECT *  FROM station   where (not latitude is null) and id < 14 order by latitude,longitude
+        $stations = Station::query()
+            ->select(['locality', 'locality_chinese', 'latitude', 'longitude'])
+            ->whereNotNull('latitude')
+            ->where('id', '<', 14)
+            ->orderBy('latitude')
+            ->orderBy('longitude')
+            ->get();
+
+        return response()
+            ->json($stations);
+    }
 }

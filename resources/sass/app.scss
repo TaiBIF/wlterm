@@ -9,12 +9,18 @@ p {
     line-height: 1.5rem;
 }
 
-.myexcel {
-    &.filter {
+.sheet-container {
+    .filter {
         z-index: 999;
         background: white;
         position: sticky;
         top: 65px;
+        height: 27px;
+    }
+    .sheet-content {
+        display: flex;
+        .action-table {
+            margin-left: -5px;
+        }
     }
 }
-
