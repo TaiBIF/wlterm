@@ -12,10 +12,10 @@ class ClassController extends Controller
     public function index(Request $request)
     {
         $phylum = $request->get('phylum');
-        $phylumCName = $request->get('phylum_c_name');
+        $phylumCName = $request->get('phylum_c');
         $class = $request->get('class');
-        $classCName = $request->get('class_c_name');
-        $kingdomCName = $request->get('kingdom_c_name');
+        $classCName = $request->get('class_c');
+        $kingdomCName = $request->get('kingdom_c');
         $kingdomName = $request->get('kingdom');
 
         $classQuery = AnimalClass::query();
@@ -24,7 +24,7 @@ class ClassController extends Controller
         }
 
         if ($phylumCName) {
-            $classQuery->where('phylum_c_name', 'like', '%' . $phylumCName . '%');
+            $classQuery->where('phylum_c', 'like', '%' . $phylumCName . '%');
         }
 
         if ($kingdomCName) {
