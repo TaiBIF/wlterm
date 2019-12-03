@@ -45,7 +45,8 @@
         },
         mounted() {
             this.$refs.map.mapObject.invalidateSize();
-            this.$http.get('/api/stations-location').then(res => {
+            let urlParams = new URLSearchParams(window.location.search);
+            this.$http.get(`/api/stations-location?${urlParams.toString()}`).then(res => {
                 this.markers = res.data.map(d => {
                     return {
                         icon: L.icon('/images/marker.png'),

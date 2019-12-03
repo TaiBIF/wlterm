@@ -12,51 +12,61 @@ class SpeciesController extends Controller
     public function index(Request $request)
     {
         $family = $request->get('family');
+        $familyName = $request->get('family_c');
         $class = $request->get('class');
+        $className = $request->get('class_c');
         $phylum = $request->get('phylum');
+        $phylumName = $request->get('phylum_c');
         $order = $request->get('order');
+        $orderName = $request->get('order_c');
         $kingdom = $request->get('kingdom');
+        $kingdomName = $request->get('kingdom_c');
         $author = $request->get('author');
-        $scientificName = $request->get('scientificName');
-        $chineseName = $request->get('chineseName');
+        $scientificName = $request->get('scientific_name');
+        $chineseName = $request->get('chinese');
         $sort = $request->get('sort');
         $direction = $request->get('direction', 'asc');
 
         $speciesQuery = Species::query();
 
         if ($phylum) {
-            $speciesQuery->where(function($query) use ($phylum) {
-                $query->where('phylum', 'like', '%' . $phylum . '%')
-                    ->orWhere('phylum_c', 'like', '%' . $phylum . '%');
-            });
+            $speciesQuery->where('phylum', 'like', '%' . $phylum . '%');
+        }
+
+        if ($phylumName) {
+            $speciesQuery->where('phylum_c', 'like', '%' . $phylumName . '%');
         }
 
         if ($kingdom) {
-            $speciesQuery->where(function($query) use ($kingdom) {
-                $query->where('kingdom_c', 'like', '%' . $kingdom . '%')
-                    ->orWhere('kingdom', 'like', '%' . $kingdom . '%');
-            });
+            $speciesQuery->where('kingdom_c', 'like', '%' . $kingdom . '%');
+        }
+
+        if ($kingdomName) {
+            $speciesQuery->where('kingdom_c', 'like', '%' . $kingdomName . '%');
         }
 
         if ($class) {
-            $speciesQuery->where(function($query) use ($class) {
-                $query->where('class_c', 'like', '%' . $class . '%')
-                    ->orWhere('class', 'like', '%' . $class . '%');
-            });
+            $speciesQuery->where('class', 'like', '%' . $class . '%');
+        }
+
+        if($className) {
+            $speciesQuery->where('class_c', 'like', '%' . $className . '%');
         }
 
         if ($order) {
-            $speciesQuery->where(function($query) use ($order) {
-                $query->where('order_c', 'like', '%' . $order . '%')
-                    ->orWhere('order', 'like', '%' . $order . '%');
-            });
+            $speciesQuery->where('order', 'like', '%' . $order . '%');
+        }
+
+        if ($orderName) {
+            $speciesQuery->where('order_c', 'like', '%' . $order . '%');
         }
 
         if ($family) {
-            $speciesQuery->where(function($query) use ($family) {
-                $query->where('family_c', 'like', '%' . $family . '%')
-                    ->orWhere('family', 'like', '%' . $family . '%');
-            });
+            $speciesQuery->where('family', 'like', '%' . $family . '%');
+        }
+
+        if ($familyName) {
+            $speciesQuery->where('family_c', 'like', '%' . $familyName . '%');
         }
 
         if ($author) {

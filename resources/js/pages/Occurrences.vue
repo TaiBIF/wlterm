@@ -1,192 +1,27 @@
 <template>
     <div>
         <h6>生物物種調查紀錄<small class="text-muted">共 {{ total }} 筆</small></h6>
-        <table class="table table-sm table-striped table-fixed table-bordered table-hover">
-            <caption>生物物種調查紀錄&nbsp;<small class="text-muted">共 {{ total }} 筆</small></caption>
-            <thead>
-            <tr>
-                <th>測站</th>
-                <th>
-                    門
-                    <sort-icon target="phylum"
-                               :sort="params.sort"
-                               :direction="params.direction"
-                               v-on:change-sort="changeSort"
-                    ></sort-icon>
-                    <br/>
-                    <input type="text" class="form-control form-control-sm input"
-                           v-on:change="search"
-                           v-model="params.phylum"
-                           placeholder="關鍵字"
-                    />
-                </th>
-                <th>
-                    綱
-                    <sort-icon target="class"
-                               :sort="params.sort"
-                               :direction="params.direction" v-on:change-sort="changeSort"></sort-icon>
-                    <br/>
-                    <input type="text" class="form-control form-control-sm input" v-on:change="search" v-model="params.class"/>
-                </th>
-                <th>
-                    目
-                    <sort-icon target="order"
-                               :sort="params.sort"
-                               :direction="params.direction"
-                               v-on:change-sort="changeSort"></sort-icon>
-                    <br/>
-                    <input type="text" class="form-control form-control-sm input"
-                           v-on:change="search" v-model="params.order"/>
-                </th>
-                <th>
-                    科
-                    <sort-icon target="family"
-                               :sort="params.sort"
-                               :direction="params.direction"
-                               v-on:change-sort="changeSort"></sort-icon>
-                    <br/>
-                    <input type="text" class="form-control form-control-sm input" v-on:change="search" v-model="params.family"/>
-                </th>
-                <th>
-                    學名
-                    <sort-icon target="scientific_name"
-                               :sort="params.sort"
-                               :direction="params.direction"
-                               v-on:change-sort="changeSort"
-                    ></sort-icon>
-                    <br/>
-                    <input type="text" class="form-control form-control-sm input"
-                           v-on:change="search"
-                           v-model="params.scientific_name"
-                    />
-                </th>
-                <th>
-                    中文名
-                    <sort-icon target="chinese"
-                               :sort="params.chinese"
-                               :direction="params.direction"
-                               v-on:change-sort="changeSort"
-                    ></sort-icon>
-                    <br/>
-                    <input type="text" class="form-control form-control-sm input"
-                           v-on:change="search"
-                           v-model="params.chinese"
-                    />
-                </th>
-                <th>
-                    調查日
-                    <sort-icon target="phylum"
-                               :sort="params.date"
-                               :direction="params.direction"
-                               v-on:change-sort="changeSort"
-                    ></sort-icon>
-                    <br/>
-                    <input type="text" class="form-control form-control-sm input"
-                           v-on:change="search"
-                           v-model="params.date"
-                    />
-                </th>
-                <th>地點
-                    <sort-icon target="phylum"
-                               :sort="params.locality_chinese"
-                               :direction="params.direction"
-                               v-on:change-sort="changeSort"
-                    ></sort-icon>
-                    <br/>
-                    <input type="text" class="form-control form-control-sm input"
-                           v-on:change="search"
-                           v-model="params.locality_chinese"
-                    />
-                </th>
-                <th>緯度
-                    <sort-icon target="latitude"
-                               :sort="params.latitude"
-                               :direction="params.direction"
-                               v-on:change-sort="changeSort"
-                    ></sort-icon>
-                    <br/>
-                    <input type="text" class="form-control form-control-sm input"
-                           v-on:change="search"
-                           v-model="params.latitude"
-                    />
-                </th>
-                <th>
-                    經度
-                    <sort-icon target="longitude"
-                               :sort="params.longitude"
-                               :direction="params.direction"
-                               v-on:change-sort="changeSort"
-                    ></sort-icon>
-                    <br/>
-                    <input type="text" class="form-control form-control-sm input"
-                           v-on:change="search"
-                           v-model="params.longitude"
-                    />
-                </th>
-                <th>
-                    調查者
-                    <sort-icon target="phylum"
-                               :sort="params.collector_chinese"
-                               :direction="params.direction"
-                               v-on:change-sort="changeSort"
-                    ></sort-icon>
-                    <br/>
-                    <input type="text" class="form-control form-control-sm input"
-                           v-on:change="search"
-                           v-model="params.collector_chinese"
-                    />
-                </th>
-                <th class="ellipsis">
-                    調查法
-                </th>
-                <th>
-                    鑒定者
-                    <sort-icon target="phylum"
-                               :sort="params.identified_by_chinese"
-                               :direction="params.direction"
-                               v-on:change-sort="changeSort"
-                    ></sort-icon>
-                    <br/>
-                    <input type="text" class="form-control form-control-sm input"
-                           v-on:change="search"
-                           v-model="params.identified_by_chinese"
-                    />
-                </th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="occurrence in occurrences">
-                <td v-text="occurrence.sid"></td>
-                <td v-text="occurrence.phylum"></td>
-                <td v-text="occurrence.class"></td>
-                <td v-text="occurrence.order"></td>
-                <td v-text="occurrence.family"></td>
-                <td v-text="occurrence.scientific_name"></td>
-                <td v-text="occurrence.chinese"></td>
-                <td v-text="occurrence.date"></td>
-                <td v-text="occurrence.locality_chinese"></td>
-                <td v-text="occurrence.latitude"></td>
-                <td v-text="occurrence.longitude"></td>
-                <td v-text="occurrence.collector_chinese"></td>
-                <td></td>
-                <td v-text="occurrence.identified_by_chinese"></td>
-                <td>
-                    <router-link :to="`/occurrences`">內容</router-link>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <sheet
+            :data="occurrences"
+            :columns="columns"
+            :is-loading="isLoading"
+            :occurence-content="true"
+            v-on:sort="sort"
+            v-on:search="search"
+        ></sheet>
+        <div class="myexcel text-muted caption">
+            生物物種調查紀錄&nbsp;共 {{ total }} 筆
+        </div>
     </div>
 </template>
 
 <script>
+    import sheet from "../components/sheet";
     import queryString from 'querystring';
-    import SortIcon from "../components/table/sort-icon";
     export default {
         name: 'Occurrences',
         components: {
-            SortIcon,
+            sheet,
         },
         data() {
             const app = this;
@@ -195,27 +30,29 @@
                 isLoading: false,
                 currentPage: 0,
                 isEnd: false,
-                params: {
-                    page: 0,
-                    sort: '',
-                    direction: 'asc',
-                    class: '',
-                    phylum: '',
-                    order: '',
-                    family: '',
-                    chineseName: '',
-                    author: '',
-                },
+                sortBy: '',
+                direction: '',
+                columns: [
+                    { type: 'text', title: '測站', width: '50', name: 'sid', searchable: true },
+                    { type: 'text', title: '門名', width: '80', name: 'phylum', searchable: true },
+                    { type: 'text', title: '綱名', width: '100', name: 'class', searchable: true },
+                    { type: 'text', title: '目名', width: '100', name: 'order', searchable: true },
+                    { type: 'text', title: '科名', width: '100', name: 'family', searchable: true },
+                    { type: 'text', title: '學名', width: '100', name: 'scientific_name', searchable: true },
+                    { type: 'text', title: '中文名', width: '100', name: 'chinese', searchable: true },
+                    { type: 'text', title: '調查日 ', width: '100', name: 'date', searchable: true },
+                    { type: 'text', title: '地點 ', width: '100', name: 'locality_chinese', searchable: true },
+                    { type: 'text', title: '緯度 ', width: '80', name: 'latitude', searchable: true },
+                    { type: 'text', title: '經度 ', width: '80', name: 'longitude', searchable: true },
+                    { type: 'text', title: '調查者', width: '80', name: 'collector_chinese', searchable: true },
+                    { type: 'text', title: '調查法', width: '100', name: 'examine_way', searchable: true },
+                    { type: 'text', title: '鑒定者', width: '80', name: 'identified_by_chinese', searchable: true },
+                ],
                 total: 0,
+                searchParams: {}
             }
         },
-        created() {
-            const paramsString = location.search.substring(1);
-            // const paramsObject = JSON.parse('{"' + decodeURI(paramsString).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
-            this.params = { ... this.params};
-        },
         mounted() {
-            this.search();
             const app = this;
             const intersectionObserver = new IntersectionObserver(function(entries) {
                 if (entries[0].intersectionRatio > 0){
@@ -223,7 +60,12 @@
                 }
             });
             // Start observing
-            intersectionObserver.observe(document.querySelector('caption'));
+            intersectionObserver.observe(document.querySelector('.caption'));
+        },
+        computed: {
+            query() {
+                return queryString.stringify(this.searchParams);
+            },
         },
         methods: {
             fetchData(callback) {
@@ -238,8 +80,7 @@
                  this.isLoading = true;
 
                 const page = this.currentPage + 1;
-                const query = queryString.stringify({... this.params, ... { page }});
-                this.$http.get(`/api/occurrences?${query}`)
+                this.$http.get(`/api/occurrences?page=${page}&sort=${this.sortBy}&direction=${this.direction}&${this.query}`)
                     .then(({ data: { data, total, currentPage, perPage } }) => {
                         if (perPage > data.length || 0 === data.length) {
                             this.isEnd = true;
@@ -251,9 +92,9 @@
                         this.isLoading = false;
                     });
             },
-            changeSort(column) {
-                this.params.sort = column;
-                this.params.direction = this.params.direction == 'asc' ? 'desc' : 'asc';
+            sort(column, direction) {
+                this.sortBy = this.columns[column].name;
+                this.direction = direction ? 'desc' : 'asc';
                 this.search();
             },
             loadMore() {
@@ -261,8 +102,15 @@
                     this.occurrences = this.occurrences.concat(data);
                 })
             },
-            search() {
+            search(query) {
+                if (query) {
+                    this.searchParams = query;
+                }
+
+                window.scrollTo(0, 0);
+
                 this.isEnd = false;
+                this.currentPage = 0;
                 this.fetchData(data => {
                     this.occurrences = data;
                 })

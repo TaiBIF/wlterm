@@ -11,11 +11,14 @@ class FamilyController extends Controller
     public function index(Request $request)
     {
         $family = $request->get('family');
-        $familyCName = $request->get('family_c_name');
+        $familyCName = $request->get('family_c');
         $phylum = $request->get('phylum');
+        $phylumCName = $request->get('phylum_c');
         $class = $request->get('class');
-        $classCName = $request->get('class_c_name');
-        $kingdomCName = $request->get('kingdom_c_name');
+        $classCName = $request->get('class_c');
+        $order = $request->get('order');
+        $orderCName = $request->get('order_c');
+        $kingdomCName = $request->get('kingdom_c');
         $kingdomName = $request->get('kingdom');
 
         $familyQuery = Family::query();
@@ -25,6 +28,10 @@ class FamilyController extends Controller
                 $query->where('phylum', 'like', '%' . $phylum . '%')
                     ->orWhere('phylum_c', 'like', '%' . $phylum . '%');
             });
+        }
+
+        if ($phylumCName) {
+            $familyQuery->where('phylum_c', 'like', '%' . $phylumCName . '%');
         }
 
         if ($kingdomCName) {
@@ -43,6 +50,14 @@ class FamilyController extends Controller
             $familyQuery->where('class_c', 'like', '%' . $classCName . '%');
         }
 
+        if ($order) {
+            $familyQuery->where('order', 'like', '%' . $order . '%');
+        }
+
+        if ($orderCName) {
+            $familyQuery->where('order_c', 'like', '%' . $orderCName . '%');
+        }
+
         if ($family) {
             $familyQuery->where('family', 'like', '%' . $family . '%');
         }
@@ -51,7 +66,13 @@ class FamilyController extends Controller
             $familyQuery->where('family_c', 'like', '%' . $familyCName . '%');
         }
 
-        $familyPage = $familyQuery->orderBy('id')->paginate($this->perPage);
+        if ($request->get('sort')) {
+            $familyQuery->orderBy($request->get('sort'), $request->get('direction', 'asc'));
+        } else {
+            $familyQuery->orderBy('id');
+        }
+
+        $familyPage = $familyQuery->paginate($this->perPage);
 
         return response()->json([
             'total' => $familyPage->total(),

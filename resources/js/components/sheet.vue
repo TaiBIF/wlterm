@@ -30,6 +30,12 @@
                     <tr v-for="datum in data">
                         <td class="jexcel_row">
                             <router-link
+                                v-if="occurenceContent"
+                                :to="`/occurrences/${datum.record_id}`">
+                                內容
+                            </router-link>
+
+                            <router-link
                                 v-if="datum.checkUrl"
                                 :to="datum.checkUrl"
                             >
@@ -77,6 +83,10 @@
             isLoading: {
                 type: Boolean,
                 default: true,
+            },
+            occurenceContent: {
+                type: Boolean,
+                default: false,
             }
         },
         data() {
@@ -93,7 +103,6 @@
                         columns: this.columns,
                         onsort: this.onsort,
                         readOnly: true,
-                        onload: this.onload,
                 }
             }
         },

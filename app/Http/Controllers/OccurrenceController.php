@@ -15,13 +15,14 @@ class OccurrenceController extends Controller
         $class = $request->get('class');
         $phylum = $request->get('phylum');
         $order = $request->get('order');
-        $author = $request->get('author');
-        $date = $request->get('date');
         $scientificName = $request->get('scientific_name');
         $chineseName = $request->get('chinese');
+        $date = $request->get('date');
         $locality = $request->get('locality_chinese');
+        $collectorChinese = $request->get('collector_chinese');
         $latitude = $request->get('latitude');
         $longitude = $request->get('longitude');
+        $examWay = $request->get('examine_way');
         $sort = $request->get('sort');
         $direction = $request->get('direction', 'asc');
 
@@ -46,8 +47,12 @@ class OccurrenceController extends Controller
             $occurrencesQuery->where('family', 'like', '%' . $family . '%');
         }
 
-        if ($author) {
-            $occurrencesQuery->where('author', 'like', '%' . $author . '%');
+        if ($collectorChinese) {
+            $occurrencesQuery->where('collector_chinese', 'like', '%' . $collectorChinese . '%');
+        }
+
+        if ($examWay) {
+            $occurrencesQuery->where('examine_way', 'like', '%' . $examWay . '%');
         }
 
         if ($scientificName) {
@@ -73,6 +78,8 @@ class OccurrenceController extends Controller
 
         if ($sort && $direction) {
             $occurrencesQuery->orderBy($sort, $direction);
+        } else {
+            $occurrencesQuery->orderBy('sid', 'asc');
         }
 
         $occurrencesPage = $occurrencesQuery->paginate($this->perPage);

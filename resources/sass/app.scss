@@ -10,17 +10,36 @@ p {
 }
 
 .sheet-container {
-    .filter {
-        z-index: 999;
-        background: white;
-        position: sticky;
-        top: 65px;
-        height: 27px;
-    }
     .sheet-content {
         display: flex;
         .action-table {
             margin-left: -5px;
+        }
+        .jexcel {
+            thead {
+                z-index: 999;
+                background: white;
+                position: sticky;
+
+                tr:first-child {
+                    td {
+                        top: 65px;
+                    }
+                }
+                tr:nth-child(2) {
+                    td {
+                        top: 111px;
+                    }
+                }
+                tr {
+                    td {
+                        height: 46px;
+                        input[type="text"] {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -1,143 +1,119 @@
 <template>
     <div>
         <h6>調查生物科別&nbsp;<small class="text-muted">共 {{ total }} 科</small></h6>
-        <table class="table table-sm table-striped table-fixed table-bordered table-hover">
-            <caption>調查生物科別&nbsp;<small class="text-muted">共 {{ total }} 科</small></caption>
-            <thead>
-            <tr>
-                <th>
-                    界中文<br/>
-                    <input type="text" class="form-control form-control-sm" v-on:change="search" v-model="params.kingdomCName"/>
-                </th>
-                <th>
-                    界名<br/>
-                    <input type="text" class="form-control form-control-sm" v-on:change="search" v-model="params.kingdom"/>
-                </th>
-                <th>
-                    門中文<br/>
-                    <input type="text" class="form-control form-control-sm" v-on:change="search" v-model="params.phylumCName"/>
-                </th>
-                <th>
-                    門名<br/>
-                    <input type="text" class="form-control form-control-sm" v-on:change="search" v-model="params.phylum"/>
-                </th>
-                <th>
-                    綱中文<br/>
-                    <input type="text" class="form-control form-control-sm" v-on:change="search" v-model="params.classCName"/>
-                </th>
-                <th>
-                    綱名<br/>
-                    <input type="text" class="form-control form-control-sm" v-on:change="search" v-model="params.class"/>
-                </th>
-                <th>
-                    目中文<br/>
-                    <input type="text" class="form-control form-control-sm" v-on:change="search" v-model="params.orderCName"/>
-                </th>
-                <th>
-                    目名<br/>
-                    <input type="text" class="form-control form-control-sm" v-on:change="search" v-model="params.order"/>
-                </th>
-                <th>
-                    科中文<br/>
-                    <input type="text" class="form-control form-control-sm" v-on:change="search" v-model="params.familyCName"/>
-                </th>
-                <th>
-                    科名<br/>
-                    <input type="text" class="form-control form-control-sm" v-on:change="search" v-model="params.family"/>
-                </th>
-                <th>數量</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="family in families">
-                <td v-text="family.kingdom_c"></td>
-                <td v-text="family.kingdom"></td>
-                <td v-text="family.phylum_c"></td>
-                <td v-text="family.phylum"></td>
-                <td v-text="family.class_c"></td>
-                <td v-text="family.class"></td>
-                <td v-text="family.order_c"></td>
-                <td v-text="family.order"></td>
-                <td v-text="family.family_c"></td>
-                <td v-text="family.family"></td>
-                <td v-text="family.total"></td>
-                <td>
-                    <router-link :to="`/occurrences?family=${family.family}`">查詢</router-link>
-                    <router-link :to="`/maps`">地圖</router-link>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <sheet
+            :data="families"
+            :columns="columns"
+            :is-loading="isLoading"
+            v-on:sort="sort"
+            v-on:search="search"
+        ></sheet>
+        <div class="myexcel text-muted caption">
+            調查生物目別&nbsp;<small class="text-muted">共 {{ total }} 門</small>
+        </div>
     </div>
 </template>
 
 <script>
+    import sheet from '../components/sheet';
     export default {
         name: 'Family',
+        components: {
+            sheet,
+        },
         data() {
             return {
                 families: [],
                 isLoading: false,
                 isEnd: false,
-                params: {
-                    kingdomCName: '',
-                    kingdom: '',
-                    classCName: '',
-                    class: '',
-                    phylumCName: '',
-                    phylum: '',
-                    orderCName: '',
-                    order: '',
-                },
+                sortBy: '',
+                direction: '',
+                page: 0,
                 total: 0,
+                columns: [
+                    { type: 'text', title: '界中文', width: '100', name: 'kingdom_c', searchable: true },
+                    { type: 'text', title: '界名', width: '100', name: 'kingdom', searchable: true },
+                    { type: 'text', title: '門中文', width: '120', name: 'phylum_c', searchable: true },
+                    { type: 'text', title: '門名', width: '80', name: 'phylum', searchable: true },
+                    { type: 'text', title: '綱中文', width: '100', name: 'class_c', searchable: true },
+                    { type: 'text', title: '綱名', width: '100', name: 'class', searchable: true },
+                    { type: 'text', title: '目中文', width: '100', name: 'order_c', searchable: true },
+                    { type: 'text', title: '目名', width: '100', name: 'order', searchable: true },
+                    { type: 'text', title: '科中文', width: '100', name: 'family_c', searchable: true },
+                    { type: 'text', title: '科名', width: '100', name: 'family', searchable: true },
+                    { type: 'text', title: '數量', width: '80', name: 'total' },
+                ],
+                searchParams: {}
             }
         },
-        created() {
+        computed: {
+            query() {
+                const searchQuery = Object.keys(this.searchParams).map((key) => {
+                    return encodeURIComponent(key) + '=' + encodeURIComponent(this.searchParams[key])
+                }).join('&');
+                return searchQuery;
+            },
+        },
+        mounted() {
             const paramsString = location.search.substring(1);
-            this.search();
-            window.onscroll = function() {
-                var d = document.documentElement;
-                var offset = d.scrollTop + window.innerHeight;
-                var height = d.offsetHeight;
-
-                if (offset >= height && this.isEnd === false && this.isLoading == false) {
-                    this.loadMore();
+            const app = this;
+            const intersectionObserver = new IntersectionObserver(function(entries) {
+                if (entries[0].intersectionRatio > 0){
+                    app.loadMore();
                 }
-            }.bind(this);
+            });
+            intersectionObserver.observe(document.querySelector('.caption'));
         },
         methods: {
-            loadMore() {
-                const page = this.page + 1;
+            fetchData(callback) {
+                if (this.isLoading || this.isEnd) {
+                    return;
+                }
+
                 this.isLoading = true;
-                this.$http.get(`/api/family?page=${page}&station_id=${this.params.stationId}&locality_name=${this.params.localityName}`)
+
+                const page = this.page + 1;
+                this.$http.get(`/api/family?page=${page}&sort=${this.sortBy}&direction=${this.direction}&${this.query}`)
                     .then(({ data: { data, total, currentPage, perPage } }) => {
                         if (perPage > data.length || 0 === data.length) {
                             this.isEnd = true;
                         }
-                        this.families = this.families.concat(data);
+                        callback(data);
                         this.total = total;
-                        this.page = page;
+                        this.page = currentPage;
                         this.isLoading = false;
                     });
             },
-            search() {
-                const page = 1;
-                this.isLoading = true;
+            sort(column, direction) {
+                this.sortBy = this.columns[column].name;
+                this.direction = direction ? 'desc' : 'asc';
+                this.search();
+            },
+            search(query) {
+                if (query) {
+                    this.searchParams = query;
+                }
+
+                window.scrollTo(0, 0);
+
+                this.page = 0;
                 this.isEnd = false;
-                this.$http.get(
-                    `/api/family?page=${page}&kingdom_c_name=${this.params.kingdomCName}&kingdom=${this.params.kingdom}&phylum_c_name=${this.params.phylumCName}&phylum=${this.params.phylum}&class_c_name=${this.params.classCName}&class=${this.params.class}`
-                )
-                    .then(({ data: { data, total, currentPage, perPage } }) => {
-                        if (perPage > data.length || 0 === data.length) {
-                            this.isEnd = true;
-                        }
-                        this.families = data;
-                        this.total = total;
-                        this.page = page;
-                        this.isLoading = false;
-                    });
-            }
+                this.currentPage = 0;
+                this.fetchData(data => {
+                    this.families = data.map(d => ({ ... d, mapUrl: `/maps?family=${d.family}`}));
+                });
+            },
+            loadMore() {
+                if (this.isLoading || this.isEnd) {
+                    return;
+                }
+
+                this.fetchData(data => {
+                    this.families = this.families.concat(
+                        data.map(d => ({ ... d, mapUrl: `/maps?family=${d.family}`}))
+                    );
+                })
+            },
         }
     }
 </script>

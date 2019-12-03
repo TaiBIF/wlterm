@@ -11,11 +11,13 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $phylum = $request->get('phylum');
-        $phylumCName = $request->get('phylum_c_name');
+        $phylumCName = $request->get('phylum_c');
         $class = $request->get('class');
-        $classCName = $request->get('class_c_name');
-        $kingdomCName = $request->get('kingdom_c_name');
+        $classCName = $request->get('class_c');
+        $kingdomCName = $request->get('kingdom_c');
         $kingdomName = $request->get('kingdom');
+        $sort = $request->get('sort');
+        $direction = $request->get('direction', 'asc');
 
         $orderQuery = Order::query();
 
@@ -43,11 +45,17 @@ class OrderController extends Controller
             $orderQuery->where('class_c', 'like', '%' . $classCName . '%');
         }
 
+        if ($sort) {
+            $orderQuery->orderBy($sort, $direction);
+        }
+
+
         $orderPage = $orderQuery->paginate($this->perPage);
         return response()->json([
             'total' => $orderPage->total(),
-            'current_page' => $orderPage->currentPage(),
+            'currentPage' => $orderPage->currentPage(),
             'data' => $orderPage->items(),
+            'perPage' => $orderPage->perPage(),
         ]);
     }
 }

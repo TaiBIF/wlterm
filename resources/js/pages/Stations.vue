@@ -1,32 +1,13 @@
 <template>
     <div>
         <h6>測站資料&nbsp;<small class="text-muted">共 {{ total }} 筆</small></h6>
-
-        <div class="sheet-container">
-            <table class="filter">
-                <tr>
-                    <td width="50">
-                        <i class="fas fa-search"></i>
-                    </td>
-                    <td v-for="column in jExcelOptions.columns" :width="column.width">
-                        <input type="text"
-                               v-if="column.searchable"
-                               :style="{ width: `${column.width - 6}px`}"
-                               :placeholder="`搜尋${column.title}`"
-                               v-model="searchParams[column.name]"
-                        />
-                    </td>
-                </tr>
-            </table>
-            <div class="sheet-content">
-                <div id="spreadsheet" ref="spreadsheet"></div>
-                <div class="myexcel spinner-container d-flex align-items-center" v-if="isLoading">
-                    <strong>載入中...</strong>
-                    <div class="spinner-border text-secondary ml-auto" role="status">
-                    </div>
-                </div>
-            </div>
-        </div>
+        <sheet
+            :data="data"
+            :columns="columns"
+            :is-loading="isLoading"
+            v-on:sort="sort"
+            v-on:search="search"
+        ></sheet>
         <div class="myexcel text-muted caption">
             測站資料&nbsp;共 {{ total }} 筆
         </div>
@@ -34,75 +15,46 @@
 </template>
 
 <script>
-    import jexcel from 'jexcel';
+    import sheet from '../components/sheet';
     export default {
         name: "Stations",
+        components: {
+            sheet,
+        },
         data() {
             return {
                 page: 0,
                 isEnd: false,
                 isLoading: false,
-                params: {
-                    stationId: '',
-                    localityName: '',
-                    direction: '',
-                    sort: '',
-                },
-                stations: [],
+                direction: '',
+                sortBy: '',
+                data: [],
+                columns: [
+                    { type: 'text', title: '測站', width: '100', name: 'auto_id', searchable: true },
+                    { type: 'text', title: '緯度', width: '100', name: 'latitude' },
+                    { type: 'text', title: '精度', width: '120', name: 'longitude' },
+                    { type: 'text', title: '誤差', width: '80', name: 'coordinate_precision' },
+                    { type: 'text', title: '地名', width: '200', name: 'locality_chinese', searchable: true },
+                    { type: 'text', title: '最高海拔', width: '60', name: 'maximum_elevation' },
+                    { type: 'text', title: '最低海拔', width: '60', name: 'minimum_elevation' },
+                    { type: 'text', title: '地點描述', width: '250', name: 'locality_describe' },
+                    { type: 'text', title: 'x', width: '35', name: 'x' },
+                    { type: 'text', title: 'y', width: '35', name: 'y' },
+                    { type: 'text', title: '備註', width: '100', name: 'note' },
+                ],
                 total: 0,
                 searchParams: {}
             }
         },
-        watch: {
-            searchParams: {
-                deep: true,
-                handler() {
-                    this.search();
-                }
-            }
-        },
         computed: {
             query() {
-                const query = Object.keys(this.params).map((key) => {
-                    return encodeURIComponent(key) + '=' + encodeURIComponent(this.params[key])
-                }).join('&');
-
                 const searchQuery = Object.keys(this.searchParams).map((key) => {
                     return encodeURIComponent(key) + '=' + encodeURIComponent(this.searchParams[key])
                 }).join('&');
-                return query + '&' + searchQuery;
+                return searchQuery;
             },
-            jExcelOptions() {
-                return {
-                    data: this.stations,
-                    columnSorting: true,
-                    search: true,
-                    editable: true,
-                    columns: [
-                        { type: 'text', title: '測站', width: '100', name: 'auto_id', searchable: true },
-                        { type: 'text', title: '緯度', width: '100', name: 'latitude' },
-                        { type: 'text', title: '精度', width: '120', name: 'longitude' },
-                        { type: 'text', title: '誤差', width: '80', name: 'coordinate_precision' },
-                        { type: 'text', title: '地名', width: '200', name: 'locality_chinese', searchable: true },
-                        { type: 'text', title: '最高海拔', width: '60', name: 'maximum_elevation' },
-                        { type: 'text', title: '最低海拔', width: '60', name: 'minimum_elevation' },
-                        { type: 'text', title: '地點描述', width: '250', name: 'locality_describe' },
-                        { type: 'text', title: 'x', width: '35', name: 'x' },
-                        { type: 'text', title: 'y', width: '35', name: 'y' },
-                        { type: 'text', title: '備註', width: '100', name: 'note', style: '123' },
-                    ],
-                    onsort: this.sort,
-                    readOnly: true,
-                };
-            }
-        },
-        created() {
-            this.search();
         },
         mounted() {
-            const jExcelObj = jexcel(this.$refs['spreadsheet'], this.jExcelOptions);
-            Object.assign(this, { jExcelObj });
-
             const app = this;
             const intersectionObserver = new IntersectionObserver(function(entries) {
                 if (entries[0].intersectionRatio > 0){
@@ -112,41 +64,49 @@
             intersectionObserver.observe(document.querySelector('.caption'));
         },
         methods: {
-            sort(instance, cellNum, order) {
-                this.params.direction = order ? 'asc' : 'desc';
-                this.params.sort = this.jExcelOptions.columns[cellNum].name;
+            sort(column, direction) {
+                this.direction = direction ? 'asc' : 'desc';
+                this.sortBy = this.columns[column].name
                 this.search();
             },
-            search() {
-                const page = 1;
+            search(query) {
+                if (query) {
+                    this.searchParams = query;
+                }
+
                 window.scrollTo(0, 0);
+
+                const page = 1;
                 this.isLoading = true;
                 this.isEnd = false;
-                this.$http.get(`/api/stations?page=${page}&${this.query}`)
+                this.$http.get(`/api/stations?page=${page}&sort=${this.sortBy}&direction=${this.direction}&${this.query}`)
                     .then(({ data: { data, total, currentPage, perPage } }) => {
                         if (perPage > data.length || 0 === data.length) {
                             this.isEnd = true;
                         }
-                        this.stations = data;
+                        this.data = data;
                         this.total = total;
                         this.page = page;
                         this.isLoading = false;
-                        this.jExcelObj.setData(this.jExcelOptions.data);
                     });
             },
             loadMore() {
-                const page = this.page + 1;
+                if (this.isEnd || this.isLoading) {
+                    return;
+                }
+
                 this.isLoading = true;
-                this.$http.get(`/api/stations?page=${page}&${this.query}`)
+                const page = this.page + 1;
+
+                this.$http.get(`/api/stations?page=${page}&sort=${this.sortBy}&direction=${this.direction}&${this.query}`)
                     .then(({ data: { data, total, currentPage, perPage } }) => {
                         if (perPage > data.length || 0 === data.length) {
                             this.isEnd = true;
                         }
-                        this.stations = this.stations.concat(data);
+                        this.data = this.data.concat(data);
                         this.total = total;
                         this.page = page;
                         this.isLoading = false;
-                        this.jExcelObj.setData(this.jExcelOptions.data);
                     });
             }
         }
