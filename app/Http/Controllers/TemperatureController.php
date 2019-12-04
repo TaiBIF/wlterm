@@ -15,8 +15,8 @@ class TemperatureController extends Controller
     {
         $locality = $request->get('locality');
         $date = $request->get('date');
-        $sort = $request->get('sort');
         $stationId = $request->get('station_id');
+        $sort = $request->get('sort');
         $direction = $request->get('direction', 'asc');
 
         $recordsQuery = Temperature::query()
@@ -67,15 +67,6 @@ class TemperatureController extends Controller
 
     public function report()
     {
-
-        $datesGroup = Temperature::query()
-            ->selectRaw('date')
-            ->groupBy(DB::raw('date'))
-            ->get()
-            ->map(function($d) {
-                return $d->date;
-            });
-
         $records = Temperature::query()->select('id', 'date', 'air')
             ->whereNotNull('air')
             ->get();
@@ -90,13 +81,11 @@ class TemperatureController extends Controller
                             $t->air
                         ];
                     }),
-                    'pointStart' => 1262304000000,
                     'pointInterval' => 24 * 3600 * 1000,
                 ];
             })->values();
 
         return response()->json([
-//            'dates' => $datesGroup,
             'data' => $data,
         ]);
 
