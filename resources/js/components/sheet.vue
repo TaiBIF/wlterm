@@ -99,6 +99,10 @@
             type: {
                 type: String,
                 default: '',
+            },
+            sortable: {
+                type: Boolean,
+                default: true,
             }
         },
         data() {
@@ -110,7 +114,7 @@
             jExcelOptions() {
                 return {
                     data: this.data,
-                        columnSorting: true,
+                        columnSorting: this.sortable,
                         editable: true,
                         columns: this.columns,
                         onsort: this.onsort,

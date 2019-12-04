@@ -16,6 +16,9 @@ import WaterQuality from '@/js/pages/WaterQuality';
 import ElementFlux from '@/js/pages/ElementFlux';
 import Temperature from '@/js/pages/Temperature';
 import AlgaeDebris from '@/js/pages/AlgaeDebris';
+import RiverHabitat from '@/js/pages/RiverHabitat';
+import RiverSections from '@/js/pages/RiverSections';
+// import RiverSection from '@/js/pages/RiverSection';
 import RiverDischargeEstimation from '@/js/pages/RiverDischargeEstimation';
 import Record from '@/js/pages/Record';
 
@@ -111,6 +114,16 @@ const router = new VueRouter ({
             path: '/river-discharge-estimation',
             name: 'river-discharge-estimation',
             component: RiverDischargeEstimation,
+        },
+        {
+            path: '/river-habitats',
+            name: 'river-habitats',
+            component: RiverHabitat,
+        },
+        {
+            path: '/river-sections',
+            name: 'river-sections',
+            component: RiverSections,
         },
     ]
 });

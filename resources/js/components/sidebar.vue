@@ -90,6 +90,16 @@
                     流量推估
                 </li>
             </router-link>
+            <router-link to="/river-habitats">
+                <li class="list-group-item">
+                    河道棲地
+                </li>
+            </router-link>
+            <router-link to="/river-sections">
+                <li class="list-group-item">
+                    河道斷面
+                </li>
+            </router-link>
         </ul>
     </div>
 </template>
@@ -128,7 +138,7 @@
         padding: .125rem 1.5rem;
         border: 0;
         font-size: 0.95rem;
-        line-height: 2rem;
+        line-height: 1.8rem;
     }
 
     a {
