@@ -1,7 +1,7 @@
 import './bootstrap';
 import Vue from 'vue';
 import Axios from 'axios';
-import Highcharts from 'highcharts'
+import Highcharts from 'highcharts';
 import HighchartsVue from 'highcharts-vue';
 import HeatMapInit from 'highcharts/modules/heatmap';
 
