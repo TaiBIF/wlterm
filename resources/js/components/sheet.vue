@@ -35,6 +35,10 @@
                                 內容
                             </router-link>
 
+                            <router-link v-if="recordUrl" :to="`/records/${datum.record_id}?type=${type}`">
+                                內容
+                            </router-link>
+
                             <router-link
                                 v-if="datum.checkUrl"
                                 :to="datum.checkUrl"
@@ -87,6 +91,14 @@
             occurenceContent: {
                 type: Boolean,
                 default: false,
+            },
+            recordUrl: {
+                type: Boolean,
+                default: false,
+            },
+            type: {
+                type: String,
+                default: '',
             }
         },
         data() {

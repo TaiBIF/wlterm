@@ -104,10 +104,6 @@
                 });
             },
             loadMore() {
-                if (this.isLoading || this.isEnd) {
-                    return;
-                }
-
                 this.fetchData(data => {
                     this.families = this.families.concat(
                         data.map(d => ({ ... d, mapUrl: `/maps?family=${d.family}`}))

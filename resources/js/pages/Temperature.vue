@@ -1,104 +1,53 @@
 <template>
     <div>
-        <h6>環境日均溫監測&nbsp;<small class="text-muted">共 {{ total }} 筆</small></h6>
-        <table class="table table-sm table-striped table-fixed table-bordered">
-            <caption>環境日均溫監測&nbsp;<small class="text-muted">共 {{ total }} 筆</small></caption>
-            <thead>
-            <tr>
-                <th>
-                    測站
-                    <sort-icon target="station_id"
-                               :sort="params.sort"
-                               :direction="params.direction"
-                               v-on:change-sort="changeSort"
-                    ></sort-icon>
-                    <br/>
-                    <input type="text" class="form-control form-control-sm input"
-                           v-on:change="search"
-                           v-model="params.station_id"
-                           placeholder="關鍵字"
-                    />
-                </th>
-                <th>
-                    測站站名
-                    <sort-icon target="locality"
-                               :sort="params.sort"
-                               :direction="params.direction"
-                               v-on:change-sort="changeSort"
-                    ></sort-icon>
-                    <br/>
-                    <input type="text" class="form-control form-control-sm input"
-                           v-on:change="search"
-                           v-model="params.locality"
-                    />
-                </th>
-                <th>
-                    調查日期
-                    <sort-icon target="date"
-                               :sort="params.sort"
-                               :direction="params.direction"
-                               v-on:change-sort="changeSort"
-                    ></sort-icon>
-                    <br/>
-                    <input type="text" class="form-control form-control-sm input"
-                           v-on:change="search"
-                           v-model="params.date"
-                    />
-                </th>
-                <th>氣溫</th>
-                <th>水溫</th>
-                <th>土表溫</th>
-                <th>土下 25cm</th>
-                <th>土下 50cm</th>
-                <th>土下 65cm</th>
-                <th>土下 90cm</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="record in records">
-                <td v-text="record.station.id"></td>
-                <td v-text="record.station.locality_chinese"></td>
-                <td v-text="record.date"></td>
-                <td v-text="record.air"></td>
-                <td v-text="record.water"></td>
-                <td v-text="record.soil_25cm"></td>
-                <td v-text="record.soil_50cm"></td>
-                <td v-text="record.soil_65cm"></td>
-                <td v-text="record.soil_90cm"></td>
-                <td v-text="record.date"></td>
-                <td>
-                    <router-link :to="`/occurrences?class=${record.class}`">xml</router-link>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <h6>溫度監測&nbsp;<small class="text-muted">共 {{ total }} 筆</small></h6>
+        <sheet
+            :data="records"
+            :columns="columns"
+            :is-loading="isLoading"
+            v-on:sort="sort"
+            v-on:search="search"
+        ></sheet>
+        <div class="myexcel text-muted caption">
+            溫度監測&nbsp;共 {{ total }} 筆
+        </div>
     </div>
 </template>
 
 <script>
+    import sheet from '../components/sheet';
     import queryString from 'querystring';
-    import SortIcon from '@/js/components/table/sort-icon';
     export default {
-        name: 'Temperature',
+        name: 'WaterQuality',
         data() {
             return {
-                currentPage: 0,
-                params: {
-                    date: '',
-                    stationId: '',
-                    locality: '',
-                },
+                isLoading: false,
                 records: [],
+                sortBy: '',
+                direction: '',
+                searchParams: {},
+                columns: [
+                    { type: 'text', title: '測站', width: '50', name: 'station_id', searchable: true },
+                    { type: 'text', title: '測站站名', width: '100', name: 'locality_chinese', searchable: true },
+                    { type: 'text', title: '調查日期', width: '100', name: 'date', searchable: true },
+                    { type: 'text', title: '氣溫', width: '50', name: 'air' },
+                    { type: 'text', title: '水溫', width: '50', name: 'water' },
+                    { type: 'text', title: '土表溫', width: '50', name: 'soil_0cm' },
+                    { type: 'text', title: '土下 25cm', width: '80', name: 'soil_25cm' },
+                    { type: 'text', title: '土下 50cm', width: '80', name: 'soil_50cm' },
+                    { type: 'text', title: '土下 65cm', width: '80', name: 'soil_65cm' },
+                    { type: 'text', title: '土下 90cm', width: '80', name: 'soil_90cm' },
+                ],
                 total: 0,
             }
         },
         components: {
-            SortIcon,
+            sheet,
         },
-        created() {
-            const paramsString = location.search.substring(1);
-            this.params = { ... this.params, ... paramsString};
+        computed: {
+            query() {
+                return queryString.stringify(this.searchParams);
+            },
         },
         mounted() {
             this.search();
@@ -109,27 +58,21 @@
                     app.loadMore();
                 }
             });
-            intersectionObserver.observe(document.querySelector('caption'));
+            intersectionObserver.observe(document.querySelector('.caption'));
         },
         methods: {
             fetchData(callback) {
-                if (this.isLoading) {
-                    return;
-                }
-
-                if (this.isEnd) {
+                if (this.isLoading || this.isEnd) {
                     return;
                 }
 
                 this.isLoading = true;
 
                 const page = this.currentPage + 1;
-                const paramsString = queryString.stringify({... this.params, ... { page: this.currentPage }});
-                this.$http.get(`/api/temperature?${paramsString}`)
+                this.$http.get(`/api/temperature?page=${page}&${this.query}`)
                     .then(({ data: { data, total, currentPage, perPage } }) => {
                         if (perPage > data.length || 0 === data.length) {
                             this.isEnd = true;
-                            return;
                         }
                         callback(data);
                         this.total = total;
@@ -137,9 +80,9 @@
                         this.isLoading = false;
                     });
             },
-            changeSort(column) {
-                this.params.sort = column;
-                this.params.direction = this.params.direction == 'asc' ? 'desc' : 'asc';
+            sort(column, direction) {
+                this.direction = direction ? 'asc' : 'desc';
+                this.sortBy = this.columns[column].name
                 this.search();
             },
             loadMore() {
@@ -147,9 +90,16 @@
                     this.records = this.records.concat(data);
                 })
             },
-            search() {
+            search(query) {
+                if (query) {
+                    this.searchParams = query;
+                }
+
+                window.scrollTo(0, 0);
+
+                this.page = 0;
                 this.isEnd = false;
-                this.currentPage = 1;
+                this.currentPage = 0;
                 this.fetchData(data => {
                     this.records = data;
                 })

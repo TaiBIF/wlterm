@@ -11,7 +11,9 @@ class AlageController extends Controller
 
     public function index(Request $request)
     {
-        $locality = $request->get('locality');
+        $locality = $request->get('locality_chinese');
+        $date = $request->get('date');
+        $id = $request->get('station_id');
         $sort = $request->get('sort');
         $direction = $request->get('direction', 'asc');
 
@@ -33,8 +35,18 @@ class AlageController extends Controller
             $recordsQuery->where('station.locality_chinese', 'like', '%' . $locality . '%');
         }
 
+        if ($id) {
+            $recordsQuery->where('station.id', $id);
+        }
+
+        if ($date) {
+            $recordsQuery->where('date',  $date);
+        }
+
         if ($sort && $direction) {
             $recordsQuery->orderBy($sort, $direction);
+        } else {
+            $recordsQuery->orderBy('station.id');
         }
 
         $records = $recordsQuery->paginate($this->perPage);

@@ -1,110 +1,80 @@
 <template>
     <div>
         <h6>河川流量推估&nbsp;<small class="text-muted">共 {{ total }} 筆</small></h6>
-        <table class="table table-sm table-striped table-fixed table-bordered">
-            <caption>河川流量推估&nbsp;<small class="text-muted">共 {{ total }} 筆</small></caption>
-            <thead>
-            <tr>
-                <th>
-                    河川
-                    <sort-icon target="station"
-                               :sort="params.sort"
-                               :direction="params.direction"
-                               v-on:change-sort="changeSort"
-                    ></sort-icon>
-                    <br/>
-                    <input type="text" class="form-control form-control-sm input"
-                           v-on:change="search"
-                           v-model="params.station"
-                           placeholder="關鍵字"
-                    />
-                </th>
-                <th>
-                    日期
-                    <sort-icon target="date"
-                               :sort="params.sort"
-                               :direction="params.direction"
-                               v-on:change-sort="changeSort"
-                    ></sort-icon>
-                    <br/>
-                    <input type="text" class="form-control form-control-sm input"
-                           v-on:change="search"
-                           v-model="params.date"
-                    />
-                </th>
-                <th>公告流量</th>
-                <th>模擬流量</th>
-                <th>模擬上界</th>
-                <th>模擬下界</th>
-                <th>思源雨量</th>
-                <th>桃山雨量</th>
-                <th>環山雨量</th>
-                <th>松茂雨量</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="record in records">
-                <td v-text="record.station.name"></td>
-                <td v-text="record.date"></td>
-                <td v-text="record.public"></td>
-                <td v-text="record.simu"></td>
-                <td v-text="record.max"></td>
-                <td v-text="record.min"></td>
-                <td v-text="record.rain.st1"></td>
-                <td v-text="record.rain.st2"></td>
-                <td v-text="record.rain.st3"></td>
-                <td v-text="record.rain.st4"></td>
-            </tr>
-            </tbody>
-        </table>
+        <sheet
+            :data="records"
+            :columns="columns"
+            :is-loading="isLoading"
+            :record-url="true"
+            :type="'water-quality'"
+            v-on:sort="sort"
+            v-on:search="search"
+        ></sheet>
+        <div class="myexcel text-muted caption">
+            河川流量推估&nbsp;共 {{ total }} 筆
+        </div>
     </div>
 </template>
 
 <script>
+    import sheet from '../components/sheet';
     import queryString from 'querystring';
     export default {
-        name: 'RiverDischargeEstimation',
+        name: 'WaterQuality',
         data() {
             return {
+                isLoading: false,
                 records: [],
-                params: {
-                    sort: '',
-                },
+                sortBy: '',
+                direction: '',
+                searchParams: {},
+                columns: [
+                    { type: 'text', title: '河川', width: '50', name: 'station_id', searchable: true },
+                    { type: 'text', title: '日期', width: '100', name: 'date', searchable: true },
+                    { type: 'text', title: '公告流量', width: '100', name: 'public' },
+                    { type: 'text', title: '模擬流量', width: '120', name: 'simu' },
+                    { type: 'text', title: '模擬上界', width: '80', name: 'max' },
+                    { type: 'text', title: '模擬下界', width: '80', name: 'min' },
+                    { type: 'text', title: '思源雨量', width: '80', name: 'rain_st1' },
+                    { type: 'text', title: '桃山雨量', width: '80', name: 'rain_st2' },
+                    { type: 'text', title: '環山雨量', width: '80', name: 'rain_st3' },
+                    { type: 'text', title: '松茂雨量', width: '80', name: 'rain_st4' },
+                ],
                 total: 0,
             }
         },
-        created() {
-
+        components: {
+            sheet,
+        },
+        computed: {
+            query() {
+                return queryString.stringify(this.searchParams);
+            },
         },
         mounted() {
             this.search();
+
             const app = this;
             const intersectionObserver = new IntersectionObserver(function(entries) {
                 if (entries[0].intersectionRatio > 0){
                     app.loadMore();
                 }
             });
-            intersectionObserver.observe(document.querySelector('caption'));
+            intersectionObserver.observe(document.querySelector('.caption'));
         },
         methods: {
             fetchData(callback) {
-                if (this.isLoading) {
-                    return;
-                }
-
-                if (this.isEnd) {
+                if (this.isLoading || this.isEnd) {
                     return;
                 }
 
                 this.isLoading = true;
 
                 const page = this.currentPage + 1;
-                const paramsString = queryString.stringify({... this.params, ... { page: this.currentPage }});
-                this.$http.get(`/api/river-discharge-estimation?${paramsString}`)
+                this.$http.get(`/api/river-discharge-estimation?page=${page}&${this.query}`)
                     .then(({ data: { data, total, currentPage, perPage } }) => {
                         if (perPage > data.length || 0 === data.length) {
                             this.isEnd = true;
-                            return;
                         }
                         callback(data);
                         this.total = total;
@@ -112,9 +82,9 @@
                         this.isLoading = false;
                     });
             },
-            changeSort(column) {
-                this.params.sort = column;
-                this.params.direction = this.params.direction == 'asc' ? 'desc' : 'asc';
+            sort(column, direction) {
+                this.direction = direction ? 'asc' : 'desc';
+                this.sortBy = this.columns[column].name
                 this.search();
             },
             loadMore() {
@@ -122,9 +92,16 @@
                     this.records = this.records.concat(data);
                 })
             },
-            search() {
+            search(query) {
+                if (query) {
+                    this.searchParams = query;
+                }
+
+                window.scrollTo(0, 0);
+
+                this.page = 0;
                 this.isEnd = false;
-                this.currentPage = 1;
+                this.currentPage = 0;
                 this.fetchData(data => {
                     this.records = data;
                 })
