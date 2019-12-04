@@ -1,6 +1,7 @@
 <template>
     <div>
         <h6>河川流量推估&nbsp;<small class="text-muted">共 {{ total }} 筆</small></h6>
+        <highcharts :options="chartOptions"></highcharts>
         <sheet
             :data="records"
             :columns="columns"
@@ -19,6 +20,7 @@
 <script>
     import sheet from '../components/sheet';
     import queryString from 'querystring';
+    import Highcharts from 'highcharts';
     export default {
         name: 'WaterQuality',
         data() {
@@ -40,6 +42,45 @@
                     { type: 'text', title: '環山雨量', width: '80', name: 'rain_st3' },
                     { type: 'text', title: '松茂雨量', width: '80', name: 'rain_st4' },
                 ],
+                chartOptions: {
+                    chart: {
+                        type: 'spline',
+                        width: 980,
+                        height: 300,
+                    },
+                    title: {
+                        text: '河川公告流量歷年紀錄'
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        labels: {
+                            formatter: function () {
+                                return Highcharts.dateFormat('%Y %b', this.value);
+                            }
+                        },
+                    },
+                    yAxis: {
+                        title: {
+                            text: '流量'
+                        }
+                    },
+                    tooltip: {
+                        formatter: function () {
+                            return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%b-%e', this.x, true) + '<br/>' + this.y;
+                        },
+                        backgroundColor: 'rgba(0, 0, 0, .75)',
+                        borderWidth: 2,
+                        style: {
+                            color: '#CCCCCC'
+                        }
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle'
+                    },
+                    series: [],
+                },
                 total: 0,
             }
         },
@@ -61,6 +102,13 @@
                 }
             });
             intersectionObserver.observe(document.querySelector('.caption'));
+
+            // fetch report data
+            this.$http.get(`/api/river-discharge-estimation-report`)
+                .then(({ data: { years, data } }) => {
+                    // this.chartOptions.xAxis.categories = years;
+                    this.chartOptions.series = data;
+                });
         },
         methods: {
             fetchData(callback) {
@@ -71,7 +119,7 @@
                 this.isLoading = true;
 
                 const page = this.currentPage + 1;
-                this.$http.get(`/api/river-discharge-estimation?page=${page}&${this.query}`)
+                this.$http.get(`/api/river-discharge-estimation?page=${page}&sort=${this.sortBy}&direction=${this.direction}&${this.query}`)
                     .then(({ data: { data, total, currentPage, perPage } }) => {
                         if (perPage > data.length || 0 === data.length) {
                             this.isEnd = true;

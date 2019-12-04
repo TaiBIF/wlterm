@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Flow;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class FlowController extends Controller
@@ -14,6 +15,9 @@ class FlowController extends Controller
         $id = $request->get('station_id');
         $date = $request->get('date');
 
+        $sort = $request->get('sort');
+        $direction = $request->get('direction', 'asc');
+
         $flowRecordsQuery = Flow::query()
             ->with(['rain', 'station']);
 
@@ -23,6 +27,10 @@ class FlowController extends Controller
 
         if ($id) {
             $flowRecordsQuery->where('station_id',  $id);
+        }
+
+        if ($sort && $direction) {
+            $flowRecordsQuery->orderBy($sort, $direction);
         }
 
         $flowRecords = $flowRecordsQuery->paginate($this->perPage);
@@ -41,6 +49,29 @@ class FlowController extends Controller
             'total' => $flowRecords->total(),
             'currentPage' => $flowRecords->currentPage(),
             'perPage' => $flowRecords->perPage(),
+            'data' => $data,
+        ]);
+    }
+
+    public function report()
+    {
+        $records = Flow::select('station_id', 'date', 'public', 'simu')->get();
+
+        $data = $records->groupBy('station_id')
+            ->map(function ($records, $stationId) {
+                return [
+                    'name' => $stationId,
+                    'data' => $records->sortBy('date')->values()->map(function($t) {
+                        return [
+                            Carbon::createFromFormat('Y-m-d', $t->date)->timestamp*1000,
+                            $t->public
+                        ];
+                    }),
+                    'pointInterval' => 24 * 3600 * 1000,
+                ];
+            })->values();
+
+        return response()->json([
             'data' => $data,
         ]);
     }

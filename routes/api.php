@@ -35,6 +35,7 @@ Route::get('/temperature', 'TemperatureController@index');
 Route::get('/temperature-report', 'TemperatureController@report');
 Route::get('/algae-debris', 'AlageController@index');
 Route::get('/river-discharge-estimation', 'FlowController@index');
+Route::get('/river-discharge-estimation-report', 'FlowController@report');
 Route::get('/river-habitat', 'RiverController@habitat');
 Route::get('/river-section', 'RiverController@section');
 
