@@ -39,6 +39,10 @@
                                 內容
                             </router-link>
 
+                            <router-link v-if="sectionUrl" :to="`/river-sections/${datum.bs_and_tp}/${datum.date}`">
+                                內容
+                            </router-link>
+
                             <router-link
                                 v-if="datum.checkUrl"
                                 :to="datum.checkUrl"
@@ -93,6 +97,10 @@
                 default: false,
             },
             recordUrl: {
+                type: Boolean,
+                default: false,
+            },
+            sectionUrl: {
                 type: Boolean,
                 default: false,
             },

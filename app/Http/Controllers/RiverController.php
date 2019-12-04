@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\RiverBsTp;
 use App\RiverHabitat;
 use App\RiverMorphology;
 use App\RiverSection;
@@ -45,7 +46,6 @@ class RiverController extends Controller
         $date = $request->get('date');
         $section = $request->get('section');
 
-        $morphology = RiverMorphology::all()->keyBy('morphology_id')->toArray();
         $sectionQuery = RiverSection::query();
 
         if ($date) {
@@ -57,8 +57,7 @@ class RiverController extends Controller
         }
 
         $habitateRecords = $sectionQuery->paginate($this->perPage);
-        $records = $habitateRecords->map(function ($item) use ($morphology) {
-//            $item->morphology_name = $morphology[$item->morphology]['morphology_chinese'];
+        $records = $habitateRecords->map(function ($item) {
             return $item;
         });
 
@@ -66,6 +65,17 @@ class RiverController extends Controller
             'total' => $habitateRecords->total(),
             'currentPage' => $records,
             'data' => $habitateRecords->items(),
+        ]);
+    }
+
+    public function certainSection($id, $date)
+    {
+        $bsTp = RiverBsTp::where('bs_and_tp', $id)->where('date', $date)->first();
+        $sections = RiverSection::where('bs_and_tp', $id)->where('date', $date)->get();
+
+        return response()->json([
+            'bs_tp' => $bsTp,
+            'sections' => $sections->groupBy('section'),
         ]);
     }
 }

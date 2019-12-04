@@ -26,3 +26,8 @@ Route::get('/occurrences/{id}', function () {
 Route::get('/records/{id}', function () {
     return view('app');
 });
+
+
+Route::get('/river-sections/{id}/{date}', function () {
+    return view('app');
+});

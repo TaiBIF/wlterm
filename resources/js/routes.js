@@ -18,7 +18,7 @@ import Temperature from '@/js/pages/Temperature';
 import AlgaeDebris from '@/js/pages/AlgaeDebris';
 import RiverHabitat from '@/js/pages/RiverHabitat';
 import RiverSections from '@/js/pages/RiverSections';
-// import RiverSection from '@/js/pages/RiverSection';
+import RiverSection from '@/js/pages/RiverSection';
 import RiverDischargeEstimation from '@/js/pages/RiverDischargeEstimation';
 import Record from '@/js/pages/Record';
 
@@ -124,6 +124,11 @@ const router = new VueRouter ({
             path: '/river-sections',
             name: 'river-sections',
             component: RiverSections,
+        },
+        {
+            path: '/river-sections/:sectionId/:date',
+            name: 'river-section',
+            component: RiverSection,
         },
     ]
 });

@@ -5,9 +5,8 @@
             :data="records"
             :columns="columns"
             :is-loading="isLoading"
-            :record-url="true"
+            :section-url="true"
             :sortable="false"
-            :type="'water-quality'"
             v-on:sort="sort"
             v-on:search="search"
         ></sheet>
