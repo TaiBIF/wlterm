@@ -32,6 +32,7 @@ Route::get('/water-quality', 'WaterQualityController@index');
 Route::get('/records/{id}', 'RecordController@page');
 Route::get('/element-flux', 'WaterQualityController@elementFlux');
 Route::get('/temperature', 'TemperatureController@index');
+Route::get('/temperature-report', 'TemperatureController@report');
 Route::get('/algae-debris', 'AlageController@index');
 Route::get('/river-discharge-estimation', 'FlowController@index');
 Route::get('/river-habitat', 'RiverController@habitat');

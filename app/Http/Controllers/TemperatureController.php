@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Temperature;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TemperatureController extends Controller
 {
@@ -61,5 +63,42 @@ class TemperatureController extends Controller
             'currentPage' => $records->currentPage(),
             'data' => $records->items(),
         ]);
+    }
+
+    public function report()
+    {
+
+        $datesGroup = Temperature::query()
+            ->selectRaw('date')
+            ->groupBy(DB::raw('date'))
+            ->get()
+            ->map(function($d) {
+                return $d->date;
+            });
+
+        $records = Temperature::query()->select('id', 'date', 'air')
+            ->whereNotNull('air')
+            ->get();
+
+        $data = $records->groupBy('id')
+            ->map(function ($temperatures, $stationId) {
+                return [
+                    'name' => $stationId,
+                    'data' => $temperatures->sortBy('date')->values()->map(function($t) {
+                        return [
+                            Carbon::createFromFormat('Y-m-d', $t->date)->timestamp*1000,
+                            $t->air
+                        ];
+                    }),
+                    'pointStart' => 1262304000000,
+                    'pointInterval' => 24 * 3600 * 1000,
+                ];
+            })->values();
+
+        return response()->json([
+//            'dates' => $datesGroup,
+            'data' => $data,
+        ]);
+
     }
 }

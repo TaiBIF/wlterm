@@ -1,6 +1,9 @@
 <template>
     <div>
         <h6>溫度監測&nbsp;<small class="text-muted">共 {{ total }} 筆</small></h6>
+        <div class="chart-container">
+            <highcharts :options="chartOptions"></highcharts>
+        </div>
         <sheet
             :data="records"
             :columns="columns"
@@ -17,8 +20,10 @@
 <script>
     import sheet from '../components/sheet';
     import queryString from 'querystring';
+    import Highcharts from 'highcharts';
+
     export default {
-        name: 'WaterQuality',
+        name: 'Temperature',
         data() {
             return {
                 isLoading: false,
@@ -38,6 +43,46 @@
                     { type: 'text', title: '土下 65cm', width: '80', name: 'soil_65cm' },
                     { type: 'text', title: '土下 90cm', width: '80', name: 'soil_90cm' },
                 ],
+
+                chartOptions: {
+                    chart: {
+                        type: 'spline',
+                        width: 860,
+                        height: 300,
+                    },
+                    title: {
+                        text: '溫度監測歷年紀錄'
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        labels: {
+                            formatter: function () {
+                                return Highcharts.dateFormat('%Y %b', this.value);
+                            }
+                        },
+                    },
+                    yAxis: {
+                        title: {
+                            text: '溫度'
+                        }
+                    },
+                    tooltip: {
+                        formatter: function () {
+                            return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%b-%e', this.x, true) + '<br/>' + this.y;
+                        },
+                        backgroundColor: 'rgba(0, 0, 0, .75)',
+                        borderWidth: 2,
+                        style: {
+                            color: '#CCCCCC'
+                        }
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle'
+                    },
+                    series: [],
+                },
                 total: 0,
             }
         },
@@ -59,6 +104,13 @@
                 }
             });
             intersectionObserver.observe(document.querySelector('.caption'));
+
+            // fetch report data
+            this.$http.get(`/api/temperature-report`)
+                .then(({ data: { dates, data } }) => {
+                    this.chartOptions.xAxis.categories = dates;
+                    this.chartOptions.series = data;
+                });
         },
         methods: {
             fetchData(callback) {
