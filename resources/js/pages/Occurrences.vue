@@ -1,6 +1,9 @@
 <template>
     <div>
-        <h6>生物物種調查紀錄<small class="text-muted">共 {{ total }} 筆</small></h6>
+        <h6>生物物種調查紀錄 <small class="text-muted">共 {{ total }} 筆</small></h6>
+        <div class="chart-container">
+            <highcharts :options="chartOptions"></highcharts>
+        </div>
         <sheet
             :data="occurrences"
             :columns="columns"
@@ -49,6 +52,32 @@
                     { type: 'text', title: '鑒定者', width: '80', name: 'identified_by_chinese', searchable: true },
                 ],
                 total: 0,
+                chartOptions: {
+                    chart: {
+                        type: 'column',
+                        width: 800,
+                        height: 300,
+                        style: { margin: '0 auto' }
+                    },
+                    title: {
+                        text: '生物物種調查歷年紀錄'
+                    },
+                    xAxis: {
+                        categories: [],
+                        title: {
+                            text: '年份'
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: '調查紀錄數'
+                        }
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    series: [],
+                },
                 searchParams: {}
             }
         },
@@ -61,6 +90,16 @@
             });
             // Start observing
             intersectionObserver.observe(document.querySelector('.caption'));
+
+            // fetch report data
+            this.$http.get(`/api/occurrences-report`)
+                .then(({ data: { years, data, currentPage, perPage } }) => {
+                    this.chartOptions.xAxis.categories = years;
+                    this.chartOptions.series = [{
+                        name: '歷年紀錄',
+                        data: data.map(d => d.count),
+                    }];
+                });
         },
         computed: {
             query() {

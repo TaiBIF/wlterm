@@ -6,6 +6,7 @@ use App\Main;
 use App\Occurrence;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OccurrenceController extends Controller
 {
@@ -101,6 +102,20 @@ class OccurrenceController extends Controller
 
         return response()->json([
             'occurence' => $record,
+        ]);
+    }
+
+    public function report()
+    {
+        $occurrenceYearsCount = Occurrence::selectRaw('YEAR(date) as year, count(YEAR(date)) as count')
+            ->groupBy(DB::raw('YEAR(date)'))
+            ->get();
+
+        return response()->json([
+            'years' => $occurrenceYearsCount->map(function ($data) {
+                return $data->year;
+            }),
+            'data' => $occurrenceYearsCount
         ]);
     }
 }
