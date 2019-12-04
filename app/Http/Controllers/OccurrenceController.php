@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Main;
 use App\Occurrence;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OccurrenceController extends Controller
@@ -87,6 +89,18 @@ class OccurrenceController extends Controller
             'total' => $occurrencesPage->total(),
             'currentPage' => $occurrencesPage->currentPage(),
             'data' => $occurrencesPage->items(),
+        ]);
+    }
+
+    public function show($id)
+    {
+        $record = Main::query()
+            ->with('station', 'project', 'species:scientific_name,author,chinese,family,family_c')
+            ->where('record_id', $id)
+            ->first();
+
+        return response()->json([
+            'occurence' => $record,
         ]);
     }
 }

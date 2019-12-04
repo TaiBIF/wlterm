@@ -19,6 +19,10 @@ Route::get('/{any}', function () {
     return view('app');
 });
 
+Route::get('/occurrences/{id}', function () {
+    return view('app');
+});
+
 Route::get('/records/{id}', function () {
     return view('app');
 });

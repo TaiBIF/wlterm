@@ -11,6 +11,7 @@ import Order from '@/js/pages/Order';
 import Family from '@/js/pages/Family';
 import Species from '@/js/pages/Species';
 import Occurrences from '@/js/pages/Occurrences';
+import Occurrence from '@/js/pages/Occurrence';
 import WaterQuality from '@/js/pages/WaterQuality';
 import ElementFlux from '@/js/pages/ElementFlux';
 import Temperature from '@/js/pages/Temperature';
@@ -75,6 +76,11 @@ const router = new VueRouter ({
             path: '/occurrences',
             name: 'occurrences',
             component: Occurrences,
+        },
+        {
+            path: '/occurrences/:recordId',
+            name: 'occurrence',
+            component: Occurrence,
         },
         {
             path: '/water-quality',

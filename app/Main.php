@@ -16,7 +16,12 @@ class Main extends Model
 
     public function project()
     {
-        return $this->hasOne(Project::class, 'id', 'Project_id');
+        return $this->hasOne(Project::class, 'Project_id', 'Project_id');
 
+    }
+
+    public function species()
+    {
+        return $this->hasOne(Species::class, 'scientific_name', 'scientific_name');
     }
 }

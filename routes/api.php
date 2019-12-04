@@ -22,6 +22,7 @@ Route::get('/stations', 'StationController@index');
 Route::get('/stations-location', 'StationController@map');
 Route::get('/phylum', 'PhylumController@index');
 Route::get('/occurrences', 'OccurrenceController@index');
+Route::get('/occurrences/{id}', 'OccurrenceController@show');
 Route::get('/classes', 'ClassController@index');
 Route::get('/orders', 'OrderController@index');
 Route::get('/family', 'FamilyController@index');
