@@ -29,6 +29,7 @@
                 searchParams: {},
                 columns: [
                     { type: 'text', title: '日期', width: '100', name: 'date', searchable: true },
+                    { type: 'text', title: '溪名', width: '80', name: 'river' },
                     { type: 'text', title: '斷面', width: '80', name: 'section', searchable: true },
                     { type: 'text', title: '河寬', width: '60', name: 'width' },
                     { type: 'text', title: '測量位置', width: '80', name: 'measure_point' },
