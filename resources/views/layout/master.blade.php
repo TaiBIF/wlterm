@@ -45,7 +45,7 @@
                         <a href="#">門別統計</a>
                     </li>
                     <li class="list-group-item">
-                        <a href="#">剛別統計</a>
+                        <a href="#">綱別統計</a>
                     </li>
                     <li class="list-group-item">
                         <a href="#">目別統計</a>

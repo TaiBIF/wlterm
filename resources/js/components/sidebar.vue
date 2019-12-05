@@ -42,7 +42,7 @@
             </router-link>
             <router-link to="/class">
                 <li class="list-group-item">
-                    剛別統計
+                    綱別統計
                 </li>
             </router-link>
             <router-link to="/order">
