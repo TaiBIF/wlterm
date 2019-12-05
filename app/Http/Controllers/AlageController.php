@@ -40,7 +40,7 @@ class AlageController extends Controller
         }
 
         if ($date) {
-            $recordsQuery->where('date',  $date);
+            $recordsQuery->where('date',  'like', '%' . $date . '%');
         }
 
         if ($sort && $direction) {
