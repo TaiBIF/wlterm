@@ -32,7 +32,7 @@
         <table class="table table-sm" v-for="(section, sectionName) in sections">
             <thead>
                 <tr>
-                    <th>斷位</th>
+                    <th>斷面</th>
                     <th>點位</th>
                     <th>度</th>
                     <th>弧度角</th>
