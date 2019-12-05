@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\RiverBsTp;
 use App\RiverHabitat;
 use App\RiverMorphology;
+use App\RiverSubstrate;
 use App\RiverSection;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,7 @@ class RiverController extends Controller
         $section = $request->get('section');
 
         $morphology = RiverMorphology::all()->keyBy('morphology_id')->toArray();
+        $substrate = RiverSubstrate::all()->keyBy('substrate_id')->toArray();
         $habitateQuery = RiverHabitat::query();
 
         if ($date) {
@@ -29,15 +31,16 @@ class RiverController extends Controller
         }
 
         $habitateRecords = $habitateQuery->paginate($this->perPage);
-        $records = $habitateRecords->map(function ($item) use ($morphology) {
+        $records = $habitateRecords->map(function ($item) use ($morphology, $substrate) {
             $item->morphology_name = $morphology[$item->morphology]['morphology_chinese'];
+            $item->substrate_name = $substrate[$item->substrate]['substrate_chinese'];
             return $item;
         });
 
         return response()->json([
             'total' => $habitateRecords->total(),
-            'currentPage' => $records,
-            'data' => $habitateRecords->items(),
+            'currentPage' => $habitateRecords->currentPage(),
+            'data' => $records,
         ]);
     }
 
