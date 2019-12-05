@@ -29,6 +29,7 @@ class WaterQualityController extends Controller
             })
             ->where(function($query) {
                 $query->where('project_id', 3)
+                    ->orWhere('project_id', 17)
                     ->orWhere('project_id', 4);
             });
 
@@ -37,7 +38,7 @@ class WaterQualityController extends Controller
         }
 
         if ($date) {
-            $waterQualityQuery->where('date',  $date);
+            $waterQualityQuery->where('date', $date);
         }
 
         if ($sort && $direction) {
