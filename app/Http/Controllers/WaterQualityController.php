@@ -39,7 +39,7 @@ class WaterQualityController extends Controller
         }
 
         if ($date) {
-            $waterQualityQuery->where('date', $date);
+            $waterQualityQuery->where('date', 'like', '%' . $date . '%');
         }
 
         if ($sort && $direction) {
