@@ -38,7 +38,7 @@
                     { type: 'text', title: '水平距', width: '80', name: 'horizontal_distance' },
                     { type: 'text', title: '經度', width: '80', name: 'longitude' },
                     { type: 'text', title: '緯度', width: '80', name: 'latitude' },
-                    { type: 'text', title: '海拔高度(公尺)', width: '80', name: 'altitude' },
+                    { type: 'text', title: '海拔高度(公尺)', width: '100', name: 'altitude' },
                     { type: 'text', title: '後視點與轉點', width: '100', name: 'bs_and_tp' },
                 ],
                 total: 0,
