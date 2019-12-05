@@ -33,7 +33,7 @@
                     { type: 'text', title: '河寬', width: '60', name: 'width' },
                     { type: 'text', title: '測量位置', width: '80', name: 'measure_point' },
                     { type: 'text', title: '流速', width: '80', name: 'flow_velocity' },
-                    { type: 'text', title: '底質', width: '80', name: 'substrate' },
+                    { type: 'text', title: '底質', width: '80', name: 'substrate_name' },
                     { type: 'text', title: '水深(公尺)', width: '80', name: 'depth' },
                     { type: 'text', title: '福祿數', width: '150', name: 'fr' },
                     { type: 'text', title: '棲地環境類型', width: '100', name: 'morphology_name' },
