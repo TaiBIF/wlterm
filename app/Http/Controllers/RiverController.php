@@ -66,7 +66,7 @@ class RiverController extends Controller
 
         return response()->json([
             'total' => $habitateRecords->total(),
-            'currentPage' => $records,
+            'currentPage' => $habitateRecords->currentPage(),
             'data' => $habitateRecords->items(),
         ]);
     }
