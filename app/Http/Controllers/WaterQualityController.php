@@ -32,6 +32,7 @@ class WaterQualityController extends Controller
                     ->orWhere('project_id', 17)
                     ->orWhere('project_id', 13)
                     ->orWhere('project_id', 4);
+                    ->orWhere('project_id', 23);
             });
 
         if ($id) {
