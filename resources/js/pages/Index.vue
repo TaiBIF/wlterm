@@ -175,6 +175,26 @@
                         <td>中央研究院生物多樣性研究中心助理研究員：生態資料庫</td>
                     </tr>
                 </table>
+                	<table class="table table-sm">
+                    <thead>
+                    <th colspan="3">民國 109 年</th>
+                    </thead>
+                    <tr>
+                        <td width="20%">總計畫及子計畫1</td>
+                        <td width="18%">葉昭憲</td>
+                        <td>逢甲大學水利工程與資源保育學系教授：物理棲地研究</td>
+                    </tr>
+                    <tr>
+                        <td>子計畫2</td>
+                        <td>官文惠</td>
+                        <td>明志科技大學環境與安全衛生工程系教授：水質研究</td>
+                    </tr>
+                    <tr>
+                        <td>子計畫3</td>
+                        <td>郭美華</td>
+                        <td>中興大學昆蟲系教授：水棲昆蟲研究</td>
+                    </tr>
+		</table>
             </div>
         </div>
     </div>
