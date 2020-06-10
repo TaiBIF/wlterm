@@ -38,7 +38,7 @@ class SpeciesController extends Controller
         }
 
         if ($kingdom) {
-            $speciesQuery->where('kingdom_c', 'like', '%' . $kingdom . '%');
+            $speciesQuery->where('kingdom', 'like', '%' . $kingdom . '%');
         }
 
         if ($kingdomName) {
