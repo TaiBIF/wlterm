@@ -3,9 +3,7 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <td colspan="6">
-                        藻類與有機碎屑調查記錄編號：urn:lsid:wlterm.biodiv.sinica.edu.tw:observation:AO791
-                    </td>
+                    <td colspan="6" v-text="title"></td>
                 </tr>
             </thead>
             <tbody>
@@ -178,6 +176,28 @@
                     project: {},
                 },
                 total: 0,
+            }
+        },
+        computed: {
+            title() {
+                let word = '';
+                let code = '';
+                switch(this.type) {
+                    case 'water-quality':
+                        word = '水質調查記錄編號';
+                        code = 'WQ';
+                        break;
+                    case 'element-flux':
+                        word = '主要元素通量調查記錄編號';
+                        code = 'WQ';
+                        break;
+                    case 'algae-debris':
+                        word = '藻類與有機碎屑調查記錄編號';
+                        code = 'AO';
+                        break;
+                }
+
+                return `${word}:urn:lsid:wlterm.biodiv.sinica.edu.tw:observation:${code}${this.record.record_id}`;
             }
         },
         mounted() {
