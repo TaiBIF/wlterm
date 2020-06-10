@@ -21,7 +21,7 @@ class RecordController extends Controller
                 ->with('station:id,latitude,longitude,locality_chinese,maximum_elevation,maximum_depth', 'project')
                 ->where('record_id', $id)
                 ->first();
-            $record->date = Carbon::createFromFormat('Y-m-d H:i:s', $record->date)->format('Y-m-d');
+            $record->date = Carbon::createFromFormat('Y-m-d H:i:s', $record->date)->format('Y-m-d H:i:s');
         } else {
             $record = Alage::query()
                 ->with('station:id,latitude,longitude,locality_chinese,maximum_elevation,maximum_depth', 'project')
