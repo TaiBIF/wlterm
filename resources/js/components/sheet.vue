@@ -58,6 +58,7 @@
                             >
                                 地圖
                             </router-link>
+                            <slot name="functions" v-bind:datum="datum"></slot>
                         </td>
                     </tr>
                     </tbody>

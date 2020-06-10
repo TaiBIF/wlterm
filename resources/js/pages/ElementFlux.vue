@@ -5,11 +5,16 @@
             :data="records"
             :columns="columns"
             :is-loading="isLoading"
-            :record-url="true"
-            :type="'water-quality'"
+            :type="'element-flux'"
             v-on:sort="sort"
             v-on:search="search"
-        ></sheet>
+        >
+            <template v-slot:functions="props">
+                <router-link :to="`/records/${props.datum.record_id}?type=element-flux`" target="_blank">
+                    內容
+                </router-link>
+            </template>
+        </sheet>
         <div class="myexcel text-muted caption">
             元素通量&nbsp;共 {{ total }} 筆
         </div>
