@@ -29,7 +29,7 @@
                 direction: '',
                 searchParams: {},
                 columns: [
-                    { type: 'text', title: '河川', width: '50', name: 'station_id', searchable: true },
+                    { type: 'text', title: '河川', width: '100', name: 'station_name', searchable: true },
                     { type: 'text', title: '日期', width: '100', name: 'date', searchable: true },
                     { type: 'text', title: '公告流量(cms)', width: '120', name: 'public' },
                     { type: 'text', title: '模擬流量(cms)', width: '140', name: 'simu' },

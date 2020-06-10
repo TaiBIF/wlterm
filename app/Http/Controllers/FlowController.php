@@ -12,21 +12,22 @@ class FlowController extends Controller
 
     public function index(Request $request)
     {
-        $id = $request->get('station_id');
+        $name = $request->get('station_name');
         $date = $request->get('date');
 
         $sort = $request->get('sort');
         $direction = $request->get('direction', 'asc');
 
         $flowRecordsQuery = Flow::query()
+            ->join('flow_stations', 'flow.station_id', '=', 'flow_stations.id')
             ->with(['rain', 'station']);
 
         if ($date) {
             $flowRecordsQuery->where('date',  'like', '%' . $date . '%');
         }
 
-        if ($id) {
-            $flowRecordsQuery->where('station_id',  $id);
+        if ($name) {
+            $flowRecordsQuery->where('flow_stations.name', 'like', '%' . $name . '%');
         }
 
         if ($sort && $direction) {
