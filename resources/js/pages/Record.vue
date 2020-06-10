@@ -82,7 +82,7 @@
             </tr>
             <tr v-if="type === 'element-flux' || type === 'water-quality'">
                 <td>深度上限</td>
-                <td v-text="record.minimum_depth">0.07&nbsp;</td>
+                <td v-text="`${record.station.minimum_depth} M`"></td>
                 <td>硝酸鹽 mg/L</td>
                 <td v-text="record.nitrate"></td>
                 <td>鈣 mg/L</td>
@@ -90,7 +90,7 @@
             </tr>
             <tr v-if="type === 'element-flux' || type === 'water-quality'">
                 <td>深度下限</td>
-                <td v-text="record.maximum_depth"></td>
+                <td v-text="`${record.station.maximum_depth} M`"></td>
                 <td>硫酸鹽 mg/L</td>
                 <td v-text="record.SO4"></td>
                 <td>鍶 mg/L</td>
@@ -98,7 +98,7 @@
             </tr>
             <tr v-if="type === 'element-flux' || type === 'water-quality'">
                 <td>高度上限</td>
-                <td v-text="record.maximum_elevation"></td>
+                <td v-text="`${record.station.maximum_elevation} M`"></td>
                 <td>磷酸鹽 mg/L</td>
                 <td v-text="record.Phosphate"></td>
                 <td>鋇 mg/L</td>
