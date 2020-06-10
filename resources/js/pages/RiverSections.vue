@@ -35,7 +35,7 @@
                     { type: 'text', title: '點位', width: '80', name: 'measure_point' },
                     { type: 'text', title: '方向角', width: '140', name: 'angle' },
                     { type: 'text', title: '弧度角', width: '140', name: 'radian' },
-                    { type: 'text', title: '水平距', width: '80', name: 'horizontal_distance' },
+                    { type: 'text', title: '水平距(公尺)', width: '80', name: 'horizontal_distance' },
                     { type: 'text', title: '經度', width: '80', name: 'longitude' },
                     { type: 'text', title: '緯度', width: '80', name: 'latitude' },
                     { type: 'text', title: '海拔高度(公尺)', width: '100', name: 'altitude' },

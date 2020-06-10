@@ -6,8 +6,6 @@
             :data="records"
             :columns="columns"
             :is-loading="isLoading"
-            :record-url="true"
-            :type="'water-quality'"
             v-on:sort="sort"
             v-on:search="search"
         ></sheet>
@@ -33,14 +31,14 @@
                 columns: [
                     { type: 'text', title: '河川', width: '50', name: 'station_id', searchable: true },
                     { type: 'text', title: '日期', width: '100', name: 'date', searchable: true },
-                    { type: 'text', title: '公告流量', width: '100', name: 'public' },
-                    { type: 'text', title: '模擬流量', width: '120', name: 'simu' },
-                    { type: 'text', title: '模擬上界', width: '80', name: 'max' },
-                    { type: 'text', title: '模擬下界', width: '80', name: 'min' },
-                    { type: 'text', title: '思源雨量', width: '80', name: 'rain_st1' },
-                    { type: 'text', title: '桃山雨量', width: '80', name: 'rain_st2' },
-                    { type: 'text', title: '環山雨量', width: '80', name: 'rain_st3' },
-                    { type: 'text', title: '松茂雨量', width: '80', name: 'rain_st4' },
+                    { type: 'text', title: '公告流量(cms)', width: '120', name: 'public' },
+                    { type: 'text', title: '模擬流量(cms)', width: '140', name: 'simu' },
+                    { type: 'text', title: '模擬上界(cms)', width: '100', name: 'max' },
+                    { type: 'text', title: '模擬下界(cms)', width: '100', name: 'min' },
+                    { type: 'text', title: '思源雨量(mm)', width: '100', name: 'rain_st1' },
+                    { type: 'text', title: '桃山雨量(mm)', width: '100', name: 'rain_st2' },
+                    { type: 'text', title: '環山雨量(mm)', width: '100', name: 'rain_st3' },
+                    { type: 'text', title: '松茂雨量(mm)', width: '100', name: 'rain_st4' },
                 ],
                 chartOptions: {
                     chart: {
