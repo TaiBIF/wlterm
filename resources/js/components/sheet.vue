@@ -31,15 +31,17 @@
                         <td class="jexcel_row">
                             <router-link
                                 v-if="occurenceContent"
-                                :to="`/occurrences/${datum.record_id}`">
+                                :to="`/occurrences/${datum.record_id}`"
+                                target="_blank"
+                            >
                                 內容
                             </router-link>
 
-                            <router-link v-if="recordUrl" :to="`/records/${datum.record_id}?type=${type}`">
+                            <router-link v-if="recordUrl" :to="`/records/${datum.record_id}?type=${type}`" target="_blank">
                                 內容
                             </router-link>
 
-                            <router-link v-if="sectionUrl" :to="`/river-sections/${datum.bs_and_tp}/${datum.date}`">
+                            <router-link v-if="sectionUrl" :to="`/river-sections/${datum.bs_and_tp}/${datum.date}`" target="_blank">
                                 內容
                             </router-link>
 
