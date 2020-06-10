@@ -5,11 +5,15 @@
             :data="records"
             :columns="columns"
             :is-loading="isLoading"
-            :record-url="true"
-            :type="'algae-debris'"
             v-on:sort="sort"
             v-on:search="search"
-        ></sheet>
+        >
+            <template v-slot:functions="props">
+                <router-link :to="`/records/${props.datum.record_id}?type=algae-debris`" target="_blank">
+                    內容
+                </router-link>
+            </template>
+        </sheet>
         <div class="myexcel text-muted caption">
             藻類與碎屑&nbsp;共 {{ total }} 筆
         </div>

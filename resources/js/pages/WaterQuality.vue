@@ -5,11 +5,15 @@
             :data="records"
             :columns="columns"
             :is-loading="isLoading"
-            :record-url="true"
-            :type="'water-quality'"
             v-on:sort="sort"
             v-on:search="search"
-        ></sheet>
+        >
+            <template v-slot:functions="props">
+                <router-link :to="`/records/${props.datum.record_id}?type=water-quality`" target="_blank">
+                    內容
+                </router-link>
+            </template>
+        </sheet>
         <div class="myexcel text-muted caption">
             水質監測&nbsp;共 {{ total }} 筆
         </div>
