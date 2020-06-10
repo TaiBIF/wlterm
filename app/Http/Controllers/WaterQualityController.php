@@ -79,7 +79,7 @@ class WaterQualityController extends Controller
         $direction = $request->get('direction', 'asc');
 
         $waterQualityQuery = WaterQuality::query()
-            ->select(['water.id as water_id', 'station.id as station_id', 'date', 'latitude', 'longitude', 'locality_chinese', 'maximum_elevation', 'maximum_depth'])
+            ->select(['water.id as water_id', 'station.id as station_id', 'date', 'latitude', 'longitude', 'locality_chinese', 'maximum_elevation', 'maximum_depth', 'record_id'])
             ->join('station', 'water.id', '=', 'station.id')
             ->where('project_id', 13);
 
