@@ -12,18 +12,6 @@
                 <td nowrap="">調查日期</td>
                 <td colspan="3" v-text="record.date"/>
             </tr>
-            <template v-if="type === 'algae-debris'">
-                <tr>
-                    <td>調查項目</td>
-                    <td>藻類生物量&nbsp;</td>
-                    <td>調查值</td>
-                    <td v-text="record.biomass" />
-                </tr>
-                <tr>
-                    <td>單位</td>
-                    <td colspan="3" v-text="record.unit" />
-                </tr>
-            </template>
             <tr>
                 <td>測站代號</td>
                 <td v-text="record.station.id"></td>
@@ -59,6 +47,18 @@
                 <td>經緯度誤差</td>
                 <td colspan="3" v-text="record.station.coordinate_precision">15&nbsp;</td>
             </tr>
+            <template v-if="type === 'algae-debris'">
+                <tr>
+                    <td>調查項目</td>
+                    <td v-text="record.item_chinese" />
+                    <td>調查值</td>
+                    <td v-text="record.biomass" />
+                </tr>
+                <tr>
+                    <td>單位</td>
+                    <td colspan="3" v-text="record.unit" />
+                </tr>
+            </template>
             <tr>
                 <td>調查點描述</td>
                 <td colspan="3" v-text="record.station.locality_describe"/>
@@ -68,9 +68,6 @@
                 <td v-text="record.collector"></td>
                 <td>調查者中文名</td>
                 <td v-text="record.collector_chinese"></td>
-            </tr>
-            <tr>
-                <td colspan="4"></td>
             </tr>
 
             <template v-if="type === 'element-flux' || type === 'water-quality'">
@@ -173,7 +170,7 @@
                 </tr>
                 <tr>
                     <td style="white-space: nowrap">亞硝酸鹽 mg/L</td>
-                    <td></td>
+                    <td v-text="record.NO2"></td>
                     <td>溶解有機碳 mg/L</td>
                     <td v-text="record.DOC"/>
                 </tr>
