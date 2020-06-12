@@ -35,7 +35,7 @@
             </tr>
             <tr>
                 <td>體長</td>
-                <td v-text="record.body_length"></td>
+                <td v-text="`${record.body_length} ${record.body_length_unit}`"></td>
                 <td>經緯度誤差</td>
                 <td v-text="`${record.station.coordinate_precision}M`"></td>
             </tr>
