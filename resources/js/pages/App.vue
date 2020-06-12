@@ -27,7 +27,7 @@
     }
 
     .main-content {
-        padding: 0px 12px;
+        padding: 0px 2rem;
         margin-left: 165px;
         overflow-anchor: none;
         display: inline-block;
