@@ -5,8 +5,19 @@
             :data="classes"
             :columns="columns"
             :is-loading="isLoading"
+            v-model="sheetValues"
             v-on:search="search"
-        ></sheet>
+        >
+            <template v-slot:functions="props">
+                <router-link :to="`/occurrences?class=${props.datum.class}`">
+                    查看
+                </router-link>
+                &nbsp;
+                <router-link :to="`/maps?class=${props.datum.class}`">
+                    地圖
+                </router-link>
+            </template>
+        </sheet>
         <div class="myexcel text-muted caption">
             調查生物綱別&nbsp;<small class="text-muted">共 {{ total }} 門</small>
         </div>
@@ -43,13 +54,15 @@
                     { type: 'text', title: '數量', width: '200', name: 'total' },
                 ],
                 total: 0,
-                searchParams: {}
+                sheetValues: {
+                    searchParams: {}
+                }
             }
         },
         computed: {
             query() {
-                const searchQuery = Object.keys(this.searchParams).map((key) => {
-                    return encodeURIComponent(key) + '=' + encodeURIComponent(this.searchParams[key])
+                const searchQuery = Object.keys(this.sheetValues.searchParams).map((key) => {
+                    return encodeURIComponent(key) + '=' + encodeURIComponent(this.sheetValues.searchParams[key])
                 }).join('&');
                 return searchQuery;
             },
@@ -58,11 +71,7 @@
             this.search();
         },
         methods: {
-            search(query) {
-                if (query) {
-                    this.searchParams = query;
-                }
-
+            search() {
                 const page = 1;
                 this.isLoading = true;
                 this.isEnd = false;

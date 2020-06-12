@@ -16,6 +16,8 @@ class OrderController extends Controller
         $classCName = $request->get('class_c');
         $kingdomCName = $request->get('kingdom_c');
         $kingdomName = $request->get('kingdom');
+        $order = $request->get('order');
+        $orderCName =  $request->get('order_c');
         $sort = $request->get('sort');
         $direction = $request->get('direction', 'asc');
 
@@ -43,6 +45,14 @@ class OrderController extends Controller
 
         if ($classCName) {
             $orderQuery->where('class_c', 'like', '%' . $classCName . '%');
+        }
+
+        if ($orderCName) {
+            $orderQuery->where('order_c', 'like', '%' . $orderCName . '%');
+        }
+
+        if ($order) {
+            $orderQuery->where('order', 'like', '%' . $order . '%');
         }
 
         if ($sort) {

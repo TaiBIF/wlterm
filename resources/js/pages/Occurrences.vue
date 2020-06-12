@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h6>生物物種調查紀錄 <small class="text-muted">共 {{ total }} 筆</small></h6>
+        <h6 class="page-title">生物物種調查紀錄 <small class="text-muted">共 {{ total }} 筆</small></h6>
         <div class="chart-container">
             <highcharts :options="chartOptions"></highcharts>
         </div>
@@ -8,10 +8,12 @@
             :data="occurrences"
             :columns="columns"
             :is-loading="isLoading"
-            :occurence-content="true"
+            v-model="sheetValues"
             v-on:sort="sort"
             v-on:search="search"
-        ></sheet>
+        >
+
+        </sheet>
         <div class="myexcel text-muted caption">
             生物物種調查紀錄&nbsp;共 {{ total }} 筆
         </div>
@@ -27,7 +29,6 @@
             sheet,
         },
         data() {
-            const app = this;
             return {
                 occurrences: [],
                 isLoading: false,
@@ -37,8 +38,8 @@
                 direction: '',
                 columns: [
                     { type: 'text', title: '測站', width: '50', name: 'sid', searchable: true },
-                    { type: 'text', title: '門名', width: '80', name: 'phylum', searchable: true },
-                    { type: 'text', title: '綱名', width: '100', name: 'class', searchable: true },
+                    { type: 'text', title: '門名', width: '120', name: 'phylum', searchable: true },
+                    { type: 'text', title: '綱名', width: '120', name: 'class', searchable: true },
                     { type: 'text', title: '目名', width: '100', name: 'order', searchable: true },
                     { type: 'text', title: '科名', width: '100', name: 'family', searchable: true },
                     { type: 'text', title: '學名', width: '100', name: 'scientific_name', searchable: true },
@@ -57,7 +58,6 @@
                         type: 'column',
                         width: 800,
                         height: 300,
-                        style: { margin: '0 auto' }
                     },
                     title: {
                         text: '生物物種調查歷年紀錄'
@@ -78,8 +78,13 @@
                     },
                     series: [],
                 },
-                searchParams: {}
+                sheetValues: {
+                    searchParams: {}
+                }
             }
+        },
+        created() {
+            this.sheetValues.searchParams = this.$route.query;
         },
         mounted() {
             const app = this;
@@ -101,11 +106,6 @@
                     }];
                 });
         },
-        computed: {
-            query() {
-                return queryString.stringify(this.searchParams);
-            },
-        },
         methods: {
             fetchData(callback) {
                 if (this.isLoading) {
@@ -119,12 +119,9 @@
                  this.isLoading = true;
 
                 const page = this.currentPage + 1;
-                this.$http.get(`/api/occurrences?page=${page}&sort=${this.sortBy}&direction=${this.direction}&${this.query}`)
+
+                this.$http.get(`/api/occurrences?page=${page}&sort=${this.sortBy}&direction=${this.direction}&${queryString.stringify(this.sheetValues.searchParams)}`)
                     .then(({ data: { data, total, currentPage, perPage } }) => {
-                        if (perPage > data.length || 0 === data.length) {
-                            this.isEnd = true;
-                            return;
-                        }
                         callback(data);
                         this.total = total;
                         this.currentPage = currentPage;
@@ -138,19 +135,20 @@
             },
             loadMore() {
                 this.fetchData(data => {
+                    if (this.perPage > data.length || 0 === data.length) {
+                        this.isEnd = true;
+                        return;
+                    }
                     this.occurrences = this.occurrences.concat(data);
                 })
             },
-            search(query) {
-                if (query) {
-                    this.searchParams = query;
-                }
-
+            search() {
                 window.scrollTo(0, 0);
 
                 this.isEnd = false;
                 this.currentPage = 0;
                 this.fetchData(data => {
+                    this.isEnd = true;
                     this.occurrences = data;
                 })
             }

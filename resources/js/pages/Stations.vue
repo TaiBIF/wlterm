@@ -5,6 +5,7 @@
             :data="data"
             :columns="columns"
             :is-loading="isLoading"
+            v-model="sheetValues"
             v-on:sort="sort"
             v-on:search="search"
         ></sheet>
@@ -16,6 +17,7 @@
 
 <script>
     import sheet from '../components/sheet';
+    import queryString from 'queryString';
     export default {
         name: "Stations",
         components: {
@@ -43,16 +45,10 @@
                     { type: 'text', title: '備註', width: '100', name: 'note' },
                 ],
                 total: 0,
-                searchParams: {}
+                sheetValues: {
+                    searchParams: {}
+                },
             }
-        },
-        computed: {
-            query() {
-                const searchQuery = Object.keys(this.searchParams).map((key) => {
-                    return encodeURIComponent(key) + '=' + encodeURIComponent(this.searchParams[key])
-                }).join('&');
-                return searchQuery;
-            },
         },
         mounted() {
             const app = this;
@@ -69,17 +65,13 @@
                 this.sortBy = this.columns[column].name
                 this.search();
             },
-            search(query) {
-                if (query) {
-                    this.searchParams = query;
-                }
-
+            search() {
                 window.scrollTo(0, 0);
 
                 const page = 1;
                 this.isLoading = true;
                 this.isEnd = false;
-                this.$http.get(`/api/stations?page=${page}&sort=${this.sortBy}&direction=${this.direction}&${this.query}`)
+                this.$http.get(`/api/stations?page=${page}&sort=${this.sortBy}&direction=${this.direction}&${queryString.stringify(this.sheetValues.searchParams)}`)
                     .then(({ data: { data, total, currentPage, perPage } }) => {
                         if (perPage > data.length || 0 === data.length) {
                             this.isEnd = true;

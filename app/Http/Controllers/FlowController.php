@@ -31,6 +31,7 @@ class FlowController extends Controller
         }
 
         if ($sort && $direction) {
+            $sort = $sort !== 'station_name' ?: 'flow_stations.name';
             $flowRecordsQuery->orderBy($sort, $direction);
         }
 

@@ -8,8 +8,9 @@
                 <input type="text"
                        v-if="column.searchable"
                        :placeholder="`搜尋${column.title}`"
-                       v-model="searchParams[column.name]"
+                       :value="value.searchParams[column.name]"
                        v-on:focus="focusSearch"
+                       v-on:change="(e) => changeQuery(e.target.value, column.name)"
                 />
             </td>
             <td></td>
@@ -29,31 +30,7 @@
                     <tbody class="draggable">
                     <tr v-for="datum in data">
                         <td class="jexcel_row">
-                            <router-link
-                                v-if="occurenceContent"
-                                :to="`/occurrences/${datum.record_id}`"
-                                target="_blank"
-                            >
-                                內容
-                            </router-link>
-                            <router-link v-if="sectionUrl" :to="`/river-sections/${datum.bs_and_tp}/${datum.date}`" target="_blank">
-                                內容
-                            </router-link>
-
-                            <router-link
-                                v-if="datum.checkUrl"
-                                :to="datum.checkUrl"
-                            >
-                                查看
-                            </router-link>
-                            &nbsp;
-                            <router-link
-                                v-if="datum.mapUrl"
-                                :to="datum.mapUrl"
-                            >
-                                地圖
-                            </router-link>
-                            <slot name="functions" v-bind:datum="datum"></slot>
+                            <slot name="functions" v-bind:datum="datum">&nbsp;<br/></slot>
                         </td>
                     </tr>
                     </tbody>
@@ -76,12 +53,6 @@
                 type: Array,
                 required: true,
             },
-            checkUrl: {
-                type: String,
-            },
-            mapUrl: {
-                type: String,
-            },
             columns: {
                 type: Array,
                 required: true,
@@ -94,14 +65,6 @@
                 type: Boolean,
                 default: false,
             },
-            recordUrl: {
-                type: Boolean,
-                default: false,
-            },
-            sectionUrl: {
-                type: Boolean,
-                default: false,
-            },
             type: {
                 type: String,
                 default: '',
@@ -109,11 +72,12 @@
             sortable: {
                 type: Boolean,
                 default: true,
-            }
-        },
-        data() {
-            return {
-                searchParams: {},
+            },
+            value: {
+                type: Object,
+                default() {
+                    return {};
+                },
             }
         },
         computed: {
@@ -135,12 +99,6 @@
                 },
                 deep: true,
             },
-            searchParams: {
-                handler(values) {
-                    this.$emit('search', values);
-                },
-                deep: true,
-            }
         },
         mounted() {
             const jExcelObj = jexcel(this.$refs['spreadsheet'], this.jExcelOptions);
@@ -150,6 +108,12 @@
                 .append(this.$refs['filter']);
         },
         methods: {
+            changeQuery(v, column) {
+                let query = this.value;
+                query.searchParams[column] = v;
+                this.$emit('input', query);
+                this.$emit('search');
+            },
             focusSearch() {
                 this.jExcelObj.resetSelection(true);
             },

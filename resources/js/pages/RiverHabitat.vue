@@ -5,6 +5,7 @@
             :data="records"
             :columns="columns"
             :is-loading="isLoading"
+            v-model="sheetValues"
             :sortable="false"
             v-on:sort="sort"
             v-on:search="search"
@@ -26,7 +27,9 @@
                 records: [],
                 sortBy: '',
                 direction: '',
-                searchParams: {},
+                sheetValues: {
+                    searchParams: {},
+                },
                 columns: [
                     { type: 'text', title: '日期', width: '100', name: 'date', searchable: true },
                     { type: 'text', title: '溪名', width: '80', name: 'river' },
@@ -44,11 +47,6 @@
         },
         components: {
             sheet,
-        },
-        computed: {
-            query() {
-                return queryString.stringify(this.searchParams);
-            },
         },
         mounted() {
             this.search();
@@ -70,7 +68,7 @@
                 this.isLoading = true;
 
                 const page = this.currentPage + 1;
-                this.$http.get(`/api/river-habitat?page=${page}&${this.query}`)
+                this.$http.get(`/api/river-habitat?page=${page}&${queryString.stringify(this.sheetValues.searchParams)}`)
                     .then(({ data: { data, total, currentPage, perPage } }) => {
                         if (perPage > data.length || 0 === data.length) {
                             this.isEnd = true;
@@ -92,10 +90,6 @@
                 })
             },
             search(query) {
-                if (query) {
-                    this.searchParams = query;
-                }
-
                 window.scrollTo(0, 0);
 
                 this.page = 0;

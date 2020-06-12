@@ -5,6 +5,7 @@
             :data="data"
             :columns="columns"
             :is-loading="isLoading"
+            v-model="sheetValues"
             v-on:sort="sort"
             v-on:search="search"
         ></sheet>
@@ -15,6 +16,7 @@
 </template>
 
 <script>
+    import queryString from 'querystring';
     import sheet from '../components/sheet';
     export default {
         name: 'Order',
@@ -41,16 +43,10 @@
                     { type: 'text', title: '數量', width: '80', name: 'total' },
                 ],
                 total: 0,
-                searchParams: {}
+                sheetValues: {
+                    searchParams: {},
+                },
             }
-        },
-        computed: {
-            query() {
-                const searchQuery = Object.keys(this.searchParams).map((key) => {
-                    return encodeURIComponent(key) + '=' + encodeURIComponent(this.searchParams[key])
-                }).join('&');
-                return searchQuery;
-            },
         },
         mounted() {
             const app = this;
@@ -70,7 +66,7 @@
                 this.isLoading = true;
 
                 const page = this.currentPage + 1;
-                this.$http.get(`/api/orders?page=${page}&sort=${this.sortBy}&direction=${this.direction}&${this.query}`)
+                this.$http.get(`/api/orders?page=${page}&sort=${this.sortBy}&direction=${this.direction}&${queryString.stringify(this.sheetValues.searchParams)}`)
                     .then(({ data: { data, total, currentPage, perPage } }) => {
                         callback(data);
                         this.total = total;
@@ -86,15 +82,14 @@
                 this.direction = direction ? 'desc' : 'asc';
                 this.search();
             },
-            search(query) {
-                if (query) {
-                    this.searchParams = query;
-                }
-
+            search() {
                 window.scrollTo(0, 0);
 
                 this.isEnd = false;
                 this.currentPage = 0;
+                this.total = 0;
+                this.data = [];
+
                 this.fetchData(data => {
                     this.data = data;
                 })

@@ -5,6 +5,7 @@
             :data="records"
             :columns="columns"
             :is-loading="isLoading"
+            v-model="sheetValues"
             v-on:sort="sort"
             v-on:search="search"
         >
@@ -31,7 +32,9 @@
                 records: [],
                 sortBy: '',
                 direction: '',
-                searchParams: {},
+                sheetValues: {
+                    searchParams: {}
+                },
                 columns: [
                     { type: 'text', title: '測站', width: '100', name: 'id', searchable: true },
                     { type: 'text', title: '測站站名', width: '100', name: 'locality_chinese', searchable: true },
@@ -46,11 +49,6 @@
         },
         components: {
             sheet,
-        },
-        computed: {
-            query() {
-                return queryString.stringify(this.searchParams);
-            },
         },
         mounted() {
             this.search();
@@ -72,7 +70,8 @@
                 this.isLoading = true;
 
                 const page = this.currentPage + 1;
-                this.$http.get(`/api/water-quality?page=${page}&${this.query}`)
+
+                this.$http.get(`/api/water-quality?page=${page}&${queryString.stringify(this.sheetValues.searchParams)}`)
                     .then(({ data: { data, total, currentPage, perPage } }) => {
                         if (perPage > data.length || 0 === data.length) {
                             this.isEnd = true;
@@ -93,11 +92,7 @@
                     this.records = this.records.concat(data);
                 })
             },
-            search(query) {
-                if (query) {
-                    this.searchParams = query;
-                }
-
+            search() {
                 window.scrollTo(0, 0);
 
                 this.page = 0;

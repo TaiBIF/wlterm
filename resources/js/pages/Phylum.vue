@@ -5,7 +5,17 @@
             :data="phyla"
             :columns="columns"
             :is-loading="isLoading"
-        ></sheet>
+        >
+            <template v-slot:functions="props">
+                <router-link :to="`/occurrences?phylum=${props.datum.phylum}`">
+                    查看
+                </router-link>
+                &nbsp;
+                <router-link :to="`/maps?phylum=${props.datum.phylum}`">
+                    地圖
+                </router-link>
+            </template>
+        </sheet>
         <div class="myexcel text-muted caption">
             生物門別數量統計&nbsp;<small class="text-muted">共 {{ total }} 門</small>
         </div>
@@ -36,11 +46,7 @@
         created() {
             this.$http.get('/api/phylum')
                 .then(({ data }) => {
-                    this.phyla = data.data.map(d => ({
-                        ... d,
-                        checkUrl: `/maps?phylum=${d.phylum}`,
-                        mapUrl: `/maps?phylum=${d.phylum}`
-                    }));
+                    this.phyla = data.data;
                     this.total = data.total;
                     this.isLoading = false;
                 });
