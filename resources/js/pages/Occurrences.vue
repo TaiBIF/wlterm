@@ -13,7 +13,7 @@
             v-on:search="search"
         >
             <template v-slot:functions="props">
-                <router-link :to="`/records/${props.datum.record_id}?type=occurrence`">
+                <router-link :to="`/records/${props.datum.record_id}?type=occurrence`" target="_blank">
                     內容
                 </router-link>
             </template>
@@ -151,6 +151,7 @@
 
                 this.isEnd = false;
                 this.currentPage = 0;
+                this.occurrences = [];
                 this.fetchData(data => {
                     this.isEnd = true;
                     this.occurrences = data;
