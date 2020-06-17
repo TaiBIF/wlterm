@@ -32,7 +32,7 @@
             </router-link>
             <router-link to="/maps">
                 <li class="list-group-item">
-                    衛星地圖
+                    測站地圖
                 </li>
             </router-link>
             <router-link to="/phylum">
