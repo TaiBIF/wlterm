@@ -71,7 +71,7 @@
 
                 const page = this.currentPage + 1;
 
-                this.$http.get(`/api/water-quality?page=${page}&${queryString.stringify(this.sheetValues.searchParams)}`)
+                this.$http.get(`/api/water-quality?page=${page}&sort=${this.sortBy}&direction=${this.direction}&${queryString.stringify(this.sheetValues.searchParams)}`)
                     .then(({ data: { data, total, currentPage, perPage } }) => {
                         if (perPage > data.length || 0 === data.length) {
                             this.isEnd = true;
