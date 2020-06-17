@@ -5,9 +5,20 @@
             :data="families"
             :columns="columns"
             :is-loading="isLoading"
+            v-model="sheetValues"
             v-on:sort="sort"
             v-on:search="search"
-        ></sheet>
+        >
+            <template v-slot:functions="props">
+                <router-link :to="`/occurrences?family=${props.datum.family}`">
+                    查看
+                </router-link>
+                &nbsp;
+                <router-link :to="`/maps?family=${props.datum.family}`">
+                    地圖
+                </router-link>
+            </template>
+        </sheet>
         <div class="myexcel text-muted caption">
             調查生物目別&nbsp;<small class="text-muted">共 {{ total }} 門</small>
         </div>
@@ -15,6 +26,7 @@
 </template>
 
 <script>
+    import queryString from 'querystring';
     import sheet from '../components/sheet';
     export default {
         name: 'Family',
@@ -34,7 +46,7 @@
                     { type: 'text', title: '界中文', width: '100', name: 'kingdom_c', searchable: true },
                     { type: 'text', title: '界名', width: '100', name: 'kingdom', searchable: true },
                     { type: 'text', title: '門中文', width: '120', name: 'phylum_c', searchable: true },
-                    { type: 'text', title: '門名', width: '80', name: 'phylum', searchable: true },
+                    { type: 'text', title: '門名', width: '120', name: 'phylum', searchable: true },
                     { type: 'text', title: '綱中文', width: '100', name: 'class_c', searchable: true },
                     { type: 'text', title: '綱名', width: '100', name: 'class', searchable: true },
                     { type: 'text', title: '目中文', width: '100', name: 'order_c', searchable: true },
@@ -43,16 +55,10 @@
                     { type: 'text', title: '科名', width: '100', name: 'family', searchable: true },
                     { type: 'text', title: '數量', width: '80', name: 'total' },
                 ],
-                searchParams: {}
+                sheetValues: {
+                    searchParams: {},
+                },
             }
-        },
-        computed: {
-            query() {
-                const searchQuery = Object.keys(this.searchParams).map((key) => {
-                    return encodeURIComponent(key) + '=' + encodeURIComponent(this.searchParams[key])
-                }).join('&');
-                return searchQuery;
-            },
         },
         mounted() {
             const paramsString = location.search.substring(1);
@@ -73,7 +79,7 @@
                 this.isLoading = true;
 
                 const page = this.page + 1;
-                this.$http.get(`/api/family?page=${page}&sort=${this.sortBy}&direction=${this.direction}&${this.query}`)
+                this.$http.get(`/api/family?page=${page}&sort=${this.sortBy}&direction=${this.direction}&${queryString.stringify(this.sheetValues.searchParams)}`)
                     .then(({ data: { data, total, currentPage, perPage } }) => {
                         if (perPage > data.length || 0 === data.length) {
                             this.isEnd = true;

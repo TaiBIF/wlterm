@@ -24,10 +24,7 @@ class FamilyController extends Controller
         $familyQuery = Family::query();
 
         if ($phylum) {
-            $familyQuery->where(function($query) use ($phylum) {
-                $query->where('phylum', 'like', '%' . $phylum . '%')
-                    ->orWhere('phylum_c', 'like', '%' . $phylum . '%');
-            });
+            $familyQuery->where('phylum', 'like', '%' . $phylum . '%');
         }
 
         if ($phylumCName) {

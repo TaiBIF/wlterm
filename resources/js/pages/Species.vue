@@ -5,9 +5,20 @@
             :data="species"
             :columns="columns"
             :is-loading="isLoading"
+            v-model="sheetValues"
             v-on:sort="sort"
             v-on:search="search"
-        ></sheet>
+        >
+            <template v-slot:functions="props">
+                <router-link :to="`/occurrences?scientific_name=${props.datum.scientific_name}`">
+                    查看
+                </router-link>
+                &nbsp;
+                <router-link :to="`/maps?scientific_name=${props.datum.scientific_name}`">
+                    地圖
+                </router-link>
+            </template>
+        </sheet>
         <div class="myexcel text-muted caption">
             調查物種&nbsp;共 {{ total }} 筆
         </div>
@@ -30,7 +41,9 @@
                 currentPage: 0,
                 sortBy: '',
                 direction: '',
-                searchParams: {},
+                sheetValues: {
+                    searchParams: {},
+                },
                 columns: [
                     { type: 'text', title: '界中文', width: '100', name: 'kingdom_c', searchable: true },
                     { type: 'text', title: '界名', width: '100', name: 'kingdom', searchable: true },
@@ -59,11 +72,6 @@
             });
             intersectionObserver.observe(document.querySelector('.caption'));
         },
-        computed: {
-            query() {
-                return queryString.stringify(this.searchParams);
-            },
-        },
         methods: {
             fetchData(callback) {
                 if (this.isEnd || this.isLoading) {
@@ -73,7 +81,7 @@
                 this.isLoading = true;
                 const page = this.currentPage + 1;
                 this.$http.get(
-                    `/api/species?page=${page}&sort=${this.sortBy}&direction=${this.direction}&${this.query}`
+                    `/api/species?page=${page}&sort=${this.sortBy}&direction=${this.direction}&${queryString.stringify(this.sheetValues.searchParams)}`
                 )
                     .then(({ data: { data, total, currentPage, perPage } }) => {
                         if (perPage > data.length || 0 === data.length) {
@@ -91,11 +99,7 @@
                 this.direction = direction ? 'desc' : 'asc';
                 this.search();
             },
-            search(query) {
-                if (query) {
-                    this.searchParams = query;
-                }
-
+            search() {
                 window.scrollTo(0, 0);
 
                 this.isEnd = false;

@@ -95,6 +95,36 @@ class StationController extends Controller
                 ->orderBy('station.latitude')
                 ->orderBy('station.longitude')
                 ->get();
+        } else if ($request->get('family')) {
+            $subquery = TableForGrid::query()
+                ->select('sid')
+                ->where('table_forgrid.family', $request->get('family'))
+                ->groupBy('sid');
+
+            $markers = DB::table(DB::raw("({$subquery->toSql()}) as mystation"))
+                ->mergeBindings($subquery->getQuery())
+                ->join('station', 'station.id', '=', 'mystation.sid')
+                ->select(['locality', 'locality_chinese', 'latitude', 'longitude'])
+                ->whereNotNull('station.latitude')
+                ->whereNotNull('station.longitude')
+                ->orderBy('station.latitude')
+                ->orderBy('station.longitude')
+                ->get();
+        } else if ($request->get('scientific_name')) {
+            $subquery = TableForGrid::query()
+                ->select('sid')
+                ->where('table_forgrid.scientific_name', $request->get('scientific_name'))
+                ->groupBy('sid');
+
+            $markers = DB::table(DB::raw("({$subquery->toSql()}) as mystation"))
+                ->mergeBindings($subquery->getQuery())
+                ->join('station', 'station.id', '=', 'mystation.sid')
+                ->select(['locality', 'locality_chinese', 'latitude', 'longitude'])
+                ->whereNotNull('station.latitude')
+                ->whereNotNull('station.longitude')
+                ->orderBy('station.latitude')
+                ->orderBy('station.longitude')
+                ->get();
         } else {
             // SELECT *  FROM station   where (not latitude is null) and id < 14 order by latitude,longitude
             $markers = Station::query()

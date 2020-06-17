@@ -8,7 +8,17 @@
             v-model="sheetValues"
             v-on:sort="sort"
             v-on:search="search"
-        ></sheet>
+        >
+            <template v-slot:functions="props">
+                <router-link :to="`/occurrences?order=${props.datum.order}`">
+                    查看
+                </router-link>
+                &nbsp;
+                <router-link :to="`/maps?order=${props.datum.order}`">
+                    地圖
+                </router-link>
+            </template>
+        </sheet>
         <div class="myexcel text-muted caption">
             調查生物目別&nbsp;<small class="text-muted">共 {{ total }} 門</small>
         </div>
