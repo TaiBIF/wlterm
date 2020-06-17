@@ -1,5 +1,9 @@
 <template>
     <div class="sheet-container">
+        <div class="helper">
+            <p class="text-muted"></p>
+            *點選標題兩下可排序
+        </div>
         <tr ref="filter">
             <td width="50">
                 <i class="fas fa-search"></i>
