@@ -31,7 +31,7 @@ class OccurrenceController extends Controller
 
         $occurrencesQuery = Occurrence::query();
         if ($phylum) {
-            $occurrencesQuery->where('phylum', $phylum);
+            $occurrencesQuery->where('phylum', 'like', '%' . $phylum . '%');
         }
 
         if ($date) {
