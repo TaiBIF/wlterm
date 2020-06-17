@@ -83,7 +83,13 @@
             </template>
             <tr>
                 <td>調查點描述</td>
-                <td colspan="3" v-text="record.station.locality_describe"/>
+                <td colspan="3">
+                    {{ record.station.locality_describe }}
+                    &nbsp;
+                    <router-link class="btn btn-outline-info btn-sm" :to="`/maps?id=${record.station.id}`">
+                        查看地圖
+                    </router-link>
+                </td>
             </tr>
             <tr>
                 <td>調查者</td>

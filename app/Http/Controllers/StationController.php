@@ -127,12 +127,17 @@ class StationController extends Controller
                 ->get();
         } else {
             // SELECT *  FROM station   where (not latitude is null) and id < 14 order by latitude,longitude
-            $markers = Station::query()
-                ->select(['locality', 'locality_chinese', 'latitude', 'longitude'])
+            $markersQuery = Station::query();
+            if ($request->get('id')) {
+                $markersQuery->where('id', $request->get('id'));
+            }
+
+            $markers = $markersQuery->select(['locality', 'locality_chinese', 'latitude', 'longitude'])
                 ->whereNotNull('latitude')
                 ->orderBy('latitude')
                 ->orderBy('longitude')
                 ->get();
+
         }
 
         return response()
