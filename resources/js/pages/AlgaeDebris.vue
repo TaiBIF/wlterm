@@ -91,12 +91,13 @@
                     this.records = this.records.concat(data);
                 })
             },
-            search(query) {
+            search() {
                 window.scrollTo(0, 0);
 
                 this.page = 0;
                 this.isEnd = false;
                 this.currentPage = 0;
+                this.records = [];
                 this.fetchData(data => {
                     this.records = data;
                 })

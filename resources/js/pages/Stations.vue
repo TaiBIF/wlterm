@@ -71,6 +71,7 @@
                 const page = 1;
                 this.isLoading = true;
                 this.isEnd = false;
+                this.data = [];
                 this.$http.get(`/api/stations?page=${page}&sort=${this.sortBy}&direction=${this.direction}&${queryString.stringify(this.sheetValues.searchParams)}`)
                     .then(({ data: { data, total, currentPage, perPage } }) => {
                         if (perPage > data.length || 0 === data.length) {

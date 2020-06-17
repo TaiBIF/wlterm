@@ -103,6 +103,7 @@
                 window.scrollTo(0, 0);
 
                 this.isEnd = false;
+                this.species = [];
                 this.currentPage = 0;
                 this.fetchData(data => {
                     this.species = data;

@@ -97,6 +97,7 @@
 
                 this.page = 0;
                 this.isEnd = false;
+                this.records = [];
                 this.currentPage = 0;
                 this.fetchData(data => {
                     this.records = data;

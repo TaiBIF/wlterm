@@ -95,16 +95,13 @@
                 this.direction = direction ? 'desc' : 'asc';
                 this.search();
             },
-            search(query) {
-                if (query) {
-                    this.searchParams = query;
-                }
-
+            search() {
                 window.scrollTo(0, 0);
 
                 this.page = 0;
                 this.isEnd = false;
                 this.currentPage = 0;
+                this.families = [];
                 this.fetchData(data => {
                     this.families = data.map(d => ({ ... d, mapUrl: `/maps?family=${d.family}`}));
                 });

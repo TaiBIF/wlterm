@@ -119,7 +119,7 @@
                 this.isLoading = true;
 
                 const page = this.currentPage + 1;
-                this.$http.get(`/api/temperature?page=${page}&${queryString.stringify(this.sheetValues.searchParams)}`)
+                this.$http.get(`/api/temperature?page=${page}&sort=${this.sortBy}&direction=${this.direction}&${queryString.stringify(this.sheetValues.searchParams)}`)
                     .then(({ data: { data, total, currentPage, perPage } }) => {
                         if (perPage > data.length || 0 === data.length) {
                             this.isEnd = true;
@@ -146,6 +146,7 @@
                 this.page = 0;
                 this.isEnd = false;
                 this.currentPage = 0;
+                this.records = [];
                 this.fetchData(data => {
                     this.records = data;
                 })
