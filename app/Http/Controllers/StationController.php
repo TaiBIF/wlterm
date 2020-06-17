@@ -130,7 +130,6 @@ class StationController extends Controller
             $markers = Station::query()
                 ->select(['locality', 'locality_chinese', 'latitude', 'longitude'])
                 ->whereNotNull('latitude')
-                ->where('id', '<', 14)
                 ->orderBy('latitude')
                 ->orderBy('longitude')
                 ->get();
