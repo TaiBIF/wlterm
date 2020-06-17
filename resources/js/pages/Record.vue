@@ -47,6 +47,28 @@
                 <td>經緯度誤差</td>
                 <td colspan="3" v-text="record.station.coordinate_precision">15&nbsp;</td>
             </tr>
+            <template v-if="type === 'occurrence'">
+                <tr>
+                    <td colspan="1">學名</td>
+                    <td colspan="3" v-text="`${record.scientific_name} ${record.author} ${record.chinese}`" />
+                </tr>
+                <tr>
+                    <td colspan="1">科名</td>
+                    <td colspan="3" v-text="`${record.family} ${record.family_c}`" />
+                </tr>
+                <tr>
+                    <td>個體數</td>
+                    <td v-text="record.individual_count" />
+                    <td>覆蓋率</td>
+                    <td v-text="record.cover_rate"/>
+                </tr>
+                <tr>
+                    <td>體長</td>
+                    <td v-text="`${record.body_length} ${record.body_length_unit}`" />
+                    <td>量測值</td>
+                    <td v-text="`${record.biomass} ${record.biomass_unit}`"/>
+                </tr>
+            </template>
             <template v-if="type === 'algae-debris'">
                 <tr>
                     <td>調查項目</td>
@@ -252,6 +274,9 @@
                     case 'algae-debris':
                         word = '藻類與有機碎屑調查記錄編號';
                         code = 'AO';
+                        break;
+                    case 'occurrence':
+                        word = '記錄編號';
                         break;
                 }
 

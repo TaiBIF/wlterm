@@ -12,7 +12,11 @@
             v-on:sort="sort"
             v-on:search="search"
         >
-
+            <template v-slot:functions="props">
+                <router-link :to="`/records/${props.datum.record_id}?type=occurrence`">
+                    內容
+                </router-link>
+            </template>
         </sheet>
         <div class="myexcel text-muted caption">
             生物物種調查紀錄&nbsp;共 {{ total }} 筆
