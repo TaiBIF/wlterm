@@ -41,10 +41,10 @@
                     { type: 'text', title: '氣溫(℃)', width: '60', name: 'air' },
                     { type: 'text', title: '水溫(℃)', width: '60', name: 'water' },
                     { type: 'text', title: '土表溫(℃)', width: '80', name: 'soil_0cm' },
-                    { type: 'text', title: '土下 25cm', width: '80', name: 'soil_25cm' },
-                    { type: 'text', title: '土下 50cm', width: '80', name: 'soil_50cm' },
-                    { type: 'text', title: '土下 65cm', width: '80', name: 'soil_65cm' },
-                    { type: 'text', title: '土下 90cm', width: '80', name: 'soil_90cm' },
+                    { type: 'text', title: '土下 25cm(℃)', width: '100', name: 'soil_25cm' },
+                    { type: 'text', title: '土下 50cm(℃)', width: '100', name: 'soil_50cm' },
+                    { type: 'text', title: '土下 65cm(℃)', width: '100', name: 'soil_65cm' },
+                    { type: 'text', title: '土下 90cm(℃)', width: '100', name: 'soil_90cm' },
                 ],
 
                 chartOptions: {
