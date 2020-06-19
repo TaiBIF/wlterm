@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Flow;
+use App\FlowStation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -58,11 +59,12 @@ class FlowController extends Controller
     public function report()
     {
         $records = Flow::select('station_id', 'date', 'public', 'simu')->get();
+        $stations = FlowStation::all()->keyBy('id');
 
         $data = $records->groupBy('station_id')
-            ->map(function ($records, $stationId) {
+            ->map(function ($records, $stationId) use ($stations) {
                 return [
-                    'name' => $stationId,
+                    'name' => $stations[$stationId]->name,
                     'data' => $records->sortBy('date')->values()->map(function($t) {
                         return [
                             Carbon::createFromFormat('Y-m-d', $t->date)->timestamp*1000,
