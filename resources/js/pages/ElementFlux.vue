@@ -41,8 +41,8 @@
                     { type: 'text', title: '測站站名', width: '100', name: 'locality_chinese', searchable: true },
                     { type: 'text', title: '緯度', width: '100', name: 'latitude' },
                     { type: 'text', title: '經度', width: '120', name: 'longitude' },
-                    { type: 'text', title: '高度', width: '80', name: 'maximum_elevation' },
-                    { type: 'text', title: '深度', width: '80', name: 'maximum_depth' },
+                    { type: 'text', title: '高度(公尺)', width: '80', name: 'maximum_elevation' },
+                    { type: 'text', title: '深度(公尺)', width: '80', name: 'maximum_depth' },
                     { type: 'text', title: '調查日期', width: '170', name: 'date', searchable: true },
                 ],
                 total: 0,
@@ -98,6 +98,7 @@
                 this.page = 0;
                 this.isEnd = false;
                 this.currentPage = 0;
+                this.records = [];
                 this.fetchData(data => {
                     this.records = data;
                 })
