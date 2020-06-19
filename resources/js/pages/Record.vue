@@ -118,7 +118,7 @@
                 <tr>
                     <td>溶氧 mg/L</td>
                     <td v-text="record.DO"/>
-                    <td>濁度 mg/L</td>
+                    <td>濁度 NTU</td>
                     <td v-text="record.Clarity" />
                 </tr>
                 <tr>
@@ -197,7 +197,7 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td style="white-space: nowrap">亞硝酸鹽 mg/L</td>
+                    <td style="white-space: nowrap">亞硝酸鹽 μg/L</td>
                     <td v-text="record.NO2"></td>
                     <td>溶解有機碳 mg/L</td>
                     <td v-text="record.DOC"/>
