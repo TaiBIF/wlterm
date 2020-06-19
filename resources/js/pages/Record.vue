@@ -106,10 +106,10 @@
                     <td v-text="record.Conductivity"></td>
                 </tr>
             </template>
-            <template v-if="type === 'element-flux'">
+            <template v-if="type === 'element-flux'  || type === 'water-quality'">
                 <tr>
                     <td>水溫&nbsp;℃</td>
-                    <td v-text="record.temperature"></td>
+                    <td v-text="record.Temperature"></td>
                     <td></td>
                     <td></td>
                 </tr>
