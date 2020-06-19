@@ -161,7 +161,7 @@
                 </tr>
                 <tr>
                     <td>硝酸鹽 mg/L</td>
-                    <td v-text="record.nitrate"></td>
+                    <td v-text="record.Nitrate"></td>
                     <td>鎂 mg/L</td>
                     <td v-text="record.Mg"></td>
                 </tr>
@@ -186,7 +186,7 @@
                 </tr>
                 <tr>
                     <td>氨</td>
-                    <td v-text="record.AN"/>
+                    <td v-text="record.NH4"/>
                     <td>鋇 mg/L</td>
                     <td v-text="record.Ba"></td>
                 </tr>
