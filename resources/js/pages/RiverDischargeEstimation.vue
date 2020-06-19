@@ -63,12 +63,12 @@
                     },
                     yAxis: {
                         title: {
-                            text: '流量'
+                            text: '流量(cms)'
                         }
                     },
                     tooltip: {
                         formatter: function () {
-                            return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%b-%e', this.x, true) + '<br/>' + this.y;
+                            return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%b-%e', this.x, true) + '<br/>' + this.y + ' cms';
                         },
                         backgroundColor: 'rgba(0, 0, 0, .75)',
                         borderWidth: 2,
@@ -129,7 +129,7 @@
             },
             sort(column, direction) {
                 this.direction = direction ? 'asc' : 'desc';
-                this.sortBy = this.columns[column].name
+                this.sortBy = this.columns[column].name;
                 this.search();
             },
             loadMore() {
@@ -137,12 +137,13 @@
                     this.records = this.records.concat(data);
                 })
             },
-            search(query) {
+            search() {
                 window.scrollTo(0, 0);
 
                 this.page = 0;
                 this.isEnd = false;
                 this.currentPage = 0;
+                this.records = [];
                 this.fetchData(data => {
                     this.records = data;
                 })
