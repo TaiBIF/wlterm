@@ -2,14 +2,20 @@
     <div>
         <h6>河道斷面&nbsp;<small class="text-muted">共 {{ total }} 筆</small></h6>
         <sheet
-            :data="records"
             :columns="columns"
+            :data="records"
             :is-loading="isLoading"
-            v-model="sheetValues"
             :sortable="false"
-            v-on:sort="sort"
+            v-model="sheetValues"
             v-on:search="search"
-        ></sheet>
+            v-on:sort="sort"
+        >
+            <template v-slot:functions="props">
+                <router-link :to="`/river-sections/${props.datum.bs_and_tp}/${props.datum.date}`" target="_blank">
+                    內容
+                </router-link>
+            </template>
+        </sheet>
         <div class="myexcel text-muted caption">
             河道斷面&nbsp;共 {{ total }} 筆
         </div>
@@ -19,6 +25,7 @@
 <script>
     import sheet from '../components/sheet';
     import queryString from 'querystring';
+
     export default {
         name: 'WaterQuality',
         data() {
@@ -53,8 +60,8 @@
             this.search();
 
             const app = this;
-            const intersectionObserver = new IntersectionObserver(function(entries) {
-                if (entries[0].intersectionRatio > 0){
+            const intersectionObserver = new IntersectionObserver(function (entries) {
+                if (entries[0].intersectionRatio > 0) {
                     app.loadMore();
                 }
             });
