@@ -58,7 +58,7 @@ class FlowController extends Controller
 
     public function report()
     {
-        $records = Flow::select('station_id', 'date', 'public', 'simu')->get();
+        $records = Flow::select('station_id', 'date', 'public', 'simu')->whereNotNull('public')->get();
         $stations = FlowStation::all()->keyBy('id');
 
         $data = $records->groupBy('station_id')
