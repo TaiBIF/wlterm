@@ -38,9 +38,9 @@
                     { type: 'text', title: '測站', width: '50', name: 'station_id', searchable: true },
                     { type: 'text', title: '測站站名', width: '100', name: 'locality_chinese', searchable: true },
                     { type: 'text', title: '調查日期', width: '100', name: 'date', searchable: true },
-                    { type: 'text', title: '氣溫', width: '50', name: 'air' },
-                    { type: 'text', title: '水溫', width: '50', name: 'water' },
-                    { type: 'text', title: '土表溫', width: '50', name: 'soil_0cm' },
+                    { type: 'text', title: '氣溫(℃)', width: '60', name: 'air' },
+                    { type: 'text', title: '水溫(℃)', width: '60', name: 'water' },
+                    { type: 'text', title: '土表溫(℃)', width: '80', name: 'soil_0cm' },
                     { type: 'text', title: '土下 25cm', width: '80', name: 'soil_25cm' },
                     { type: 'text', title: '土下 50cm', width: '80', name: 'soil_50cm' },
                     { type: 'text', title: '土下 65cm', width: '80', name: 'soil_65cm' },
@@ -66,12 +66,12 @@
                     },
                     yAxis: {
                         title: {
-                            text: '溫度'
+                            text: '溫度(℃)'
                         }
                     },
                     tooltip: {
                         formatter: function () {
-                            return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%b-%e', this.x, true) + '<br/>' + this.y;
+                            return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%b-%e', this.x, true) + '<br/>' + this.y + ' ℃';
                         },
                         backgroundColor: 'rgba(0, 0, 0, .75)',
                         borderWidth: 2,
