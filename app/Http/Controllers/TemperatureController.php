@@ -74,7 +74,7 @@ class TemperatureController extends Controller
         $data = $records->groupBy('id')
             ->map(function ($temperatures, $stationId) {
                 return [
-                    'name' => $stationId,
+                    'name' => $stationId . ' 測站',
                     'data' => $temperatures->sortBy('date')->values()->map(function($t) {
                         return [
                             Carbon::createFromFormat('Y-m-d', $t->date)->timestamp*1000,
