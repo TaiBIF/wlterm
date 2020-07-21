@@ -3,33 +3,48 @@
         <h5>日期：{{ $route.params.date }}</h5>
         <hr />
         <h5 class="subtitle is-5 text-info">後視點與轉點</h5>
+        <p>
+            <strong>後視點與轉點編號</strong>： {{ bsTp.bs_and_tp }}<br/>
+            <strong>儀器高度</strong>： {{ bsTp.elevation_of_instrument }} 公尺
+        </p>
         <table class="table table-sm">
             <thead>
                 <tr>
-                    <th>後視點與轉點編號</th>
-                    <th>後視點海拔高(公尺)</th>
-                    <th>後視點經度</th>
-                    <th>後視點緯度</th>
-                    <th>轉點海拔高(公尺)</th>
-                    <th>轉點經度</th>
-                    <th>轉點緯度</th>
-                    <th>儀器高度(公尺)</th>
+                    <th></th>
+                    <th>方向角(度)</th>
+                    <th>弧度角(度)</th>
+                    <th>水平距(公尺)</th>
+                    <th>高程差(公尺)</th>
+                    <th>經度</th>
+                    <th>緯度</th>
+                    <th>海拔高(公尺)</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td v-text="bsTp.bs_and_tp"></td>
-                    <td v-text="bsTp.bs_altitude"></td>
+                    <th>後視點</th>
+                    <td v-text="bsTp.bs_angle"></td>
+                    <td v-text="bsTp.bs_radian"></td>
+                    <td v-text="bsTp.bs_horizontal_distance"></td>
+                    <td v-text="bsTp.bs_elevation_difference"></td>
                     <td v-text="bsTp.bs_longitude"></td>
                     <td v-text="bsTp.bs_latitude"></td>
-                    <td v-text="bsTp.tp_altitude"></td>
+                    <td v-text="bsTp.bs_altitude"></td>
+
+                </tr>
+                <tr>
+                    <th>轉點</th>
+                    <td v-text="bsTp.tp_angle"></td>
+                    <td v-text="bsTp.tp_radian"></td>
+                    <td v-text="bsTp.tp_horizontal_distance"></td>
+                    <td v-text="bsTp.tp_elevation_difference"></td>
                     <td v-text="bsTp.tp_longitude"></td>
                     <td v-text="bsTp.tp_latitude"></td>
-                    <td v-text="bsTp.elevation_of_instrument"></td>
+                    <td v-text="bsTp.tp_altitude"></td>
                 </tr>
             </tbody>
         </table>
-        <hr />
+        <br />
         <h5 class="subtitle is-5 text-info">斷面測量點</h5>
         <table class="table table-sm" v-for="(section, sectionName) in sections">
             <thead>
