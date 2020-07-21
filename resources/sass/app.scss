@@ -47,3 +47,7 @@ p {
 .chart-container {
     width: calc(100vw - 180px);
 }
+
+.table-sm td, .table-sm th {
+    padding: .4rem;
+}
