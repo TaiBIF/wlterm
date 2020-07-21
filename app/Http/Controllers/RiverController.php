@@ -79,7 +79,11 @@ class RiverController extends Controller
     public function certainSection($id, $date)
     {
         $bsTp = RiverBsTp::where('bs_and_tp', $id)->where('date', $date)->first();
-        $sections = RiverSection::where('bs_and_tp', $id)->where('date', $date)->get();
+        $sections = RiverSection::where('bs_and_tp', $id)
+            ->where('date', $date)
+            ->orderBy('section')
+            ->orderBy('measure_point')
+            ->get();
 
         return response()->json([
             'bs_tp' => $bsTp,
