@@ -48,6 +48,7 @@ class RiverController extends Controller
     {
         $date = $request->get('date');
         $section = $request->get('section');
+        $river = $request->get('river');
 
         $sectionQuery = RiverSection::query();
 
@@ -57,6 +58,10 @@ class RiverController extends Controller
 
         if ($section) {
             $sectionQuery->where('section', $section);
+        }
+
+        if ($river) {
+            $sectionQuery->where('river', 'like', '%' . $river . '%');
         }
 
         $habitateRecords = $sectionQuery->paginate($this->perPage);
