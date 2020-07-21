@@ -2,6 +2,7 @@
     <div>
         <h5>日期：{{ $route.params.date }}</h5>
         <hr />
+        <h5 class="subtitle is-5 text-info">後視點與轉點</h5>
         <table class="table table-sm">
             <thead>
                 <tr>
@@ -29,6 +30,7 @@
             </tbody>
         </table>
         <hr />
+        <h5 class="subtitle is-5 text-info">斷面測量點</h5>
         <table class="table table-sm" v-for="(section, sectionName) in sections">
             <thead>
                 <tr>
