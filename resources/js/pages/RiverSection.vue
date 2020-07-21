@@ -6,7 +6,7 @@
         <table class="table table-sm">
             <thead>
                 <tr>
-                    <th>編號</th>
+                    <th>後視點與轉點編號</th>
                     <th>後視點海拔高(公尺)</th>
                     <th>後視點經度</th>
                     <th>後視點緯度</th>
