@@ -36,12 +36,13 @@
                 <tr>
                     <th>斷面</th>
                     <th>點位</th>
-                    <th>度</th>
-                    <th>弧度角</th>
+                    <th>測量角(度)</th>
+                    <th>弧度角(度)</th>
                     <th>水平距(公尺)</th>
                     <th>高程差(公尺)</th>
                     <th>經度</th>
                     <th>緯度</th>
+                    <th>海拔高度(公尺)</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,6 +55,7 @@
                     <td v-text="point.elevation_difference"></td>
                     <td v-text="point.longitude"></td>
                     <td v-text="point.latitude"></td>
+                    <td v-text="point.altitude"></td>
                 </tr>
             </tbody>
         </table>
