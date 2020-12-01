@@ -90,6 +90,7 @@ class OccurrenceController extends Controller
             'total' => $occurrencesPage->total(),
             'currentPage' => $occurrencesPage->currentPage(),
             'data' => $occurrencesPage->items(),
+            'perPage' => $occurrencesPage->perPage(),
         ]);
     }
 

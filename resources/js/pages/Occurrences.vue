@@ -38,6 +38,7 @@
                 isLoading: false,
                 currentPage: 0,
                 isEnd: false,
+                perPage: 50,
                 sortBy: '',
                 direction: '',
                 columns: [
@@ -93,7 +94,7 @@
         mounted() {
             const app = this;
             const intersectionObserver = new IntersectionObserver(function(entries) {
-                if (entries[0].intersectionRatio > 0){
+                if (entries[0].intersectionRatio > 0) {
                     app.loadMore();
                 }
             });
@@ -112,20 +113,19 @@
         },
         methods: {
             fetchData(callback) {
-                if (this.isLoading) {
+                if (this.isLoading || this.isEnd) {
                     return;
                 }
-
-                if (this.isEnd) {
-                    return;
-                }
-
                  this.isLoading = true;
 
                 const page = this.currentPage + 1;
 
                 this.$http.get(`/api/occurrences?page=${page}&sort=${this.sortBy}&direction=${this.direction}&${queryString.stringify(this.sheetValues.searchParams)}`)
                     .then(({ data: { data, total, currentPage, perPage } }) => {
+                        if (perPage > data.length || 0 === data.length) {
+                            this.isEnd = true;
+                        }
+
                         callback(data);
                         this.total = total;
                         this.currentPage = currentPage;
@@ -139,10 +139,6 @@
             },
             loadMore() {
                 this.fetchData(data => {
-                    if (this.perPage > data.length || 0 === data.length) {
-                        this.isEnd = true;
-                        return;
-                    }
                     this.occurrences = this.occurrences.concat(data);
                 })
             },
@@ -153,7 +149,6 @@
                 this.currentPage = 0;
                 this.occurrences = [];
                 this.fetchData(data => {
-                    this.isEnd = true;
                     this.occurrences = data;
                 })
             }
