@@ -109,6 +109,7 @@ class OccurrenceController extends Controller
     {
         $occurrenceYearsCount = Occurrence::selectRaw('YEAR(date) as year, count(YEAR(date)) as count')
             ->groupBy(DB::raw('YEAR(date)'))
+            ->orderBy('year')
             ->get();
 
         return response()->json([
