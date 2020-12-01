@@ -17,6 +17,7 @@ class RiverController extends Controller
     {
         $date = $request->get('date');
         $section = $request->get('section');
+        $river = $request->get('river');
 
         $morphology = RiverMorphology::all()->keyBy('morphology_id')->toArray();
         $substrate = RiverSubstrate::all()->keyBy('substrate_id')->toArray();
@@ -28,6 +29,10 @@ class RiverController extends Controller
 
         if ($section) {
             $habitateQuery->where('section', $section);
+        }
+
+        if ($river) {
+            $habitateQuery->where('river', 'like', '%' . $river . '%');
         }
 
         $habitateRecords = $habitateQuery->paginate($this->perPage);
