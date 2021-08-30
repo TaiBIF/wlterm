@@ -14,14 +14,13 @@
         "autoprefixer": "^10.3.3",
         "axios": "^0.21.1",
         "cross-env": "^5.1",
-        "laravel-mix": "^6.0.0-beta.17",
+        "laravel-mix": "^6.0.28",
         "lodash": "^4.17.13",
         "resolve-url-loader": "^3.1.4",
         "sass": "^1.15.2",
         "sass-loader": "^11.1.1",
         "vue-loader": "^15.9.8",
-        "vue-template-compiler": "^2.6.10",
-        "webpack-cli": "^4.8.0"
+        "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
         "@handsontable/vue": "^4.1.0",
