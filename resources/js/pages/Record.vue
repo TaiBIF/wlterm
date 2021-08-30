@@ -3,9 +3,9 @@
 
         <table class="table table-striped table-bordered">
             <thead>
-                <tr>
-                    <td colspan="4" v-text="title" />
-                </tr>
+            <tr>
+                <td colspan="4" v-text="title"/>
+            </tr>
             </thead>
             <tbody>
             <tr>
@@ -16,7 +16,7 @@
                 <td>測站代號</td>
                 <td v-text="record.station.id"></td>
                 <td>調查地點</td>
-                <td v-text="record.station.locality_chinese">桃山北溪</td>
+                <td v-text="record.station.locality_chinese"/>
             </tr>
             <tr>
                 <td>高度上限</td>
@@ -26,7 +26,7 @@
             </tr>
             <tr>
                 <td>高度下限</td>
-                <td v-text="`${record.station.minimum_elevation} M`">1891&nbsp;</td>
+                <td v-text="`${record.station.minimum_elevation} M`"/>
                 <td>深度下限</td>
                 <td v-text="`${record.station.maximum_depth} M`"/>
             </tr>
@@ -45,26 +45,26 @@
             </tr>
             <tr>
                 <td>經緯度誤差</td>
-                <td colspan="3" v-text="record.station.coordinate_precision">15&nbsp;</td>
+                <td colspan="3" v-text="record.station.coordinate_precision"/>
             </tr>
             <template v-if="type === 'occurrence'">
                 <tr>
                     <td colspan="1">學名</td>
-                    <td colspan="3" v-text="`${record.scientific_name} ${record.author} ${record.chinese}`" />
+                    <td colspan="3" v-text="`${record.scientific_name} ${record.author} ${record.chinese}`"/>
                 </tr>
                 <tr>
                     <td colspan="1">科名</td>
-                    <td colspan="3" v-text="`${record.family} ${record.family_c}`" />
+                    <td colspan="3" v-text="`${record.family} ${record.family_c}`"/>
                 </tr>
                 <tr>
                     <td>個體數</td>
-                    <td v-text="record.individual_count" />
+                    <td v-text="record.individual_count"/>
                     <td>覆蓋率</td>
                     <td v-text="record.cover_rate"/>
                 </tr>
                 <tr>
                     <td>體長</td>
-                    <td v-text="`${record.body_length} ${record.body_length_unit}`" />
+                    <td v-text="`${record.body_length} ${record.body_length_unit}`"/>
                     <td>量測值</td>
                     <td v-text="`${record.biomass} ${record.biomass_unit}`"/>
                 </tr>
@@ -72,13 +72,13 @@
             <template v-if="type === 'algae-debris'">
                 <tr>
                     <td>調查項目</td>
-                    <td v-text="record.item_chinese" />
+                    <td v-text="record.item_chinese"/>
                     <td>調查值</td>
-                    <td v-text="record.biomass" />
+                    <td v-text="record.biomass"/>
                 </tr>
                 <tr>
                     <td>單位</td>
-                    <td colspan="3" v-text="record.unit" />
+                    <td colspan="3" v-text="record.unit"/>
                 </tr>
             </template>
             <tr>
@@ -119,37 +119,37 @@
                     <td>溶氧 mg/L</td>
                     <td v-text="record.DO"/>
                     <td>濁度 NTU</td>
-                    <td v-text="record.Clarity" />
+                    <td v-text="record.Clarity"/>
                 </tr>
                 <tr>
                     <td>矽酸鹽 mg/L</td>
-                    <td v-text="record.Alkali_Silicate" />
+                    <td v-text="record.Alkali_Silicate"/>
                     <td>生化需氧量 mg/L</td>
-                    <td v-text="record.BOD" />
+                    <td v-text="record.BOD"/>
                 </tr>
                 <tr>
                     <td style="white-space: nowrap;">硝酸鹽氮 mg/L</td>
-                    <td v-text="record.NO3_N" />
+                    <td v-text="record.NO3_N"/>
                     <td>亞硝酸鹽氮 μg/L</td>
-                    <td v-text="record.NO2_N" />
+                    <td v-text="record.NO2_N"/>
                 </tr>
                 <tr>
                     <td>硫酸鹽 mg/L</td>
-                    <td v-text="record.SO4" />
+                    <td v-text="record.SO4"/>
                     <td>氯鹽 mg/L</td>
-                    <td v-text="record.Chloride" />
+                    <td v-text="record.Chloride"/>
                 </tr>
                 <tr>
                     <td>磷酸鹽 mg/L</td>
-                    <td v-text="record.Phosphate" />
+                    <td v-text="record.Phosphate"/>
                     <td>總磷 mg/L</td>
-                    <td v-text="record.TP" />
+                    <td v-text="record.TP"/>
                 </tr>
                 <tr>
                     <td>氨氮 mg/L</td>
-                    <td v-text="record.AN" />
+                    <td v-text="record.AN"/>
                     <td>總有機碳 mg/L</td>
-                    <td v-text="record.TOC" />
+                    <td v-text="record.TOC"/>
                 </tr>
             </template>
             <template v-else-if="type === 'element-flux'">
@@ -188,11 +188,11 @@
                     <td>氨</td>
                     <td v-text="record.NH4"/>
                     <td>鋇 mg/L</td>
-                    <td v-text="record.Ba"></td>
+                    <td v-text="record.Ba"/>
                 </tr>
                 <tr>
                     <td>矽 mg/L</td>
-                    <td v-text="record.Si">&nbsp;</td>
+                    <td v-text="record.Si"/>
                     <td></td>
                     <td></td>
                 </tr>
@@ -228,19 +228,19 @@
             </tr>
             <tr>
                 <td>地址</td>
-                <td colspan="3" v-text="record.project.hostaddress"></td>
+                <td colspan="3" v-text="record.project.hostaddress"/>
             </tr>
             <tr>
                 <td>E-Mail</td>
-                <td colspan="3" v-text="record.project.hoste_mail">hjlin@dragon.nchu.edu.tw&nbsp;</td>
+                <td colspan="3" v-text="record.project.hoste_mail"/>
             </tr>
             <tr>
                 <td nowrap="">協同主持人</td>
-                <td colspan="3" v-text="record.project.coordination"></td>
+                <td colspan="3" v-text="record.project.coordination"/>
             </tr>
             <tr>
                 <td>執行方法</td>
-                <td colspan="3" v-text="record.project.executiveway"></td>
+                <td colspan="3" v-text="record.project.executiveway"/>
             </tr>
             <tr>
                 <td>計畫摘要</td>
@@ -287,7 +287,7 @@
                 }
 
                 return `${word}:urn:lsid:wlterm.biodiv.sinica.edu.tw:observation:${code}${this.record.record_id}`;
-            }
+            },
         },
         mounted() {
             const { recordId } = this.$route.params;
@@ -297,7 +297,7 @@
                 .then(({ data }) => {
                     this.record = data.record;
                 });
-        }
+        },
     }
 </script>
 

@@ -98,7 +98,7 @@
             </tr>
             <tr>
                 <td>E-Mail</td>
-                <td colspan="5" v-text="record.project.hoste_mail">hjlin@dragon.nchu.edu.tw&nbsp;</td>
+                <td colspan="5" v-text="record.project.hoste_mail" />
             </tr>
             <tr>
                 <td nowrap="">協同主持人</td>

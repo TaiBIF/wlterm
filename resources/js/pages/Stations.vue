@@ -17,7 +17,7 @@
 
 <script>
     import sheet from '../components/sheet';
-    import queryString from 'queryString';
+    import queryString from 'querystring';
     export default {
         name: "Stations",
         components: {
