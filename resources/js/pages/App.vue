@@ -9,8 +9,8 @@
 </template>
 
 <script>
-    import nav from '@/js/components/nav';
-    import Sidebar from "@/js/components/sidebar";
+    import nav from './../components/nav';
+    import Sidebar from "./../components/sidebar";
 
     export default {
         name: 'App',

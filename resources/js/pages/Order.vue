@@ -114,7 +114,7 @@
 </script>
 
 <style lang="scss" scoped>
-    @import '@/sass/fix-table';
+    @import './../../sass/fix-table';
     .input {
         max-width: 90px;
     }

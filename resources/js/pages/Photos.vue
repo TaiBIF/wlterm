@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import lightbox from '@/js/components/lightbox';
+    import lightbox from './../components/lightbox';
     export default {
         name: "Photos",
         components: {

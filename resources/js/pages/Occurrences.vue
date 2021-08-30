@@ -158,5 +158,5 @@
 
 
 <style lang="scss" scoped>
-   @import '@/sass/fix-table';
+   @import './../../sass/fix-table';
 </style>

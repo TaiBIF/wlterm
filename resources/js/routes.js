@@ -1,26 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import Index from '@/js/pages/Index';
-import Photos from '@/js/pages/Photos';
-import Stations from '@/js/pages/Stations';
-import Maps from '@/js/pages/Maps';
-import Phylum from '@/js/pages/Phylum';
-import Class from '@/js/pages/Class';
-import Order from '@/js/pages/Order';
-import Family from '@/js/pages/Family';
-import Species from '@/js/pages/Species';
-import Occurrences from '@/js/pages/Occurrences';
-import Occurrence from '@/js/pages/Occurrence';
-import WaterQuality from '@/js/pages/WaterQuality';
-import ElementFlux from '@/js/pages/ElementFlux';
-import Temperature from '@/js/pages/Temperature';
-import AlgaeDebris from '@/js/pages/AlgaeDebris';
-import RiverHabitat from '@/js/pages/RiverHabitat';
-import RiverSections from '@/js/pages/RiverSections';
-import RiverSection from '@/js/pages/RiverSection';
-import RiverDischargeEstimation from '@/js/pages/RiverDischargeEstimation';
-import Record from '@/js/pages/Record';
+import Index from './pages/Index';
+import Record from './pages/Record';
 
 Vue.use(VueRouter);
 
@@ -38,97 +20,97 @@ const router = new VueRouter ({
         {
             path: '/photos',
             name: 'photos',
-            component: Photos,
+            component: () => import(/* webpackChunkName: "photos" */'./pages/Photos'),
         },
         {
             path: '/stations',
             name: 'stations',
-            component: Stations,
+            component: () => import(/* webpackChunkName: "stations" */'./pages/Stations'),
         },
         {
             path: '/maps',
             name: 'maps',
-            component: Maps,
+            component: () => import(/* webpackChunkName: "maps" */'./pages/Maps'),
         },
         {
             path: '/phylum',
             name: 'phylum',
-            component: Phylum,
+            component: () => import(/* webpackChunkName: "phylum" */'./pages/Phylum'),
         },
         {
             path: '/class',
             name: 'class',
-            component: Class,
+            component: () => import(/* webpackChunkName: "class" */'./pages/Class'),
         },
         {
             path: '/order',
             name: 'order',
-            component: Order,
+            component: () => import(/* webpackChunkName: "order" */'./pages/Order'),
         },
         {
             path: '/family',
             name: 'family',
-            component: Family,
+            component: () => import(/* webpackChunkName: "family" */'./pages/Family'),
         },
         {
             path: '/species',
             name: 'species',
-            component: Species,
+            component: () => import(/* webpackChunkName: "species" */'./pages/Species'),
         },
         {
             path: '/occurrences',
             name: 'occurrences',
-            component: Occurrences,
+            component: () => import(/* webpackChunkName: "occurrences" */'./pages/Occurrences'),
         },
         {
             path: '/occurrences/:recordId',
             name: 'occurrence',
-            component: Occurrence,
+            component: () => import(/* webpackChunkName: "occurrence" */'./pages/Occurrence'),
         },
         {
             path: '/water-quality',
             name: 'water-quality',
-            component: WaterQuality,
+            component: () => import(/* webpackChunkName: "water-quality" */'./pages/WaterQuality'),
         },
         {
             path: '/records/:recordId',
             name: 'record',
-            component: Record,
+            component: () => import(/* webpackChunkName: "record" */'./pages/Record'),
         },
         {
             path: '/element-flux',
             name: 'element-flux',
-            component: ElementFlux,
+            component: () => import(/* webpackChunkName: "element-flux" */'./pages/ElementFlux'),
         },
         {
             path: '/temperature',
             name: 'temperature',
-            component: Temperature,
+            component: () => import(/* webpackChunkName: "temperature" */'./pages/Temperature'),
         },
         {
             path: '/algae-debris',
             name: 'algae-debris',
-            component: AlgaeDebris,
+            component: () => import(/* webpackChunkName: "algaeDebris" */'./pages/AlgaeDebris'),
         },
         {
             path: '/river-discharge-estimation',
             name: 'river-discharge-estimation',
-            component: RiverDischargeEstimation,
+            component: () => import(/* webpackChunkName: "river-discharge-estimation" */'./pages/RiverDischargeEstimation'),
         },
         {
             path: '/river-habitats',
             name: 'river-habitats',
-            component: RiverHabitat,
+            component: () => import(/* webpackChunkName: "river-habitat" */'./pages/RiverHabitat'),
         },
         {
             path: '/river-sections',
             name: 'river-sections',
-            component: RiverSections,
+            component: () => import(/* webpackChunkName: "river-sections" */'./pages/RiverSections'),
         },
         {
             path: '/river-sections/:sectionId/:date',
             name: 'river-section',
-            component: RiverSection,
+            component: () => import(/* webpackChunkName: "river-section" */'./pages/RiverSection'),
         },
     ]
 });
