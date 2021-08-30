@@ -36,7 +36,7 @@ class WaterQualityController extends Controller
             });
 
         if ($id) {
-            $waterQualityQuery->where('id', $id);
+            $waterQualityQuery->where('water.id', $id);
         }
 
         if ($date) {

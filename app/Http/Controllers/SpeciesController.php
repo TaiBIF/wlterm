@@ -58,7 +58,7 @@ class SpeciesController extends Controller
         }
 
         if ($orderName) {
-            $speciesQuery->where('order_c', 'like', '%' . $order . '%');
+            $speciesQuery->where('order_c', 'like', '%' . $orderName . '%');
         }
 
         if ($family) {

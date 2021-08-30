@@ -6,7 +6,6 @@
             :columns="columns"
             :is-loading="isLoading"
             v-model="sheetValues"
-            :sortable="false"
             v-on:sort="sort"
             v-on:search="search"
         ></sheet>
@@ -68,7 +67,7 @@
                 this.isLoading = true;
 
                 const page = this.currentPage + 1;
-                this.$http.get(`/api/river-habitat?page=${page}&${queryString.stringify(this.sheetValues.searchParams)}`)
+                this.$http.get(`/api/river-habitat?page=${page}&${queryString.stringify(this.sheetValues.searchParams)}&sort=${this.sortBy}&direction=${this.direction}`)
                     .then(({ data: { data, total, currentPage, perPage } }) => {
                         if (perPage > data.length || 0 === data.length) {
                             this.isEnd = true;

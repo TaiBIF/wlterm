@@ -28,8 +28,14 @@ class OccurrenceController extends Controller
         $examWay = $request->get('examine_way');
         $sort = $request->get('sort');
         $direction = $request->get('direction', 'asc');
+        $identifiedByChinese = $request->get('identified_by_chinese');
+        $sid = $request->get('sid');
 
         $occurrencesQuery = Occurrence::query();
+        if ($sid) {
+            $occurrencesQuery->where('sid', '=', $sid);
+        }
+
         if ($phylum) {
             $occurrencesQuery->where('phylum', 'like', '%' . $phylum . '%');
         }
@@ -71,12 +77,15 @@ class OccurrenceController extends Controller
         }
 
         if ($longitude) {
-            $occurrencesQuery->where('longitude', 'like', '%' . $locality . '%');
+            $occurrencesQuery->where('longitude', 'like', '%' . $longitude . '%');
         }
-
 
         if ($chineseName) {
             $occurrencesQuery->where('chinese', 'like', '%' . $chineseName . '%');
+        }
+
+        if ($identifiedByChinese) {
+            $occurrencesQuery->where('identified_by_chinese', 'like', '%' . $identifiedByChinese . '%');
         }
 
         if ($sort && $direction) {

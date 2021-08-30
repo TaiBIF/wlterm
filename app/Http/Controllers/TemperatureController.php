@@ -13,7 +13,7 @@ class TemperatureController extends Controller
 
     public function index(Request $request)
     {
-        $locality = $request->get('locality');
+        $locality = $request->get('locality_chinese');
         $date = $request->get('date');
         $stationId = $request->get('station_id');
         $sort = $request->get('sort');
