@@ -26,6 +26,8 @@
 
 <script>
     import sheet from '../components/sheet';
+    import queryString from 'querystring';
+
     export default {
         name: "Class",
         components: {
@@ -59,14 +61,6 @@
                 }
             }
         },
-        computed: {
-            query() {
-                const searchQuery = Object.keys(this.sheetValues.searchParams).map((key) => {
-                    return encodeURIComponent(key) + '=' + encodeURIComponent(this.sheetValues.searchParams[key])
-                }).join('&');
-                return searchQuery;
-            },
-        },
         mounted() {
             this.search();
         },
@@ -76,7 +70,7 @@
                 this.isLoading = true;
                 this.isEnd = false;
                 this.$http.get(
-                    `/api/classes?page=${page}&${this.query}`
+                    `/api/classes?page=${page}&${queryString.stringify(this.sheetValues.searchParams)}`
                 )
                     .then(({ data: { data, total, currentPage, perPage } }) => {
                         if (perPage > data.length || 0 === data.length) {
