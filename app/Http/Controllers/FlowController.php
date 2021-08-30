@@ -20,7 +20,9 @@ class FlowController extends Controller
         $direction = $request->get('direction', 'asc');
 
         $flowRecordsQuery = Flow::query()
+            ->select(['*', 'rain.st1 as rain_st1', 'rain.st2 as rain_st2', 'rain.st3 as rain_st3', 'rain.st4 as rain_st4'])
             ->join('flow_stations', 'flow.station_id', '=', 'flow_stations.id')
+            ->join('rain', 'rain.date', 'flow.date')
             ->with(['rain', 'station']);
 
         if ($date) {
