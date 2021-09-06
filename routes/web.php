@@ -19,6 +19,10 @@ Route::get('/{any}', function () {
     return view('app');
 });
 
+Route::get('/projects/{projectId}/stations/{stationId}/simpling-events', function () {
+    return view('app');
+});
+
 Route::get('/occurrences/{id}', function () {
     return view('app');
 });

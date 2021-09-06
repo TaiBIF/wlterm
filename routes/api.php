@@ -39,4 +39,6 @@ Route::get('/river-discharge-estimation-report', 'FlowController@report');
 Route::get('/river-habitat', 'RiverController@habitat');
 Route::get('/river-section', 'RiverController@section');
 Route::get('/river-sections/{id}/{date}', 'RiverController@certainSection');
+Route::get('/simpling-events', 'SimplingEventController@index');
+Route::get('/projects/{projectId}/stations/{stationId}/simpling-events', 'SimplingEventController@events');
 
