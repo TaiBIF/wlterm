@@ -33,6 +33,16 @@ const router = new VueRouter ({
             component: () => import(/* webpackChunkName: "maps" */'./pages/Maps'),
         },
         {
+            path: '/simpling-events',
+            name: 'maps',
+            component: () => import(/* webpackChunkName: "simpling-events" */'./pages/SimplingEvents'),
+        },
+        {
+            path: '/projects/:projectId/stations/:stationId/simpling-events',
+            name: 'maps',
+            component: () => import(/* webpackChunkName: "simpling-event" */'./pages/SimplingEvent'),
+        },
+        {
             path: '/phylum',
             name: 'phylum',
             component: () => import(/* webpackChunkName: "phylum" */'./pages/Phylum'),

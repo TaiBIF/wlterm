@@ -25,7 +25,7 @@
                 <table class="jexcel action-table" cellpadding="0" cellspacing="0">
                     <thead class="resizable1">
                     <tr>
-                        <td width="80px">&nbsp;</td>
+                        <td width="100px">&nbsp;</td>
                     </tr>
                     <tr>
                         <td width="80px">&nbsp;</td>
