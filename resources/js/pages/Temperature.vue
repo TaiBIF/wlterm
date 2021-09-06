@@ -104,13 +104,16 @@
             intersectionObserver.observe(document.querySelector('.caption'));
 
             // fetch report data
-            this.$http.get(`/api/temperature-report`)
-                .then(({ data: { dates, data } }) => {
-                    this.chartOptions.xAxis.categories = dates;
-                    this.chartOptions.series = data;
-                });
+            this.fetchReportData();
         },
         methods: {
+            fetchReportData() {
+                this.$http.get(`/api/temperature-report?${queryString.stringify(this.sheetValues.searchParams)}`)
+                    .then(({ data: { dates, data } }) => {
+                        this.chartOptions.xAxis.categories = dates;
+                        this.chartOptions.series = data;
+                    });
+            },
             fetchData(callback) {
                 if (this.isLoading || this.isEnd) {
                     return;
@@ -142,6 +145,7 @@
             },
             search() {
                 window.scrollTo(0, 0);
+                this.fetchReportData();
 
                 this.page = 0;
                 this.isEnd = false;

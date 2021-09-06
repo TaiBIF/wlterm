@@ -65,11 +65,25 @@ class TemperatureController extends Controller
         ]);
     }
 
-    public function report()
+    public function report(Request $request)
     {
-        $records = Temperature::query()->select('id', 'date', 'air')
-            ->whereNotNull('air')
-            ->get();
+        $stationId = $request->get('station_id');
+        $locality = $request->get('locality_chinese');
+
+        $recordsQuery = Temperature::query()
+            ->select('temperature.id', 'date', 'air')
+            ->leftJoin('station', 'temperature.id', '=', 'station.id')
+            ->whereNotNull('air');
+
+        if ($stationId) {
+            $recordsQuery->where('station.id', $stationId);
+        }
+
+        if ($locality) {
+            $recordsQuery->where('station.locality_chinese', 'like', '%' . $locality . '%');
+        }
+
+        $records = $recordsQuery->get();
 
         $data = $records->groupBy('id')
             ->map(function ($temperatures, $stationId) {
