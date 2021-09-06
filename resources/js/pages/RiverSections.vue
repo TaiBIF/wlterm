@@ -5,7 +5,6 @@
             :columns="columns"
             :data="records"
             :is-loading="isLoading"
-            :sortable="false"
             v-model="sheetValues"
             v-on:search="search"
             v-on:sort="sort"
@@ -73,7 +72,7 @@
                 this.isLoading = true;
 
                 const page = this.currentPage + 1;
-                this.$http.get(`/api/river-section?page=${page}&${queryString.stringify(this.sheetValues.searchParams)}`)
+                this.$http.get(`/api/river-section?page=${page}&${queryString.stringify({... this.sheetValues.searchParams, sort: this.sortBy, direction: this.direction})}`)
                     .then(({ data: { data, total, currentPage, perPage } }) => {
                         if (perPage > data.length || 0 === data.length) {
                             this.isEnd = true;
