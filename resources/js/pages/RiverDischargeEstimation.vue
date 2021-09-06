@@ -22,7 +22,7 @@
     import queryString from 'querystring';
     import Highcharts from 'highcharts';
     export default {
-        name: 'WaterQuality',
+        name: 'RiverDischargeEstimation',
         data() {
             return {
                 isLoading: false,
@@ -101,13 +101,16 @@
             intersectionObserver.observe(document.querySelector('.caption'));
 
             // fetch report data
-            this.$http.get(`/api/river-discharge-estimation-report`)
-                .then(({ data: { years, data } }) => {
-                    // this.chartOptions.xAxis.categories = years;
-                    this.chartOptions.series = data;
-                });
+            this.fetchReportData();
         },
         methods: {
+            fetchReportData() {
+                this.$http.get(`/api/river-discharge-estimation-report?${queryString.stringify(this.sheetValues.searchParams)}`)
+                    .then(({ data: { years, data } }) => {
+                        // this.chartOptions.xAxis.categories = years;
+                        this.chartOptions.series = data;
+                    });
+            },
             fetchData(callback) {
                 if (this.isLoading || this.isEnd) {
                     return;
@@ -139,6 +142,7 @@
             },
             search() {
                 window.scrollTo(0, 0);
+                this.fetchReportData();
 
                 this.page = 0;
                 this.isEnd = false;

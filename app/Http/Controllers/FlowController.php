@@ -58,9 +58,20 @@ class FlowController extends Controller
         ]);
     }
 
-    public function report()
+    public function report(Request $request)
     {
-        $records = Flow::select('station_id', 'date', 'public', 'simu')->whereNotNull('public')->get();
+        $name = $request->get('station_name');
+
+        $recordsQuery = Flow::select('station_id', 'date', 'public', 'simu')
+            ->whereNotNull('public');
+
+        if ($name) {
+            $recordsQuery->join('flow_stations', 'flow.station_id', '=', 'flow_stations.id')
+                ->where('flow_stations.name', 'like', '%' . $name . '%');
+        }
+
+        $records = $recordsQuery->get();
+
         $stations = FlowStation::all()->keyBy('id');
 
         $data = $records->groupBy('station_id')
