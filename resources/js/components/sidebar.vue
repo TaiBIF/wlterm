@@ -35,6 +35,11 @@
                     測站地圖
                 </li>
             </router-link>
+            <router-link to="/simpling-events">
+                <li class="list-group-item">
+                    調查活動
+                </li>
+            </router-link>
             <router-link to="/phylum">
                 <li class="list-group-item">
                     門別統計

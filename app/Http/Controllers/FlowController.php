@@ -26,7 +26,7 @@ class FlowController extends Controller
             ->with(['rain', 'station']);
 
         if ($date) {
-            $flowRecordsQuery->where('date',  'like', '%' . $date . '%');
+            $flowRecordsQuery->where('flow.date',  'like', '%' . $date . '%');
         }
 
         if ($name) {
