@@ -1,10 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import 'jexcel.css';
 @import 'jexcel.datatables.css';
+
 body {
     height: 100vh;
     overflow: scroll;
     font-size: 0.8rem;
 }
+
 p {
     line-height: 1.5rem;
 }
