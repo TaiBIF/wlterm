@@ -1,31 +1,6 @@
 <template>
     <div>
         <div class="map-container">
-            <div class="tool-bar py-3 bg-gray-100" v-if="Object.keys($route.query).length === 0">
-                <div class="field font-bold">
-                    年份:
-                    <select class="mx-2 ring-1 ring-1 ring-gray-200" v-on:change="onUpdateDate">
-                        <option value="">請選擇</option>
-                        <option :value="year" v-for="year in yearOptions">{{year}}</option>
-                    </select>
-                </div>
-                <div class="field font-bold">
-                    調查項目:
-                    <select class="mx-2 ring-1 ring-1 ring-gray-200" v-on:change="onUpdateProjectIds">
-                        <option>請選擇</option>
-                        <option value="3,4,13,17,23">水質調查</option>
-                        <option value="13">元素通量</option>
-                        <option value="14">溫度監測</option>
-                        <option value="1,15">藻類與碎屑</option>
-                        <option value="5">濱岸植群研究</option>
-                        <option value="6,18,24">水棲昆蟲研究</option>
-                        <option value="7">陸棲昆蟲研究</option>
-                        <option value="9,20">兩生類研究</option>
-                        <option value="10,19">魚類研究</option>
-                        <option value="11,21">鳥類研究</option>
-                    </select>
-                </div>
-            </div>
             <l-map :zoom="zoom" :center="center" ref="map">
                 <l-tile-layer :url="url"></l-tile-layer>
                 <l-marker :lat-lng="marker.location"
@@ -43,6 +18,31 @@
                     </l-icon>
                 </l-marker>
             </l-map>
+        </div>
+        <div class="tool-bar py-3" v-if="Object.keys($route.query).length === 0">
+            <div class="field font-bold">
+                年份:
+                <select class="mx-2 ring-1 ring-1 ring-gray-200" v-on:change="onUpdateDate">
+                    <option value="">請選擇</option>
+                    <option :value="year" v-for="year in yearOptions">{{year}}</option>
+                </select>
+            </div>
+            <div class="field font-bold">
+                調查項目:
+                <select class="mx-2 ring-1 ring-1 ring-gray-200" v-on:change="onUpdateProjectIds">
+                    <option>請選擇</option>
+                    <option value="3,4,13,17,23">水質調查</option>
+                    <option value="13">元素通量</option>
+                    <option value="14">溫度監測</option>
+                    <option value="1,15">藻類與碎屑</option>
+                    <option value="5">濱岸植群研究</option>
+                    <option value="6,18,24">水棲昆蟲研究</option>
+                    <option value="7">陸棲昆蟲研究</option>
+                    <option value="9,20">兩生類研究</option>
+                    <option value="10,19">魚類研究</option>
+                    <option value="11,21">鳥類研究</option>
+                </select>
+            </div>
         </div>
     </div>
 </template>
@@ -131,10 +131,16 @@
 <style lang="scss" scoped>
     .map-container {
         width: calc(100vw - 160px);
-        height: calc(100vh - 67px);
+        height: calc(100vh - 4.2rem);
+        overflow: hidden;
     }
     .tool-bar {
         padding: 8px;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        z-index: 999;
+        background-color: #ffffff69;
 
         .field {
             margin-right: 10px;
