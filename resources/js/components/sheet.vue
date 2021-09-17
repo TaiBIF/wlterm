@@ -1,7 +1,6 @@
 <template>
     <div class="sheet-container">
         <div class="helper" v-if="sortable">
-            <p class="text-muted"></p>
             *點選標題兩下可排序
         </div>
         <tr ref="filter">
@@ -131,4 +130,8 @@
     }
 
 </script>
+<style lang="scss" scoped>
+    @import '../../sass/jexcel.css';
+    @import '../../sass/jexcel.datatables.css';
+</style>
 
