@@ -1,9 +1,11 @@
 <template>
     <div class="app-container">
         <navigation></navigation>
-        <sidebar></sidebar>
-        <div class="main-content py-2">
-            <router-view></router-view>
+        <div>
+            <sidebar></sidebar>
+            <div class="main-content inline-block">
+                <router-view></router-view>
+            </div>
         </div>
     </div>
 </template>
@@ -28,9 +30,8 @@
 
     .main-content {
         padding: 0px;
-        margin-left: 165px;
+        margin-left: 160px;
         overflow-anchor: none;
-        display: inline-block;
     }
 
     @media(max-width:768px) {

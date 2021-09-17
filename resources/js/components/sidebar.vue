@@ -127,6 +127,7 @@
         width: 160px;
         display: inline-block;
         position: fixed;
+        left: 0;
         height: calc(100vh - 4.2rem);
         overflow-y: scroll;
     }
