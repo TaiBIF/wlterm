@@ -1,5 +1,5 @@
 <template>
-    <div class="blog-sidebar">
+    <div class="blog-sidebar scroll">
         <ul class="list-group py-2">
             <li class="list-group-item">
                 <router-link to="/">計畫簡介</router-link>
@@ -163,7 +163,7 @@
 
     ul {
         .sub-menu {
-            padding: 0.125rem 1.5rem;
+            padding: 0.125rem 1rem;
         }
     }
 
@@ -172,5 +172,19 @@
             border-left: 3px red solid;
         }
         list-style-type: none;
+    }
+
+    .scroll::-webkit-scrollbar {
+        width: 7px;
+    }
+
+    .scroll::-webkit-scrollbar-thumb {
+        background: #666666b0;
+        border-radius: 20px;
+    }
+
+    .scroll::-webkit-scrollbar-track {
+        background: #dddddd70;
+        border-radius: 20px;
     }
 </style>
