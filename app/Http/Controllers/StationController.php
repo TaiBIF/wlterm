@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Alage;
+use App\Main;
+use App\Occurrence;
 use App\Station;
 use App\TableForGrid;
+use App\Temperature;
+use App\WaterQuality;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -46,9 +51,62 @@ class StationController extends Controller
         ]);
     }
 
+    public function get($stationId, Request $request)
+    {
+        $date = $request->get('date');
+
+        $station = Station::query()
+            ->select(['id', 'locality', 'locality_chinese', 'latitude', 'longitude'])
+            ->where('id', $stationId)
+            ->orderBy('latitude')
+            ->orderBy('longitude')
+            ->first();
+
+
+        $hasWaterQuery = WaterQuality::where('id', $stationId)->where(function($query) {
+            $query->where('project_id', 3)
+                ->orWhere('project_id', 17)
+                ->orWhere('project_id', 13)
+                ->orWhere('project_id', 4)
+                ->orWhere('project_id', 23);
+        });
+        $hasTemperatureQuery = Temperature::where('id', $stationId);
+
+        $hasElementFluxQuery =  WaterQuality::query()
+            ->select(['water.id as water_id', 'date', 'locality_chinese', 'record_id'])
+            ->where('project_id', 13)
+            ->where('id', $stationId);
+
+        $hasAlgaeDebrisQuery = Alage::where('id', $stationId);
+
+        $hasOccurrenceQuery = Occurrence::where('sid', $stationId);
+
+        if ($date) {
+            $hasTemperatureQuery->where('date', 'like', '%' . $date . '%');
+            $hasWaterQuery->where('date', 'like', '%' . $date . '%');
+            $hasElementFluxQuery->where('date', 'like', '%' . $date . '%');
+            $hasAlgaeDebrisQuery->where('date', 'like', '%' . $date . '%');
+            $hasOccurrenceQuery->where('date', 'like', '%' . $date . '%');
+        }
+
+        $hasOccurrence = $hasOccurrenceQuery->count();
+        $hasTemperature = $hasTemperatureQuery->count();
+        $hasWater = $hasWaterQuery->count();
+        $hasElementFlux = $hasElementFluxQuery->count();
+        $hasAlgaeDebris = $hasAlgaeDebrisQuery->count();
+        return response()
+            ->json([
+                'station' => $station,
+                'occurrences' => $hasOccurrence,
+                'water' => $hasWater,
+                'temperature' => $hasTemperature,
+                'elementFlux' => $hasElementFlux,
+                'algaeDebris' => $hasAlgaeDebris,
+            ]);
+    }
+
     public function map(Request $request)
     {
-
         if ($request->get('phylum')) {
             // SELECT *,locality_chinese as locality,sid as id FROM table_forgrid where `".$_GET['pfield']."` ".$qb.uniDecode($_GET['pvalue'], 'utf8'). $qe ." order by latitude,longitude
             $subquery = TableForGrid::query()
@@ -59,7 +117,7 @@ class StationController extends Controller
             $markers = DB::table(DB::raw("({$subquery->toSql()}) as mystation"))
                 ->mergeBindings($subquery->getQuery())
                 ->join('station', 'station.id', '=', 'mystation.sid')
-                ->select(['locality', 'locality_chinese', 'latitude', 'longitude'])
+                ->select(['id', 'locality', 'locality_chinese', 'latitude', 'longitude'])
                 ->whereNotNull('station.latitude')
                 ->whereNotNull('station.longitude')
                 ->orderBy('station.latitude')
@@ -74,7 +132,7 @@ class StationController extends Controller
             $markers = DB::table(DB::raw("({$subquery->toSql()}) as mystation"))
                 ->mergeBindings($subquery->getQuery())
                 ->join('station', 'station.id', '=', 'mystation.sid')
-                ->select(['locality', 'locality_chinese', 'latitude', 'longitude'])
+                ->select(['id', 'locality', 'locality_chinese', 'latitude', 'longitude'])
                 ->whereNotNull('station.latitude')
                 ->whereNotNull('station.longitude')
                 ->orderBy('station.latitude')
@@ -89,7 +147,7 @@ class StationController extends Controller
             $markers = DB::table(DB::raw("({$subquery->toSql()}) as mystation"))
                 ->mergeBindings($subquery->getQuery())
                 ->join('station', 'station.id', '=', 'mystation.sid')
-                ->select(['locality', 'locality_chinese', 'latitude', 'longitude'])
+                ->select(['id', 'locality', 'locality_chinese', 'latitude', 'longitude'])
                 ->whereNotNull('station.latitude')
                 ->whereNotNull('station.longitude')
                 ->orderBy('station.latitude')
@@ -104,7 +162,7 @@ class StationController extends Controller
             $markers = DB::table(DB::raw("({$subquery->toSql()}) as mystation"))
                 ->mergeBindings($subquery->getQuery())
                 ->join('station', 'station.id', '=', 'mystation.sid')
-                ->select(['locality', 'locality_chinese', 'latitude', 'longitude'])
+                ->select(['id', 'locality', 'locality_chinese', 'latitude', 'longitude'])
                 ->whereNotNull('station.latitude')
                 ->whereNotNull('station.longitude')
                 ->orderBy('station.latitude')
@@ -119,7 +177,60 @@ class StationController extends Controller
             $markers = DB::table(DB::raw("({$subquery->toSql()}) as mystation"))
                 ->mergeBindings($subquery->getQuery())
                 ->join('station', 'station.id', '=', 'mystation.sid')
-                ->select(['locality', 'locality_chinese', 'latitude', 'longitude'])
+                ->select(['id', 'locality', 'locality_chinese', 'latitude', 'longitude'])
+                ->whereNotNull('station.latitude')
+                ->whereNotNull('station.longitude')
+                ->orderBy('station.latitude')
+                ->orderBy('station.longitude')
+                ->get();
+        } else if ($request->get('project_ids') || $request->get('date')) {
+            $projectIdsString = $request->get('project_ids');
+            $projectIds = $projectIdsString ? explode(',', $projectIdsString) : '';
+            $date = $request->get('date');
+
+
+            if ($projectIdsString === '3,4,13,17,23') {
+                $subquery = WaterQuality::query()->select('id')
+                    ->where(function($query) {
+                        $query->where('project_id', 3)
+                            ->orWhere('project_id', 4)
+                            ->orWhere('project_id', 13)
+                            ->orWhere('project_id', 17)
+                            ->orWhere('project_id', 23);
+                    });
+
+                if (!empty($projectIds)) {
+                    $subquery->whereIn('Project_id', $projectIds);
+                }
+            } else if ($projectIdsString == '13') {
+                $subquery = WaterQuality::query()->select('id')
+                    ->where('project_id', 13);
+
+                if (!empty($projectIds)) {
+                    $subquery->whereIn('Project_id', $projectIds);
+                }
+            } else if ($projectIdsString == '14') {
+                $subquery = Temperature::query()->select('id');
+            } else if ($projectIdsString == '1,15') {
+                $subquery = Alage::query()->select('id');
+            } else {
+                $subquery = Main::query()->select('main.id');
+
+                if (!empty($projectIds)) {
+                    $subquery->whereIn('Project_id', $projectIds);
+                }
+            }
+
+            if ($date) {
+                $subquery->where('date', 'like', '%' . $date . '%');
+            }
+
+            $subquery = $subquery->groupBy('id');
+
+            $markers = DB::table(DB::raw("({$subquery->toSql()}) as mystation"))
+                ->mergeBindings($subquery->getQuery())
+                ->join('station', 'station.id', '=', 'mystation.id')
+                ->select(['station.id', 'locality', 'locality_chinese', 'latitude', 'longitude'])
                 ->whereNotNull('station.latitude')
                 ->whereNotNull('station.longitude')
                 ->orderBy('station.latitude')
@@ -132,7 +243,7 @@ class StationController extends Controller
                 $markersQuery->where('id', $request->get('id'));
             }
 
-            $markers = $markersQuery->select(['locality', 'locality_chinese', 'latitude', 'longitude'])
+            $markers = $markersQuery->select(['id', 'locality', 'locality_chinese', 'latitude', 'longitude'])
                 ->whereNotNull('latitude')
                 ->orderBy('latitude')
                 ->orderBy('longitude')

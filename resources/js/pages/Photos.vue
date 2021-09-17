@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="p-4">
         <lightbox ref="lightbox" :photos="photos"></lightbox>
         <div v-for="(photo, index) in photos" class="photo-wrapper">
             <img :src="`/images/${photo}`"

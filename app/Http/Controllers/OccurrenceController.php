@@ -30,6 +30,7 @@ class OccurrenceController extends Controller
         $direction = $request->get('direction', 'asc');
         $identifiedByChinese = $request->get('identified_by_chinese');
         $sid = $request->get('sid');
+        $projectIds = $request->get('projectIds');
 
         $occurrencesQuery = Occurrence::query();
         if ($sid) {
@@ -41,7 +42,7 @@ class OccurrenceController extends Controller
         }
 
         if ($date) {
-            $occurrencesQuery->where('date', 'like', '%' . $date . '%');
+            $occurrencesQuery->where('table_forgrid.date', 'like', '%' . $date . '%');
         }
 
         if ($class) {
@@ -88,6 +89,12 @@ class OccurrenceController extends Controller
             $occurrencesQuery->where('identified_by_chinese', 'like', '%' . $identifiedByChinese . '%');
         }
 
+        if ($projectIds) {
+            $projectIdsArray = explode(',', $projectIds);
+            $occurrencesQuery->leftJoin('main', 'main.record_id', 'table_forgrid.record_id')
+                ->whereIn('main.Project_id', $projectIdsArray);
+        }
+
         if ($sort && $direction) {
             $occurrencesQuery->orderBy($sort, $direction);
         } else {
@@ -112,6 +119,18 @@ class OccurrenceController extends Controller
 
         return response()->json([
             'occurence' => $record,
+        ]);
+    }
+
+    public function years()
+    {
+        $occurrenceYears = Occurrence::selectRaw('YEAR(date) as year')
+            ->groupBy(DB::raw('YEAR(date)'))
+            ->orderBy('year')
+            ->get();
+
+        return response()->json([
+            'years' => $occurrenceYears->pluck('year'),
         ]);
     }
 

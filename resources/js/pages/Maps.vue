@@ -13,6 +13,10 @@
                     調查項目:
                     <select v-on:change="onUpdateProjectIds">
                         <option>請選擇</option>
+                        <option value="3,4,13,17,23">水質調查</option>
+                        <option value="13">元素通量</option>
+                        <option value="14">溫度監測</option>
+                        <option value="1,15">藻類與碎屑</option>
                         <option value="5">濱岸植群研究</option>
                         <option value="6,18,24">水棲昆蟲研究</option>
                         <option value="7">陸棲昆蟲研究</option>
@@ -27,13 +31,12 @@
                 <l-marker :lat-lng="marker.location"
                           :options="marker.options"
                           :name="marker.options.name"
-                          v-for="(marker, index) in markers" :key="index">
+                          v-for="(marker, index) in markers" :key="index"
+                          v-on:click="currentMarker = marker.stationId"
+                >
                     <l-popup>
-                        {{ marker.options.title }}
-                        <br/>查看:
-                        <router-link :to="`/occurrences?locality_chinese=${marker.options.title}&date=${params.date}&projectIds=${params.projectIds}`">
-                            <i class="fas fa-external-link-alt"></i>
-                        </router-link>
+                        <m-marker v-if="currentMarker === marker.stationId" :date="params.date" :marker="marker"></m-marker>
+                        <div v-else>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
                     </l-popup>
                     <l-icon>
                         <img src="/images/marker.png">
@@ -47,6 +50,8 @@
 <script>
     import 'leaflet/dist/leaflet.css';
     import { LMap, LTileLayer, LMarker, LIcon, LPopup } from 'vue2-leaflet';
+    import MMarker from './../components/Marker';
+
     export default {
         name: "Maps",
         components: {
@@ -55,6 +60,7 @@
             LMarker,
             LIcon,
             LPopup,
+            MMarker,
         },
         data() {
             return {
@@ -63,6 +69,8 @@
                 url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                 markers: [],
                 yearOptions: [],
+                currentMarker: '',
+                markerInfo: 'asdfasd',
                 params: {
                     date: '',
                     projectIds: [],
@@ -86,13 +94,14 @@
                 this.$http.get(`/api/stations-location?${urlParams.toString()}`).then(res => {
                     this.markers = res.data.map(d => {
                         return {
+                            stationId: d.id,
                             icon: L.icon('/images/marker.png'),
                             location: [parseFloat(d.latitude), parseFloat(d.longitude)],
+                            meta: d,
                             options: {
                                 name: d.locality,
                                 title: d.locality_chinese,
                                 riseOnHover: true,
-                                onClick: this.clickMarker
                             }
                         };
                     });

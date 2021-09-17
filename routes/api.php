@@ -19,11 +19,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/photos', 'PhotoController@index');
 Route::get('/stations', 'StationController@index');
+Route::get('/stations/{id}', 'StationController@get');
 Route::get('/stations-location', 'StationController@map');
 Route::get('/phylum', 'PhylumController@index');
 Route::get('/occurrences', 'OccurrenceController@index');
 Route::get('/occurrences/{id}', 'OccurrenceController@show');
 Route::get('/occurrences-report', 'OccurrenceController@report');
+Route::get('/occurrences-years', 'OccurrenceController@years');
 Route::get('/classes', 'ClassController@index');
 Route::get('/orders', 'OrderController@index');
 Route::get('/family', 'FamilyController@index');

@@ -52,6 +52,7 @@
             sheet,
         },
         mounted() {
+            this.sheetValues.searchParams = this.$route.query;
             this.search();
 
             const app = this;

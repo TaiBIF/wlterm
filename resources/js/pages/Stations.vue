@@ -1,6 +1,9 @@
 <template>
     <div>
-        <h6>測站資料&nbsp;<small class="text-muted">共 {{ total }} 筆</small></h6>
+        <h6 class="text-lg font-bold py-2">
+            測站資料&nbsp;
+            <small class="text-sm text-gray-400">共 {{ total }} 筆</small>
+        </h6>
         <sheet
             :data="data"
             :columns="columns"
