@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="px-4">
         <h5>日期：{{ $route.params.date }}</h5>
         <hr />
         <h5 class="subtitle is-5 text-info">後視點與轉點</h5>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="px-4">
         <h6>調查生物綱別&nbsp;<small class="text-muted">共 {{ total }} 筆</small></h6>
         <sheet
             :data="classes"

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="px-4">
         <h6>河川流量推估&nbsp;<small class="text-muted">共 {{ total }} 筆</small></h6>
         <highcharts :options="chartOptions"></highcharts>
         <sheet

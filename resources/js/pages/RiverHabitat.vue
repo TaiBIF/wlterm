@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="px-4">
         <h6>河道棲地&nbsp;<small class="text-muted">共 {{ total }} 筆</small></h6>
         <sheet
             :data="records"

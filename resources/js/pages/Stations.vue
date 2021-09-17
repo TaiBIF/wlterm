@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="px-4">
         <h6 class="text-lg font-bold py-2">
             測站資料&nbsp;
             <small class="text-sm text-gray-400">共 {{ total }} 筆</small>

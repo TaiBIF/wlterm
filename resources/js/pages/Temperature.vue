@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="px-4">
         <h6>溫度監測&nbsp;<small class="text-muted">共 {{ total }} 筆</small></h6>
         <div class="chart-container">
             <highcharts :options="chartOptions"></highcharts>

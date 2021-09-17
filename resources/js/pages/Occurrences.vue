@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="px-4">
         <h6 class="page-title">
             生物物種調查紀錄 <small class="text-muted">共 {{ total }} 筆</small>
         </h6>

@@ -1,6 +1,5 @@
 <template>
-    <div class="page">
-
+    <div class="px-4">
         <table class="table table-striped table-bordered">
             <thead>
             <tr>

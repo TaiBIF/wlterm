@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="px-4">
         <h6>生物門別數量統計&nbsp;<small class="text-muted">共 {{ total }} 門</small></h6>
         <sheet
             :data="phyla"
