@@ -1,5 +1,5 @@
 <template>
-    <header class="blog-header py-3">
+    <header class="blog-header py-3 shadow-md">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="title-container">
                 <img src="/images/logo.jpg" class="logo">
@@ -29,6 +29,7 @@
         .logo {
             width: 35px;
             height: 35px;
+            display: inline-block;
         }
 
         .title-container {
@@ -36,5 +37,4 @@
             text-align: center;
         }
     }
-
 </style>

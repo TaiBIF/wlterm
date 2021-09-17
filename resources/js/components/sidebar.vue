@@ -1,6 +1,6 @@
 <template>
     <div class="blog-sidebar">
-        <ul class="list-group">
+        <ul class="list-group py-4">
             <li class="list-group-item">
                 <router-link to="/">計畫簡介</router-link>
                 <ul class="sub-menu">
@@ -118,7 +118,7 @@
 <style lang="scss" scoped>
     .blog-sidebar {
         background: white;
-        z-index: 10000;
+        z-index: 50;
         width: 160px;
         display: inline-block;
         position: fixed;
