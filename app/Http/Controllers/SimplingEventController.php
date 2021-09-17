@@ -67,7 +67,7 @@ class SimplingEventController extends Controller
             ->select([
                 'species.order', 'species.family', 'main.scientific_name', 'chinese',
                 'individual_count', 'cover_rate', 'body_length', 'body_length_unit',
-                'biomass', 'biomass_unit', 'notes', 'collector_chinese', 'identified_by_chinese'
+                'biomass', 'biomass_unit', 'notes', 'collector_chinese', 'identified_by_chinese', 'record_use_name'
             ])
             ->leftJoin('species', 'species.scientific_name', 'main.scientific_name');
 
