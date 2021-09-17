@@ -142,7 +142,7 @@
         color: #77757a;
         height: 100vh;
         border-right: 1px #eee solid;
-        .router-link-active, .router-link-exact-active {
+        .router-link-exact-active {
             color: #007bff;
         }
     }

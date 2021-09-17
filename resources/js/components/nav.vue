@@ -1,6 +1,6 @@
 <template>
     <header class="blog-header py-3 shadow-md">
-        <div class="row flex-nowrap justify-content-between align-items-center">
+        <div class="flex-nowrap justify-content-between align-items-center">
             <div class="title-container">
                 <img src="/images/logo.jpg" class="logo">
                 <a class="blog-header-logo text-dark" href="#">
