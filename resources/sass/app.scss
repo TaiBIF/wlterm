@@ -79,3 +79,9 @@ input {
 input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: lightgray;
 }
+
+a {
+    background: transparent;
+    color: #007bff;
+    text-decoration: none;
+}
