@@ -2,7 +2,7 @@
     <div class="app-container">
         <navigation></navigation>
         <sidebar></sidebar>
-        <div class="main-content">
+        <div class="main-content py-2">
             <router-view></router-view>
         </div>
     </div>
@@ -27,7 +27,7 @@
     }
 
     .main-content {
-        padding: 0px 2rem;
+        padding: 0px;
         margin-left: 165px;
         overflow-anchor: none;
         display: inline-block;

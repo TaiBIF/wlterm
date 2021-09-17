@@ -1,17 +1,17 @@
 <template>
-    <div class="row">
+    <div>
         <div class="map-container">
-            <div class="tool-bar" v-if="Object.keys($route.query).length === 0">
-                <div class="field">
+            <div class="tool-bar py-3 bg-gray-100" v-if="Object.keys($route.query).length === 0">
+                <div class="field font-bold">
                     年份:
-                    <select v-on:change="onUpdateDate">
+                    <select class="mx-2 ring-1 ring-1 ring-gray-200" v-on:change="onUpdateDate">
                         <option value="">請選擇</option>
                         <option :value="year" v-for="year in yearOptions">{{year}}</option>
                     </select>
                 </div>
-                <div class="field">
+                <div class="field font-bold">
                     調查項目:
-                    <select v-on:change="onUpdateProjectIds">
+                    <select class="mx-2 ring-1 ring-1 ring-gray-200" v-on:change="onUpdateProjectIds">
                         <option>請選擇</option>
                         <option value="3,4,13,17,23">水質調查</option>
                         <option value="13">元素通量</option>
