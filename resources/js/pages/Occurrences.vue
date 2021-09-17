@@ -3,15 +3,6 @@
         <h6 class="page-title">
             生物物種調查紀錄 <small class="text-muted">共 {{ total }} 筆</small>
         </h6>
-        <p>
-            Project
-            <label class="tag" v-if="$route.query.projectIds === '5'">濱岸植群研究 <span v-on:click="onRemoveProjectIds()">x</span></label>
-            <label class="tag" v-if="$route.query.projectIds === '6,18,24'">水棲昆蟲研究 <span v-on:click="onRemoveProjectIds()">x</span></label>
-            <label class="tag" v-if="$route.query.projectIds === '7'">陸棲昆蟲研究 <span v-on:click="onRemoveProjectIds()">x</span></label>
-            <label class="tag" v-if="$route.query.projectIds === '9,20'">兩生類研究 <span v-on:click="onRemoveProjectIds()">x</span></label>
-            <label class="tag" v-if="$route.query.projectIds === '10,19'">魚類研究 <span v-on:click="onRemoveProjectIds()">x</span></label>
-            <label class="tag" v-if="$route.query.projectIds === '11,21'">鳥類研究 <span v-on:click="onRemoveProjectIds()">x</span></label>
-        </p>
         <sheet
             :data="occurrences"
             :columns="columns"
