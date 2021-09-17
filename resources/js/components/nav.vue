@@ -3,7 +3,7 @@
         <div class="flex-nowrap justify-content-between align-items-center">
             <div class="title-container">
                 <img src="/images/logo.jpg" class="logo">
-                <a class="blog-header-logo text-dark" href="#">
+                <a class="blog-header-logo text-dark text-lg" href="#">
                     武陵地區生態監測及生態模式建立
                     <small>雪霸國家公園委託辦理計畫</small>
                 </a>
@@ -18,6 +18,9 @@
     }
 </script>
 <style lang="scss" scoped>
+    .blog-header-logo {
+        vertical-align: middle;
+    }
     .blog-header {
         overflow: hidden;
         position: sticky;
@@ -30,6 +33,7 @@
             width: 35px;
             height: 35px;
             display: inline-block;
+            vertical-align: middle;
         }
 
         .title-container {
