@@ -43,6 +43,11 @@ const router = new VueRouter ({
             component: () => import(/* webpackChunkName: "simpling-event-group" */'./pages/SimplingEvent'),
         },
         {
+            path: '/analyze',
+            name: 'analyze',
+            component: () => import(/* webpackChunkName: "simpling-event-group" */'./pages/Analyze'),
+        },
+        {
             path: '/phylum',
             name: 'phylum',
             component: () => import(/* webpackChunkName: "phylum" */'./pages/Phylum'),

@@ -40,6 +40,11 @@
                     調查活動
                 </li>
             </router-link>
+            <router-link to="/analyze">
+                <li class="list-group-item">
+                    資料統計
+                </li>
+            </router-link>
             <router-link to="/phylum">
                 <li class="list-group-item">
                     門別統計
