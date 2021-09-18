@@ -14,6 +14,7 @@ class SimplingEventController extends Controller
     public function index(Request $request)
     {
         $date = $request->get('date');
+        $id = $request->get('id');
         $examineWay = $request->get('examine_way');
         $localityChinese = $request->get('locality_chinese');
         $projectName = $request->get('project_name');
@@ -39,6 +40,10 @@ class SimplingEventController extends Controller
 
         if ($examineWay) {
             $eventsQuery->where('examine_way', 'like', '%' . $examineWay . '%');
+        }
+
+        if ($id) {
+            $eventsQuery->where('station.id', $id);
         }
 
         if ($localityChinese) {
