@@ -71,7 +71,6 @@
                 window.scrollTo(0, 0);
 
                 this.page = 1;
-                this.isLoading = true;
                 this.isEnd = false;
                 this.data = [];
                 this.loadMore();

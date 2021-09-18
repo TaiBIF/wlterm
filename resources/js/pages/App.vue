@@ -12,19 +12,21 @@
 </template>
 
 <script>
-    import nav from './../components/nav';
+    import Navbar from "./../components/navbar";
     import Sidebar from "./../components/sidebar";
 
     export default {
         name: 'App',
         components: {
             Sidebar,
-            'navigation': nav,
+            Navbar,
         }
     }
 </script>
 
 <style lang="scss" scoped>
+    @import './../../sass/app';
+
     .app-container {
         display: inline-block;
     }
