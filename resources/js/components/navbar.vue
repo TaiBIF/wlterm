@@ -1,6 +1,6 @@
 <template>
     <header class="blog-header py-3 shadow-md">
-        <div class="flex-nowrap justify-content-between align-items-center">
+        <div class="flex justify-center">
             <div class="title-container">
                 <img src="/images/logo.jpg" class="logo">
                 <a class="blog-header-logo text-dark text-lg" href="#">
@@ -11,12 +11,6 @@
         </div>
     </header>
 </template>
-
-<script>
-    export default {
-        name: 'navigation'
-    }
-</script>
 <style lang="scss" scoped>
     .blog-header-logo {
         vertical-align: middle;

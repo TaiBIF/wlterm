@@ -1,7 +1,8 @@
 <template>
     <div class="app-container">
-        <navigation></navigation>
+
         <div>
+            <navbar></navbar>
             <sidebar></sidebar>
             <div class="main-content inline-block">
                 <router-view></router-view>
