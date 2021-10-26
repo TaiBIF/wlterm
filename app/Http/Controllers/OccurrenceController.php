@@ -31,8 +31,12 @@ class OccurrenceController extends Controller
         $identifiedByChinese = $request->get('identified_by_chinese');
         $sid = $request->get('sid');
         $projectIds = $request->get('projectIds');
+        $recordUseName = $request->get('record_use_name');
 
-        $occurrencesQuery = Occurrence::query();
+        $occurrencesQuery = Occurrence::query()
+            ->select('table_forgrid.*', 'main.record_use_name')
+            ->leftJoin('main', 'main.record_id', '=', 'table_forgrid.record_id');
+
         if ($sid) {
             $occurrencesQuery->where('sid', '=', $sid);
         }
@@ -66,7 +70,7 @@ class OccurrenceController extends Controller
         }
 
         if ($scientificName) {
-            $occurrencesQuery->where('scientific_name', 'like', '%' . $scientificName . '%');
+            $occurrencesQuery->where('table_forgrid.scientific_name', 'like', '%' . $scientificName . '%');
         }
 
         if ($locality) {
@@ -83,6 +87,10 @@ class OccurrenceController extends Controller
 
         if ($chineseName) {
             $occurrencesQuery->where('chinese', 'like', '%' . $chineseName . '%');
+        }
+
+        if ($recordUseName) {
+            $occurrencesQuery->where('record_use_name', 'like', '%' . $recordUseName . '%');
         }
 
         if ($identifiedByChinese) {

@@ -48,6 +48,10 @@
             </tr>
             <template v-if="type === 'occurrence'">
                 <tr>
+                    <td colspan="1">原紀錄學名</td>
+                    <td colspan="3" v-text="`${record.record_use_name}`"/>
+                </tr>
+                <tr>
                     <td colspan="1">學名</td>
                     <td colspan="3" v-text="`${record.scientific_name} ${record.author} ${record.chinese}`"/>
                 </tr>

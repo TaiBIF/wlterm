@@ -48,6 +48,7 @@
                     { type: 'text', title: '目名', width: '100', name: 'order', searchable: true },
                     { type: 'text', title: '科名', width: '100', name: 'family', searchable: true },
                     { type: 'text', title: '學名', width: '100', name: 'scientific_name', searchable: true },
+                    { type: 'text', title: '原紀錄學名', width: '100', name: 'record_use_name', searchable: true },
                     { type: 'text', title: '中文名', width: '100', name: 'chinese', searchable: true },
                     { type: 'text', title: '調查日 ', width: '100', name: 'date', searchable: true },
                     { type: 'text', title: '地點 ', width: '100', name: 'locality_chinese', searchable: true },
