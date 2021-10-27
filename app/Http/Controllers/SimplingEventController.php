@@ -28,8 +28,8 @@ class SimplingEventController extends Controller
                 'station.longitude as longitude',
                 'project.projectname as project_name'
             ])
-            ->leftJoin('station', 'station.id', '=', 'main.id')
-            ->leftJoin('project', 'project.Project_id', '=', 'main.Project_id')
+            ->join('station', 'station.id', '=', 'main.id')
+            ->join('project', 'project.Project_id', '=', 'main.Project_id')
             ->orderBy('date')
             ->orderBy('main.Project_id')
             ->groupBy(['date', 'examine_way', 'main.id', 'main.Project_id']);
