@@ -2,7 +2,6 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import Index from './pages/Index';
-import Record from './pages/Record';
 
 Vue.use(VueRouter);
 
