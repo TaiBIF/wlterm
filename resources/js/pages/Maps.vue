@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="map-container">
-            <l-map :zoom="zoom" :center="center" ref="map">
+            <l-map :zoom="zoom" :center="center" :options="{tap :false}" ref="map">
                 <l-tile-layer :url="url"></l-tile-layer>
                 <l-marker :lat-lng="marker.location"
                           :options="marker.options"
