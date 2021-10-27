@@ -6,10 +6,14 @@ import Record from './pages/Record';
 
 Vue.use(VueRouter);
 
-const router = new VueRouter ({
+const router = new VueRouter({
     mode: 'history',
-    scrollBehavior() {
-        return { x: 0, y: 0 };
+    scrollBehavior: function (to, from, savedPosition) {
+        if (to.hash) {
+            return { selector: to.hash, offset: { x: 0, y: 100 }}
+        } else {
+            return {x: 0, y: 0}
+        }
     },
     routes: [
         {

@@ -5,16 +5,16 @@
                 <router-link to="/">計畫簡介</router-link>
                 <ul class="sub-menu">
                     <li>
-                        <a class="text-dark" href="/#project">計畫緣由</a>
+                        <router-link to="/#project">計畫緣由</router-link>
                     </li>
                     <li>
-                        <a class="text-dark" href="/#project-target">計畫目標</a>
+                        <router-link to="/#project-target">計畫目標</router-link>
                     </li>
                     <li>
-                        <a class="text-dark" href="/#research-station">研究測站</a>
+                        <router-link to="#research-station">研究測站</router-link>
                     </li>
                     <li>
-                        <a class="text-dark" href="/#participants">參與人員</a>
+                        <router-link to="/#participants">參與人員</router-link>
                     </li>
                 </ul>
             </li>
