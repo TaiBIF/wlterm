@@ -19,6 +19,9 @@ class SimplingEventController extends Controller
         $localityChinese = $request->get('locality_chinese');
         $projectName = $request->get('project_name');
 
+        $sort = $request->get('sort');
+        $direction = $request->get('direction', 'asc');
+
         $eventsQuery = Main::query()
             ->select([
                 'date', 'examine_way', 'main.id as id', 'main.Project_id as project_id',
@@ -30,8 +33,6 @@ class SimplingEventController extends Controller
             ])
             ->join('station', 'station.id', '=', 'main.id')
             ->join('project', 'project.Project_id', '=', 'main.Project_id')
-            ->orderBy('date')
-            ->orderBy('main.Project_id')
             ->groupBy(['date', 'examine_way', 'main.id', 'main.Project_id']);
 
         if ($date) {
@@ -54,6 +55,13 @@ class SimplingEventController extends Controller
             $eventsQuery->where('project.projectname', 'like', '%' . $projectName . '%');
         }
 
+        if ($sort || $direction) {
+            $eventsQuery->orderBy($sort, $direction);
+        } else {
+            $eventsQuery->orderBy('date')
+                ->orderBy('main.Project_id');
+        }
+
         $events = $eventsQuery->paginate($this->perPage);
 
         return response()->json([
@@ -67,6 +75,19 @@ class SimplingEventController extends Controller
     {
         $examineWay = $request->get('examineWay');
         $date = $request->get('date');
+        $order = $request->get('order');
+        $family = $request->get('family');
+        $recordUseName = $request->get('record_use_name');
+        $scientificName = $request->get('scientific_name');
+        $chinese = $request->get('chinese');
+        $bodyLength = $request->get('body_length');
+        $bodyLengthUnit = $request->get('body_length_unit');
+        $biomass = $request->get('biomass');
+        $biomassUnit = $request->get('biomass_unit');
+        $notes = $request->get('notes');
+
+        $sort = $request->get('sort');
+        $direction = $request->get('direction', 'asc');
 
         $eventsQuery = Main::query()
             ->select([
@@ -77,11 +98,55 @@ class SimplingEventController extends Controller
             ->leftJoin('species', 'species.scientific_name', 'main.scientific_name');
 
         if ($examineWay) {
-            $eventsQuery->where('examine_way', $examineWay);
+            $eventsQuery->where('examine_way', '=', $examineWay);
         }
 
         if ($date) {
-            $eventsQuery->where('date', $date);
+            $eventsQuery->where('date', '=', $date);
+        }
+
+        if ($order) {
+            $eventsQuery->where('species.order', 'like', "%$order%");
+        }
+
+        if ($family) {
+            $eventsQuery->where('species.family', 'like', "%$family%");
+        }
+
+        if ($recordUseName) {
+            $eventsQuery->where('record_use_name', 'like', "%$recordUseName%");
+        }
+
+        if ($scientificName) {
+            $eventsQuery->where('main.scientific_name', 'like', "%$scientificName%");
+        }
+
+        if ($chinese) {
+            $eventsQuery->where('chinese', 'like', "%$chinese%");
+        }
+
+        if ($bodyLength) {
+            $eventsQuery->where('body_length', 'like', "%$bodyLength%");
+        }
+
+        if ($bodyLengthUnit) {
+            $eventsQuery->where('body_length_unit', 'like', "%$bodyLengthUnit%");
+        }
+
+        if ($biomass) {
+            $eventsQuery->where('biomass', '=', $biomass);
+        }
+
+        if ($biomassUnit) {
+            $eventsQuery->where('biomass_unit', 'like', "%$biomassUnit%");
+        }
+
+        if ($notes) {
+            $eventsQuery->where('notes', 'like', "%$notes%");
+        }
+
+        if ($sort || $direction) {
+            $eventsQuery->orderBy($sort, $direction);
         }
 
         $events = $eventsQuery->paginate($this->perPage);

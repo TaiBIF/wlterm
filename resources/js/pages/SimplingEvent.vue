@@ -44,12 +44,12 @@
                     { type: 'text', title: '科', width: '100', name: 'family', searchable: true },
                     { type: 'text', title: '原紀錄學名', width: '100', name: 'record_use_name', searchable: true },
                     { type: 'text', title: '接受學名', width: '180', name: 'scientific_name', searchable: true },
-                    { type: 'text', title: '中文名', width: '120', name: 'chinese' },
+                    { type: 'text', title: '中文名', width: '120', name: 'chinese', searchable: true },
                     { type: 'text', title: '個體數', width: '80', name: 'individual_count' },
-                    { type: 'text', title: '覆蓋率', width: '80', name: 'cover_rate', searchable: true },
-                    { type: 'text', title: '體長', width: '80', name: 'body_length', searchable: true },
+                    { type: 'text', title: '覆蓋率', width: '80', name: 'cover_rate'},
+                    { type: 'text', title: '體長', width: '80', name: 'body_length'},
                     { type: 'text', title: '體長單位', width: '80', name: 'body_length_unit', searchable: true },
-                    { type: 'text', title: '生物量', width: '80', name: 'biomass', searchable: true },
+                    { type: 'text', title: '生物量', width: '80', name: 'biomass'},
                     { type: 'text', title: '生物量單位', width: '80', name: 'biomass_unit', searchable: true },
                     { type: 'text', title: '備註', width: '150', name: 'notes', searchable: true },
 
@@ -80,6 +80,7 @@
 
                 this.page = 0;
                 this.isEnd = false;
+                this.data = [];
 
                 this.loadMore()
             },
