@@ -78,7 +78,7 @@
             search() {
                 window.scrollTo(0, 0);
 
-                this.page = 1;
+                this.page = 0;
                 this.isEnd = false;
 
                 this.loadMore()
