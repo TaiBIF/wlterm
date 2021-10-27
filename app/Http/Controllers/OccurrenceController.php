@@ -94,7 +94,7 @@ class OccurrenceController extends Controller
         }
 
         if ($identifiedByChinese) {
-            $occurrencesQuery->where('identified_by_chinese', 'like', '%' . $identifiedByChinese . '%');
+            $occurrencesQuery->where('table_forgrid.identified_by_chinese', 'like', '%' . $identifiedByChinese . '%');
         }
 
         if ($projectIds) {
