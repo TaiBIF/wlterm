@@ -58,7 +58,7 @@ class OccurrenceController extends Controller
         }
 
         if ($family) {
-            $occurrencesQuery->where('family', 'like', '%' . $family . '%');
+            $occurrencesQuery->where('table_forgrid.family', 'like', '%' . $family . '%');
         }
 
         if ($collectorChinese) {
