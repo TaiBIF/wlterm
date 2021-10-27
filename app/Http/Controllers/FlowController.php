@@ -20,10 +20,9 @@ class FlowController extends Controller
         $direction = $request->get('direction', 'asc');
 
         $flowRecordsQuery = Flow::query()
-            ->select(['*', 'rain.st1 as rain_st1', 'rain.st2 as rain_st2', 'rain.st3 as rain_st3', 'rain.st4 as rain_st4'])
+            ->select(['flow.*', 'flow_stations.name as station_name', 'rain.st1 as rain_st1', 'rain.st2 as rain_st2', 'rain.st3 as rain_st3', 'rain.st4 as rain_st4'])
             ->join('flow_stations', 'flow.station_id', '=', 'flow_stations.id')
-            ->join('rain', 'rain.date', 'flow.date')
-            ->with(['rain', 'station']);
+            ->join('rain', 'rain.date', '=', 'flow.date');
 
         if ($date) {
             $flowRecordsQuery->where('flow.date',  'like', '%' . $date . '%');
@@ -40,21 +39,11 @@ class FlowController extends Controller
 
         $flowRecords = $flowRecordsQuery->paginate($this->perPage);
 
-        $data = $flowRecords->map(function ($record) {
-            $record->station_name =$record->station->name ?? '';
-            $record->rain_st1 = $record->rain->st1;
-            $record->rain_st2 = $record->rain->st2;
-            $record->rain_st3 = $record->rain->st3;
-            $record->rain_st4 = $record->rain->st4;
-            unset($record->rain, $record->station);
-            return $record;
-        });
-
         return response()->json([
             'total' => $flowRecords->total(),
             'currentPage' => $flowRecords->currentPage(),
             'perPage' => $flowRecords->perPage(),
-            'data' => $data,
+            'data' => $flowRecords->items(),
         ]);
     }
 
