@@ -91,10 +91,12 @@ class SimplingEventController extends Controller
 
         $eventsQuery = Main::query()
             ->select([
-                'species.order', 'species.family', 'main.scientific_name', 'chinese',
+                'species.order', 'species.family', 'main.scientific_name', 'main.record_id', 'chinese',
                 'individual_count', 'cover_rate', 'body_length', 'body_length_unit',
                 'biomass', 'biomass_unit', 'notes', 'collector_chinese', 'identified_by_chinese', 'record_use_name'
             ])
+            ->where('project_id', '=', $projectId)
+            ->where('id', '=', $stationId)
             ->leftJoin('species', 'species.scientific_name', 'main.scientific_name');
 
         if ($examineWay) {

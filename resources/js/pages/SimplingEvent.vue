@@ -10,8 +10,8 @@
             v-on:search="search"
         >
             <template v-slot:functions="props">
-                <router-link :to="`/occurrences?scientific_name=${ props.datum.scientific_name}`">
-                    查看物種紀錄
+                <router-link :to="`/records/${ props.datum.record_id}?type=occurrence`">
+                    內容
                 </router-link>
             </template>
         </sheet>
