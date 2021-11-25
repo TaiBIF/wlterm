@@ -35,7 +35,7 @@
                 sortBy: '',
                 data: [],
                 columns: [
-                    { type: 'text', title: '測站', width: '100', name: 'auto_id', searchable: true },
+                    { type: 'text', title: '測站', width: '100', name: 'id', searchable: true },
                     { type: 'text', title: '緯度', width: '100', name: 'latitude' },
                     { type: 'text', title: '經度', width: '120', name: 'longitude' },
                     { type: 'text', title: '誤差(公尺)', width: '80', name: 'coordinate_precision' },
