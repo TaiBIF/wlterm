@@ -21,7 +21,7 @@
 
             <router-link to="/photos">
                 <li class="list-group-item">
-                    現象影像
+                    現場影像
                 </li>
             </router-link>
 

@@ -33,7 +33,7 @@
                         </ul>
                     </li>
                     <li class="list-group-item">
-                        <a href="#">現象影像</a>
+                        <a href="#">現場影像</a>
                     </li>
                     <li class="list-group-item">
                         <a href="#">測站資料</a>
