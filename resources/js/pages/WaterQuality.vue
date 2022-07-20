@@ -19,7 +19,9 @@
                 <button class="btn rounded-none ml-1" v-on:click="toggleTab('TOC')" :class="{'bgg200': activeTabKey === 'TOC'}">總有機碳</button>
                 <button class="btn rounded-none ml-1" v-on:click="toggleTab('Temperature')" :class="{'bgg200': activeTabKey === 'Temperature'}">水溫</button>
             </div>
+            <hr class="my-3"/>
         </div>
+
         <sheet
             :data="records"
             :columns="columns"
