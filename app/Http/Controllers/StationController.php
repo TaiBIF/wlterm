@@ -18,7 +18,7 @@ class StationController extends Controller
 
     public function index(Request $request)
     {
-        $stationId = $request->get('auto_id');
+        $stationId = $request->get('id');
         $localityName = $request->get('locality_chinese');
         $sort = $request->get('sort');
         $direction = $request->get('direction');
