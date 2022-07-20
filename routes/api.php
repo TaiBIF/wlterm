@@ -24,6 +24,7 @@ Route::get('/stations-location', 'StationController@map');
 Route::get('/phylum', 'PhylumController@index');
 Route::get('/occurrences', 'OccurrenceController@index');
 Route::get('/occurrences/{id}', 'OccurrenceController@show');
+Route::get('/occurrences-list-map', 'OccurrenceController@listmap');
 Route::get('/occurrences-report', 'OccurrenceController@report');
 Route::get('/occurrences-years', 'OccurrenceController@years');
 Route::get('/classes', 'ClassController@index');
