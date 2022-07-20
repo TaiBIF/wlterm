@@ -20,7 +20,7 @@ class WaterQualityController extends Controller
         $direction = $request->get('direction', 'asc');
 
         $waterQualityQuery = WaterQuality::query()
-            ->select(['water.id', 'date', 'record_id', 'station.latitude', 'station.longitude', 'station.locality_chinese', 'station.maximum_elevation', 'station.maximum_depth'])
+            ->select(['water.*', 'date', 'record_id', 'station.locality_chinese'])
             ->join('station', 'station.id', '=', 'water.id')
             ->whereHas('station', function($query) use ($locality) {
                 if ($locality) {
@@ -53,11 +53,7 @@ class WaterQualityController extends Controller
 
         $data = $waterQuality->map(function ($record) {
             $record->date = Carbon::createFromFormat('Y-m-d H:i:s', $record->date)->format('Y-m-d');
-            $record->latitude = $record->latitude;
-            $record->longitude = $record->longitude;
             $record->locality_chinese = $record->locality_chinese;
-            $record->maximum_elevation = $record->maximum_elevation;
-            $record->maximum_depth = $record->maximum_depth;
             unset($record->station);
             return $record;
         });
