@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Main;
 use App\WaterQuality;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
 class WaterQualityController extends Controller
 {
@@ -16,18 +15,19 @@ class WaterQualityController extends Controller
         $locality = $request->get('locality_chinese');
         $date = $request->get('date');
         $id = $request->get('id');
+        $collectorChinese = $request->get('collector_chinese');
         $sort = $request->get('sort');
         $direction = $request->get('direction', 'asc');
 
         $waterQualityQuery = WaterQuality::query()
-            ->select(['water.id', 'date', 'record_id', 'station.latitude', 'station.longitude', 'station.locality_chinese', 'station.maximum_elevation', 'station.maximum_depth'])
+            ->select(['water.*', 'date', 'record_id', 'station.locality_chinese'])
             ->join('station', 'station.id', '=', 'water.id')
-            ->whereHas('station', function($query) use ($locality) {
+            ->whereHas('station', function ($query) use ($locality) {
                 if ($locality) {
                     $query->where('locality_chinese', 'like', '%' . $locality . '%');
                 }
             })
-            ->where(function($query) {
+            ->where(function ($query) {
                 $query->where('project_id', 3)
                     ->orWhere('project_id', 17)
                     ->orWhere('project_id', 13)
@@ -43,6 +43,10 @@ class WaterQualityController extends Controller
             $waterQualityQuery->where('date', 'like', '%' . $date . '%');
         }
 
+        if ($collectorChinese) {
+            $waterQualityQuery->where('collector_chinese', 'like', '%' . $collectorChinese . '%');
+        }
+
         if ($sort && $direction) {
             $waterQualityQuery->orderBy($sort, $direction);
         } else {
@@ -53,11 +57,7 @@ class WaterQualityController extends Controller
 
         $data = $waterQuality->map(function ($record) {
             $record->date = Carbon::createFromFormat('Y-m-d H:i:s', $record->date)->format('Y-m-d');
-            $record->latitude = $record->latitude;
-            $record->longitude = $record->longitude;
             $record->locality_chinese = $record->locality_chinese;
-            $record->maximum_elevation = $record->maximum_elevation;
-            $record->maximum_depth = $record->maximum_depth;
             unset($record->station);
             return $record;
         });
@@ -92,7 +92,7 @@ class WaterQualityController extends Controller
         }
 
         if ($date) {
-            $waterQualityQuery->where('date',  'like', '%' . $date . '%');
+            $waterQualityQuery->where('date', 'like', '%' . $date . '%');
         }
 
         if ($sort && $direction) {
@@ -109,5 +109,66 @@ class WaterQualityController extends Controller
             'current_page' => $waterQuality->currentPage(),
             'data' => $waterQuality->items(),
         ]);
+    }
+
+    public function report(Request $request)
+    {
+        $locality = $request->get('locality_chinese');
+        $date = $request->get('date');
+        $id = $request->get('id');
+        $collectorChinese = $request->get('collector_chinese');
+        $target = $request->get('target', 'PH');
+
+        $waterQualityQuery = WaterQuality::query()
+            ->select(['water.id', 'date', 'record_id', 'station.locality_chinese', "water.{$target}"])
+            ->join('station', 'station.id', '=', 'water.id')
+            ->whereHas('station', function ($query) use ($locality) {
+                if ($locality) {
+                    $query->where('locality_chinese', 'like', '%' . $locality . '%');
+                }
+            })
+            ->where(function ($query) {
+                $query->where('project_id', 3)
+                    ->orWhere('project_id', 17)
+                    ->orWhere('project_id', 13)
+                    ->orWhere('project_id', 4)
+                    ->orWhere('project_id', 23);
+            });
+
+        if ($id) {
+            $waterQualityQuery->where('water.id', $id);
+        }
+
+        if ($date) {
+            $waterQualityQuery->where('date', 'like', '%' . $date . '%');
+        }
+
+        if ($collectorChinese) {
+            $waterQualityQuery->where('collector_chinese', 'like', '%' . $collectorChinese . '%');
+        }
+
+        $waterQuality = $waterQualityQuery
+            ->where($target, '!=', '')
+            ->orderBy('id')
+            ->orderBy('date')->get();
+
+        $data = $waterQuality->groupBy('id')
+            ->map(function ($records, $stationId) use ($target) {
+                return [
+                    'name' => "測站 $stationId",
+                    'data' => $records->map(function ($record) use ($target) {
+                        return [
+                            Carbon::createFromFormat('Y-m-d H:i:s', $record->date)->timestamp*1000,
+                            $record->{$target},
+                        ];
+                    }),
+                    'pointInterval' => 24 * 3600 * 1000,
+                ];
+            })->values();
+
+        return response()->json([
+            'data' => $data,
+        ]);
+
     }
 }
