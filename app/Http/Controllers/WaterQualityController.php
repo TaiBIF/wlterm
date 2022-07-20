@@ -16,6 +16,7 @@ class WaterQualityController extends Controller
         $locality = $request->get('locality_chinese');
         $date = $request->get('date');
         $id = $request->get('id');
+        $collectorChinese = $request->get('collector_chinese');
         $sort = $request->get('sort');
         $direction = $request->get('direction', 'asc');
 
@@ -41,6 +42,10 @@ class WaterQualityController extends Controller
 
         if ($date) {
             $waterQualityQuery->where('date', 'like', '%' . $date . '%');
+        }
+
+        if ($collectorChinese) {
+            $waterQualityQuery->where('collector_chinese', 'like', '%' . $collectorChinese . '%');
         }
 
         if ($sort && $direction) {
