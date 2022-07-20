@@ -196,8 +196,6 @@
                 }
             });
             intersectionObserver.observe(document.querySelector('.caption'));
-
-            this.fetchReportData();
         },
         methods: {
             fetchReportData() {
