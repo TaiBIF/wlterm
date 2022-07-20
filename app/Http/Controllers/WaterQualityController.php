@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Main;
 use App\WaterQuality;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
 class WaterQualityController extends Controller
 {
@@ -110,5 +109,66 @@ class WaterQualityController extends Controller
             'current_page' => $waterQuality->currentPage(),
             'data' => $waterQuality->items(),
         ]);
+    }
+
+    public function report(Request $request)
+    {
+        $locality = $request->get('locality_chinese');
+        $date = $request->get('date');
+        $id = $request->get('id');
+        $collectorChinese = $request->get('collector_chinese');
+        $target = $request->get('target', 'PH');
+
+        $waterQualityQuery = WaterQuality::query()
+            ->select(['water.id', 'date', 'record_id', 'station.locality_chinese', "water.{$target}"])
+            ->join('station', 'station.id', '=', 'water.id')
+            ->whereHas('station', function ($query) use ($locality) {
+                if ($locality) {
+                    $query->where('locality_chinese', 'like', '%' . $locality . '%');
+                }
+            })
+            ->where(function ($query) {
+                $query->where('project_id', 3)
+                    ->orWhere('project_id', 17)
+                    ->orWhere('project_id', 13)
+                    ->orWhere('project_id', 4)
+                    ->orWhere('project_id', 23);
+            });
+
+        if ($id) {
+            $waterQualityQuery->where('water.id', $id);
+        }
+
+        if ($date) {
+            $waterQualityQuery->where('date', 'like', '%' . $date . '%');
+        }
+
+        if ($collectorChinese) {
+            $waterQualityQuery->where('collector_chinese', 'like', '%' . $collectorChinese . '%');
+        }
+
+        $waterQuality = $waterQualityQuery
+            ->where($target, '!=', '')
+            ->orderBy('id')
+            ->orderBy('date')->get();
+
+        $data = $waterQuality->groupBy('id')
+            ->map(function ($records, $stationId) use ($target) {
+                return [
+                    'name' => "測站 $stationId",
+                    'data' => $records->map(function ($record) use ($target) {
+                        return [
+                            Carbon::createFromFormat('Y-m-d H:i:s', $record->date)->timestamp*1000,
+                            $record->{$target},
+                        ];
+                    }),
+                    'pointInterval' => 24 * 3600 * 1000,
+                ];
+            })->values();
+
+        return response()->json([
+            'data' => $data,
+        ]);
+
     }
 }

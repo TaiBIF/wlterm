@@ -31,6 +31,7 @@ Route::get('/orders', 'OrderController@index');
 Route::get('/family', 'FamilyController@index');
 Route::get('/species', 'SpeciesController@index');
 Route::get('/water-quality', 'WaterQualityController@index');
+Route::get('/water-quality-report', 'WaterQualityController@report');
 Route::get('/records/{id}', 'RecordController@page');
 Route::get('/element-flux', 'WaterQualityController@elementFlux');
 Route::get('/temperature', 'TemperatureController@index');
