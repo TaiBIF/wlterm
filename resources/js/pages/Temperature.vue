@@ -110,8 +110,7 @@
         methods: {
             fetchReportData() {
                 this.$http.get(`/api/temperature-report?${queryString.stringify(this.sheetValues.searchParams)}`)
-                    .then(({ data: { dates, data } }) => {
-                        this.chartOptions.xAxis.categories = dates;
+                    .then(({ data: { data } }) => {
                         this.chartOptions.series = data;
                     });
             },
