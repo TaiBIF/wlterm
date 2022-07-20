@@ -22,12 +22,12 @@ class WaterQualityController extends Controller
         $waterQualityQuery = WaterQuality::query()
             ->select(['water.*', 'date', 'record_id', 'station.locality_chinese'])
             ->join('station', 'station.id', '=', 'water.id')
-            ->whereHas('station', function($query) use ($locality) {
+            ->whereHas('station', function ($query) use ($locality) {
                 if ($locality) {
                     $query->where('locality_chinese', 'like', '%' . $locality . '%');
                 }
             })
-            ->where(function($query) {
+            ->where(function ($query) {
                 $query->where('project_id', 3)
                     ->orWhere('project_id', 17)
                     ->orWhere('project_id', 13)
@@ -92,7 +92,7 @@ class WaterQualityController extends Controller
         }
 
         if ($date) {
-            $waterQualityQuery->where('date',  'like', '%' . $date . '%');
+            $waterQualityQuery->where('date', 'like', '%' . $date . '%');
         }
 
         if ($sort && $direction) {
