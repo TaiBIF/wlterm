@@ -82,7 +82,6 @@
                 activeTabKey: 'PH',
                 chartOptions: {
                     chart: {
-                        type: 'spline',
                         height: 300,
                     },
                     title: {
