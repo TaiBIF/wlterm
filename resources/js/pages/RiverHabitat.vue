@@ -1,7 +1,7 @@
 <template>
     <div class="px-4">
         <h6>河道棲地&nbsp;<small class="text-muted">共 {{ total }} 筆</small></h6>
-        <div class="chart-container">
+        <div class="chart-container max-w-[1240px]">
             <div class="flex justify-center p-4">
                 <div>
                     <highcharts :options="substrateChartOptions"></highcharts>
@@ -111,7 +111,6 @@ export default {
                 title: {
                     text: '棲地百分比'
                 },
-
             },
         }
     },
