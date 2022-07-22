@@ -55,6 +55,7 @@ const chartOption = {
             text: '%'
         }
     },
+    colors: ['#023e8a', '#0077b6', '#00b4d8', '#ade8f4', '#2a9d8f', '#63af90'],
     plotOptions: {
         column: {
             stacking: 'percent'
