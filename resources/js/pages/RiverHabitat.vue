@@ -13,7 +13,7 @@
             <div class="text-center py-2">
                 <button v-for="station in stations"
                         :class="{'bgg200': activeStationKey === station.id}"
-                        class="btn rounded-none ml-1"
+                        class="px-2 py-1 rounded-none ml-1"
                         v-on:click="toggleStation(station.id)">{{ station.locality_chinese }} (#{{ station.id }})
                 </button>
             </div>
