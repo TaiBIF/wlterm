@@ -14,7 +14,6 @@
                 <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('SO4')" :class="{'bgg200': activeTabKey === 'SO4'}">硫酸鹽</button>
                 <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('Chloride')" :class="{'bgg200': activeTabKey === 'Chloride'}">氯鹽</button>
                 <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('Phosphate')" :class="{'bgg200': activeTabKey === 'Phosphate'}">磷酸鹽</button>
-                <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('TP')" :class="{'bgg200': activeTabKey === 'TP'}">總磷</button>
                 <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('AN')" :class="{'bgg200': activeTabKey === 'AN'}">氨氮</button>
                 <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('TOC')" :class="{'bgg200': activeTabKey === 'TOC'}">總有機碳</button>
                 <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('Temperature')" :class="{'bgg200': activeTabKey === 'Temperature'}">水溫</button>
@@ -73,7 +72,6 @@
                     { type: 'text', title: '硫酸鹽(mg/L)', width: '100', name: 'SO4', searchable: false },
                     { type: 'text', title: '氯鹽(mg/L)', width: '80', name: 'Chloride', searchable: false },
                     { type: 'text', title: '磷酸鹽(mg/L)', width: '100', name: 'Phosphate', searchable: false },
-                    { type: 'text', title: '總磷(mg/L)', width: '80', name: 'TP', searchable: false },
                     { type: 'text', title: '氨氮(mg/L)', width: '80', name: 'AN', searchable: false },
                     { type: 'text', title: '總有機碳(mg/L)', width: '100', name: 'TOC', searchable: false },
                     { type: 'text', title: '水溫(℃)', width: '80', name: 'Temperature', searchable: false },
@@ -163,10 +161,6 @@
                     },
                     'Phosphate': {
                         'name': '磷酸鹽',
-                        'unit': 'mg/L',
-                    },
-                    'TP': {
-                        'name': '總磷',
                         'unit': 'mg/L',
                     },
                     'AN': {
