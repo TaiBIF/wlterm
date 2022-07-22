@@ -1,7 +1,7 @@
 <template>
     <div class="px-4">
         <h6>河道棲地&nbsp;<small class="text-muted">共 {{ total }} 筆</small></h6>
-        <div class="chart-container">
+        <div class="chart-container max-w-[1240px]">
             <div class="flex justify-center p-4">
                 <div>
                     <highcharts :options="substrateChartOptions"></highcharts>
@@ -12,9 +12,9 @@
             </div>
             <div class="text-center py-2">
                 <button v-for="station in stations"
-                        :class="{'bgg200': activeStationKey === station}"
-                        class="btn rounded-none ml-1"
-                        v-on:click="toggleStation(station)">測站 {{ station }}
+                        :class="{'bgg200': activeStationKey === station.id}"
+                        class="px-2 py-1 rounded-none ml-1"
+                        v-on:click="toggleStation(station.id)">{{ station.locality_chinese }} (#{{ station.id }})
                 </button>
             </div>
             <hr class="my-3"/>
@@ -55,6 +55,7 @@ const chartOption = {
             text: '%'
         }
     },
+    colors: ['#023e8a', '#0077b6', '#00b4d8', '#ade8f4', '#2a9d8f', '#63af90'],
     plotOptions: {
         column: {
             stacking: 'percent'
@@ -111,7 +112,6 @@ export default {
                 title: {
                     text: '棲地百分比'
                 },
-
             },
         }
     },
@@ -137,7 +137,7 @@ export default {
                 /api/river-habitat-report?${ queryString.stringify(params) }&active_station=${this.activeStationKey}`
             )
                 .then(({data: {data: {categories, morphology, substrate, stations}}}) => {
-                    this.activeStationKey = this.activeStationKey || stations[0];
+                    this.activeStationKey = this.activeStationKey || stations[0].id;
                     this.morphologyChartOptions.xAxis.categories = categories;
                     this.morphologyChartOptions.series = morphology;
                     this.substrateChartOptions.xAxis.categories = categories;
@@ -151,9 +151,6 @@ export default {
             }
 
             this.isLoading = true;
-
-            if (this.sheetValues.searchParams.station_id) this.activeStationKey = this.sheetValues.searchParams.station_id;
-            else this.activeStationKey = '';
 
             const page = this.currentPage + 1;
             this.$http.get(`/api/river-habitat?page=${ page }&${ queryString.stringify(this.sheetValues.searchParams) }&sort=${ this.sortBy }&direction=${ this.direction }`)
@@ -186,6 +183,9 @@ export default {
             this.fetchData(data => {
                 this.records = data;
             })
+
+            if (this.sheetValues.searchParams.station_id) this.activeStationKey = parseInt(this.sheetValues.searchParams.station_id, 10);
+            else this.activeStationKey = '';
             this.fetchReportData();
         },
         toggleStation(target) {

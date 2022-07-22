@@ -4,20 +4,19 @@
         <div class="chart-container">
             <highcharts ref="chart" :options="chartOptions"></highcharts>
             <div class="text-center py-2">
-                <button class="btn rounded-none ml-1" v-on:click="toggleTab('PH')" :class="{'bgg200': activeTabKey === 'PH'}">氫離子濃度</button>
-                <button class="btn rounded-none ml-1" v-on:click="toggleTab('Conductivity')" :class="{'bgg200': activeTabKey === 'Conductivity'}">導電度</button>
-                <button class="btn rounded-none ml-1" v-on:click="toggleTab('DO')" :class="{'bgg200': activeTabKey === 'DO'}">溶氧</button>
-                <button class="btn rounded-none ml-1" v-on:click="toggleTab('Clarity')" :class="{'bgg200': activeTabKey === 'Clarity'}">濁度</button>
-                <button class="btn rounded-none ml-1" v-on:click="toggleTab('Alkali_Silicate')" :class="{'bgg200': activeTabKey === 'Alkali_Silicate'}">矽酸鹽</button>
-                <button class="btn rounded-none ml-1" v-on:click="toggleTab('NO3_N')" :class="{'bgg200': activeTabKey === 'NO3_N'}">硝酸鹽氮</button>
-                <button class="btn rounded-none ml-1" v-on:click="toggleTab('NO2_N')" :class="{'bgg200': activeTabKey === 'NO2_N'}">亞硝酸鹽氮</button>
-                <button class="btn rounded-none ml-1" v-on:click="toggleTab('SO4')" :class="{'bgg200': activeTabKey === 'SO4'}">硫酸鹽</button>
-                <button class="btn rounded-none ml-1" v-on:click="toggleTab('Chloride')" :class="{'bgg200': activeTabKey === 'Chloride'}">氯鹽</button>
-                <button class="btn rounded-none ml-1" v-on:click="toggleTab('Phosphate')" :class="{'bgg200': activeTabKey === 'Phosphate'}">磷酸鹽</button>
-                <button class="btn rounded-none ml-1" v-on:click="toggleTab('TP')" :class="{'bgg200': activeTabKey === 'TP'}">總磷</button>
-                <button class="btn rounded-none ml-1" v-on:click="toggleTab('AN')" :class="{'bgg200': activeTabKey === 'AN'}">氨氮</button>
-                <button class="btn rounded-none ml-1" v-on:click="toggleTab('TOC')" :class="{'bgg200': activeTabKey === 'TOC'}">總有機碳</button>
-                <button class="btn rounded-none ml-1" v-on:click="toggleTab('Temperature')" :class="{'bgg200': activeTabKey === 'Temperature'}">水溫</button>
+                <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('PH')" :class="{'bgg200': activeTabKey === 'PH'}">氫離子濃度</button>
+                <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('Conductivity')" :class="{'bgg200': activeTabKey === 'Conductivity'}">導電度</button>
+                <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('DO')" :class="{'bgg200': activeTabKey === 'DO'}">溶氧</button>
+                <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('Clarity')" :class="{'bgg200': activeTabKey === 'Clarity'}">濁度</button>
+                <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('Alkali_Silicate')" :class="{'bgg200': activeTabKey === 'Alkali_Silicate'}">矽酸鹽</button>
+                <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('NO3_N')" :class="{'bgg200': activeTabKey === 'NO3_N'}">硝酸鹽氮</button>
+                <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('NO2_N')" :class="{'bgg200': activeTabKey === 'NO2_N'}">亞硝酸鹽氮</button>
+                <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('SO4')" :class="{'bgg200': activeTabKey === 'SO4'}">硫酸鹽</button>
+                <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('Chloride')" :class="{'bgg200': activeTabKey === 'Chloride'}">氯鹽</button>
+                <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('Phosphate')" :class="{'bgg200': activeTabKey === 'Phosphate'}">磷酸鹽</button>
+                <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('AN')" :class="{'bgg200': activeTabKey === 'AN'}">氨氮</button>
+                <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('TOC')" :class="{'bgg200': activeTabKey === 'TOC'}">總有機碳</button>
+                <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTab('Temperature')" :class="{'bgg200': activeTabKey === 'Temperature'}">水溫</button>
             </div>
             <hr class="my-3"/>
         </div>
@@ -73,7 +72,6 @@
                     { type: 'text', title: '硫酸鹽(mg/L)', width: '100', name: 'SO4', searchable: false },
                     { type: 'text', title: '氯鹽(mg/L)', width: '80', name: 'Chloride', searchable: false },
                     { type: 'text', title: '磷酸鹽(mg/L)', width: '100', name: 'Phosphate', searchable: false },
-                    { type: 'text', title: '總磷(mg/L)', width: '80', name: 'TP', searchable: false },
                     { type: 'text', title: '氨氮(mg/L)', width: '80', name: 'AN', searchable: false },
                     { type: 'text', title: '總有機碳(mg/L)', width: '100', name: 'TOC', searchable: false },
                     { type: 'text', title: '水溫(℃)', width: '80', name: 'Temperature', searchable: false },
@@ -82,7 +80,6 @@
                 activeTabKey: 'PH',
                 chartOptions: {
                     chart: {
-                        type: 'spline',
                         height: 300,
                     },
                     title: {
@@ -103,7 +100,7 @@
                     },
                     tooltip: {
                         formatter: function () {
-                            return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%b-%e', this.x, true) + '<br/>' + this.y + ' ℃';
+                            return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%b-%e', this.x, true) + '<br/>' + this.y;
                         },
                         backgroundColor: 'rgba(0, 0, 0, .75)',
                         borderWidth: 2,
@@ -164,10 +161,6 @@
                     },
                     'Phosphate': {
                         'name': '磷酸鹽',
-                        'unit': 'mg/L',
-                    },
-                    'TP': {
-                        'name': '總磷',
                         'unit': 'mg/L',
                     },
                     'AN': {
