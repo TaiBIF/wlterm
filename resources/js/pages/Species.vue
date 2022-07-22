@@ -59,6 +59,7 @@
                     { type: 'text', title: '中文名', width: '100', name: 'chinese', searchable: true },
                     { type: 'text', title: '命名者', width: '100', name: 'author', searchable: true },
                     { type: 'text', title: '數量', width: '80', name: 'total' },
+                    { type: 'text', title: '保育資訊', width: '80', name: 'conserve_info' },
                 ],
                 total: 0,
             }
