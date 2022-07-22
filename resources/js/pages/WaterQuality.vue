@@ -102,7 +102,7 @@
                     },
                     tooltip: {
                         formatter: function () {
-                            return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%b-%e', this.x, true) + '<br/>' + this.y + ' ℃';
+                            return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%b-%e', this.x, true) + '<br/>' + this.y;
                         },
                         backgroundColor: 'rgba(0, 0, 0, .75)',
                         borderWidth: 2,
