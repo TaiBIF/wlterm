@@ -12,9 +12,9 @@
             </div>
             <div class="text-center py-2">
                 <button v-for="station in stations"
-                        :class="{'bgg200': activeStationKey === station}"
+                        :class="{'bgg200': activeStationKey === station.id}"
                         class="btn rounded-none ml-1"
-                        v-on:click="toggleStation(station)">測站 {{ station }}
+                        v-on:click="toggleStation(station.id)">{{ station.locality_chinese }} (#{{ station.id }})
                 </button>
             </div>
             <hr class="my-3"/>
@@ -137,7 +137,7 @@ export default {
                 /api/river-habitat-report?${ queryString.stringify(params) }&active_station=${this.activeStationKey}`
             )
                 .then(({data: {data: {categories, morphology, substrate, stations}}}) => {
-                    this.activeStationKey = this.activeStationKey || stations[0];
+                    this.activeStationKey = this.activeStationKey || stations[0].id;
                     this.morphologyChartOptions.xAxis.categories = categories;
                     this.morphologyChartOptions.series = morphology;
                     this.substrateChartOptions.xAxis.categories = categories;
@@ -151,9 +151,6 @@ export default {
             }
 
             this.isLoading = true;
-
-            if (this.sheetValues.searchParams.station_id) this.activeStationKey = this.sheetValues.searchParams.station_id;
-            else this.activeStationKey = '';
 
             const page = this.currentPage + 1;
             this.$http.get(`/api/river-habitat?page=${ page }&${ queryString.stringify(this.sheetValues.searchParams) }&sort=${ this.sortBy }&direction=${ this.direction }`)
@@ -186,6 +183,9 @@ export default {
             this.fetchData(data => {
                 this.records = data;
             })
+
+            if (this.sheetValues.searchParams.station_id) this.activeStationKey = parseInt(this.sheetValues.searchParams.station_id, 10);
+            else this.activeStationKey = '';
             this.fetchReportData();
         },
         toggleStation(target) {

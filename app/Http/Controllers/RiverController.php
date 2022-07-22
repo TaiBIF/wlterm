@@ -7,6 +7,7 @@ use App\RiverHabitat;
 use App\RiverMorphology;
 use App\RiverSubstrate;
 use App\RiverSection;
+use App\Station;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -128,7 +129,7 @@ class RiverController extends Controller
 
         return response()->json([
             'data' => [
-                'stations' => $stations,
+                'stations' => Station::whereIn('id', $stations)->get(),
                 'categories' => $dates->map(function($date) {
                     return Carbon::createFromFormat('Y-m-d', $date)->format('Y-m');
                 })->all(),
