@@ -1,6 +1,5 @@
 module.exports = {
-    purge: ['./resources/**/*.{vue,js,ts,jsx,tsx}'],
-    darkMode: false,
+    content: ['./resources/**/*.{vue,js,ts,jsx,tsx}'],
     theme: {
         extend: {
             flex: {
