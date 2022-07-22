@@ -1,6 +1,6 @@
 <template>
     <div class="px-4">
-        <h6 class="page-title">
+        <h6 class="page-title sticky left-[180px] w-[400px]">
             生物物種調查紀錄 <small class="text-muted">共 {{ total }} 筆</small>
         </h6>
         <div class="map-container">
@@ -195,6 +195,8 @@ export default {
     height: 300px;
     overflow: hidden;
     z-index: 0;
+    position: sticky;
+    left: 180px;
     .vue2leaflet-map {
         z-index: 0;
     }
