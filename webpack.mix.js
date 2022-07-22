@@ -7,4 +7,9 @@ mix.js('resources/js/app.js', 'public/js')
     .options({
         postCss: [tailwindcss('./tailwind.config.js')],
     })
+    .webpackConfig({
+        output: {
+            chunkFilename: mix.inProduction() ? 'js/chunks/[name].[chunkhash].js' : 'js/chunks/[name].js',
+        },
+    })
     .version();
