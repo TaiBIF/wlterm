@@ -112,7 +112,7 @@ class RiverController extends Controller
         }
 
         if ($stationId) {
-            $habitateQuery->where('station.id', 'like', '%' . $stationId . '%');
+            $habitateQuery->where('station.id', '=', $stationId);
         }
 
         $stations = $habitateQuery->get()->unique('station_id')->sortBy('station_id')->pluck('station_id');
