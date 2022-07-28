@@ -55,6 +55,7 @@ class RiverController extends Controller
         }
 
         if ($sort && $direction) {
+            if ($sort === 'morphology_name') $sort = 'morphology';
             $habitateQuery->orderBy($sort, $direction);
         }
 
