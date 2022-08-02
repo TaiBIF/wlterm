@@ -91,11 +91,12 @@
             jExcelOptions() {
                 return {
                     data: this.data,
-                        columnSorting: this.sortable,
-                        editable: true,
-                        columns: this.columns,
-                        onsort: this.onsort,
-                        readOnly: true,
+                    columnSorting: this.sortable,
+                    editable: true,
+                    columns: this.columns,
+                    onsort: this.onsort,
+                    readOnly: true,
+                    contextMenu: false,
                 }
             }
         },
