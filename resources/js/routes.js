@@ -21,6 +21,11 @@ const router = new VueRouter({
             component: Index,
         },
         {
+            path: '/references',
+            name: 'references',
+            component: () => import(/* webpackChunkName: "references" */'./pages/References'),
+        },
+        {
             path: '/photos',
             name: 'photos',
             component: () => import(/* webpackChunkName: "photos" */'./pages/Photos'),

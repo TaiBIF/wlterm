@@ -17,6 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/references', 'ReferenceController@index');
 Route::get('/photos', 'PhotoController@index');
 Route::get('/stations', 'StationController@index');
 Route::get('/stations/{id}', 'StationController@get');
