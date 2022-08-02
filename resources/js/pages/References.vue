@@ -1,18 +1,6 @@
 <template>
     <div class="px-4">
         <h6>伍、相關文獻&nbsp;<small class="text-muted">共 {{ total }} 筆</small></h6>
-        <div class="w-full mb-2">
-            以標籤篩選:
-            <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTag('資料整合')" :class="{'bgg200': sheetValues.searchParams.tag === '資料整合'}">資料整合</button>
-            <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTag('水工模型試驗')" :class="{'bgg200': sheetValues.searchParams.tag === '水工模型試驗'}">水工模型試驗</button>
-            <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTag('櫻花鉤吻鮭')" :class="{'bgg200': sheetValues.searchParams.tag === '櫻花鉤吻鮭'}">櫻花鉤吻鮭</button>
-            <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTag('水棲昆蟲')" :class="{'bgg200': sheetValues.searchParams.tag === '水棲昆蟲'}">水棲昆蟲</button>
-            <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTag('水文物理棲地')" :class="{'bgg200': sheetValues.searchParams.tag === '水文物理棲地'}">水文物理棲地</button>
-            <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTag('水質')" :class="{'bgg200': sheetValues.searchParams.tag === '水質'}">水質</button>
-            <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTag('藻類')" :class="{'bgg200': sheetValues.searchParams.tag === '藻類'}">藻類</button>
-            <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTag('生態資料庫')" :class="{'bgg200': sheetValues.searchParams.tag === '生態資料庫'}">生態資料庫</button>
-            <button class="px-2 py-1 rounded-none ml-1" v-on:click="toggleTag('鳥類')" :class="{'bgg200': sheetValues.searchParams.tag === '鳥類'}">鳥類</button>
-        </div>
         <sheet
             :data="references"
             :columns="columns"
@@ -22,6 +10,20 @@
             v-on:sort="sort"
             v-on:search="search"
         >
+            <template v-slot:search-tags>
+                <select v-on:change="(e) => toggleTag(e.target.value, 'tags')">
+                    <option value="">全部</option>
+                    <option value="資料整合">資料整合</option>
+                    <option value="水工模型試驗">水工模型試驗</option>
+                    <option value="櫻花鉤吻鮭">櫻花鉤吻鮭</option>
+                    <option value="水棲昆蟲">水棲昆蟲</option>
+                    <option value="水文物理棲地">水文物理棲地</option>
+                    <option value="水質">水質</option>
+                    <option value="藻類">藻類</option>
+                    <option value="生態資料庫">生態資料庫</option>
+                    <option value="鳥類">鳥類</option>
+                </select>
+            </template>
         </sheet>
         <div class="myexcel text-muted caption">
             相關文獻&nbsp;共 {{ total }} 筆
@@ -53,8 +55,8 @@
                 },
                 columns: [
                     { type: 'html', title: '引用文獻', width: '700', name: 'citation', searchable: true },
-                    { type: 'text', title: '年份', width: '100', name: 'year', searchable: true },
-                    { type: 'text', title: '標籤', width: '160', name: 'tags' },
+                    { type: 'text', title: '年份', width: '100', name: 'year', searchable: true},
+                    { type: 'text', title: '標籤', width: '160', name: 'tags', searchable: true, searchType: 'custom' },
                 ],
                 total: 0,
             }
@@ -129,5 +131,14 @@
 
     .bgg200 {
         background-color: #eee;
+    }
+
+    select {
+        border: 1px solid gray;
+        line-height: 1.2rem;
+        font-size: 0.6rem;
+        padding: 1px 2px;
+        font-weight: normal;
+        height: 23px;
     }
 </style>

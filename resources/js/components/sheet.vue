@@ -8,13 +8,17 @@
                 <i class="fas fa-search"></i>
             </td>
             <td v-for="column in columns" :width="column.width">
-                <input type="text"
-                       v-if="column.searchable"
-                       :placeholder="`搜尋${column.title}`"
-                       :value="value.searchParams[column.name]"
-                       v-on:focus="focusSearch"
-                       v-on:change="(e) => changeQuery(e.target.value, column.name)"
-                />
+                <div v-if="column.searchable">
+                    <slot v-if="column.searchType === 'custom'" :name="`search-${column.name}`"></slot>
+                    <input type="text"
+                           v-else
+                           :placeholder="`搜尋${column.title}`"
+                           :value="value.searchParams[column.name]"
+                           v-on:focus="focusSearch"
+                           v-on:change="(e) => changeQuery(e.target.value, column.name)"
+                    />
+                </div>
+
             </td>
             <td v-if="action"></td>
         </tr>
