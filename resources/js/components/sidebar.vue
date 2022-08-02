@@ -16,6 +16,9 @@
                     <li>
                         <router-link to="/#participants">參與人員</router-link>
                     </li>
+                    <li>
+                        <router-link to="/references">相關文獻</router-link>
+                    </li>
                 </ul>
             </li>
 

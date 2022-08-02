@@ -8,15 +8,19 @@
                 <i class="fas fa-search"></i>
             </td>
             <td v-for="column in columns" :width="column.width">
-                <input type="text"
-                       v-if="column.searchable"
-                       :placeholder="`搜尋${column.title}`"
-                       :value="value.searchParams[column.name]"
-                       v-on:focus="focusSearch"
-                       v-on:change="(e) => changeQuery(e.target.value, column.name)"
-                />
+                <div v-if="column.searchable">
+                    <slot v-if="column.searchType === 'custom'" :name="`search-${column.name}`"></slot>
+                    <input type="text"
+                           v-else
+                           :placeholder="`搜尋${column.title}`"
+                           :value="value.searchParams[column.name]"
+                           v-on:focus="focusSearch"
+                           v-on:change="(e) => changeQuery(e.target.value, column.name)"
+                    />
+                </div>
+
             </td>
-            <td></td>
+            <td v-if="action"></td>
         </tr>
         <div class="sheet-content">
             <div id="spreadsheet" ref="spreadsheet"></div>
@@ -24,15 +28,15 @@
                 <table class="jexcel action-table" cellpadding="0" cellspacing="0">
                     <thead class="resizable1">
                     <tr>
-                        <td width="100px">&nbsp;</td>
+                        <td width="100px" v-if="action">&nbsp;</td>
                     </tr>
                     <tr>
-                        <td width="80px">&nbsp;</td>
+                        <td width="80px" v-if="action">&nbsp;</td>
                     </tr>
                     </thead>
                     <tbody class="draggable">
                     <tr v-for="datum in data">
-                        <td class="jexcel_row">
+                        <td class="jexcel_row" v-if="action" >
                             <slot name="functions" v-bind:datum="datum">&nbsp;<br/></slot>
                         </td>
                     </tr>
@@ -81,17 +85,22 @@
                 default() {
                     return {};
                 },
+            },
+            action: {
+                type: Boolean,
+                default: true,
             }
         },
         computed: {
             jExcelOptions() {
                 return {
                     data: this.data,
-                        columnSorting: this.sortable,
-                        editable: true,
-                        columns: this.columns,
-                        onsort: this.onsort,
-                        readOnly: true,
+                    columnSorting: this.sortable,
+                    editable: true,
+                    columns: this.columns,
+                    onsort: this.onsort,
+                    readOnly: true,
+                    contextMenu: false,
                 }
             }
         },
