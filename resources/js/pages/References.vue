@@ -87,7 +87,12 @@
                             this.isEnd = true;
                         }
 
-                        callback(data);
+                        callback(data.map(m => {
+                            return {
+                                ... m,
+                                tags: m.tags.split(',').join(', '),
+                            }
+                        }));
                         this.total = total;
                         this.currentPage = currentPage;
                         this.isLoading = false;
