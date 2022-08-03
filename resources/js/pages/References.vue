@@ -2,6 +2,7 @@
     <div class="px-4">
         <h6>伍、相關文獻&nbsp;<small class="text-muted">共 {{ total }} 筆</small></h6>
         <sheet
+            class="sheet"
             :data="references"
             :columns="columns"
             :is-loading="isLoading"
@@ -54,9 +55,9 @@
                     defaultColAlign: 'left',
                 },
                 columns: [
-                    { type: 'html', title: '引用文獻', width: '700', name: 'citation', searchable: true },
+                    { type: 'text', title: '引用文獻', width: '700', name: 'citation', searchable: true },
                     { type: 'text', title: '年份', width: '100', name: 'year', searchable: true},
-                    { type: 'text', title: '標籤', width: '160', name: 'tags', searchable: true, searchType: 'custom' },
+                    { type: 'text', title: '標籤', width: '200', name: 'tags', searchable: true, searchType: 'custom' },
                 ],
                 total: 0,
             }
@@ -86,12 +87,7 @@
                             this.isEnd = true;
                         }
 
-                        callback(data.map((d) => {
-                            return {
-                                ...d,
-                                citation: `<div style="width: 100%;white-space: break-spaces;text-align: left;line-height: 16px">${d.citation}</div>`,
-                            }
-                        }));
+                        callback(data);
                         this.total = total;
                         this.currentPage = currentPage;
                         this.isLoading = false;
@@ -140,5 +136,13 @@
         padding: 1px 2px;
         font-weight: normal;
         height: 23px;
+    }
+
+    .sheet::v-deep .jexcel {
+        tbody > tr > td[data-x="0"] {
+            text-align: left !important;
+            white-space: break-spaces !important;
+            line-height: 16px;
+        }
     }
 </style>
