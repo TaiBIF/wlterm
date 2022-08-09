@@ -73,6 +73,40 @@ const chartOption = {
     series: [],
 }
 
+const morphologyColorMap = (name) => {
+    switch (name) {
+        case '深潭':
+            return '#023e8a';
+        case '緩流':
+            return '#0077b6';
+        case '淺瀨(湍流)':
+            return '#00b4d8';
+        case '急流':
+            return '#2a9d8f';
+        default:
+            return '#fff';
+    }
+}
+
+const substrateColorMap = (name) => {
+    switch (name) {
+        case '平坦表面':
+            return '#63af90';
+        case '碎石':
+            return '#2a9d8f';
+        case '卵石':
+            return '#ade8f4';
+        case '粗石':
+            return '#00b4d8';
+        case '小型礫石':
+            return '#0077b6';
+        case '大型礫石':
+            return '#023e8a';
+        default:
+            return '#fffddd';
+    }
+}
+
 export default {
     name: 'WaterQuality',
     data() {
@@ -139,9 +173,20 @@ export default {
                 .then(({data: {data: {categories, morphology, substrate, stations}}}) => {
                     this.activeStationKey = this.activeStationKey || stations[0].id;
                     this.morphologyChartOptions.xAxis.categories = categories;
-                    this.morphologyChartOptions.series = morphology;
+                    this.morphologyChartOptions.series = morphology.map(m => {
+
+                        return {
+                            ...m,
+                            color: morphologyColorMap(m.name),
+                        }
+                    });
                     this.substrateChartOptions.xAxis.categories = categories;
-                    this.substrateChartOptions.series = substrate;
+                    this.substrateChartOptions.series = substrate.map(s => {
+                        return {
+                            ... s,
+                            color: substrateColorMap(s.name),
+                        }
+                    });
                     this.stations = stations;
                 });
         },
