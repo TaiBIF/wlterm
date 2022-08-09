@@ -167,11 +167,12 @@ export default {
         fetchReportData() {
             const params = this.sheetValues.searchParams;
 
+
             this.$http.get(`
                 /api/river-habitat-report?${ queryString.stringify(params) }&active_station=${this.activeStationKey}`
             )
                 .then(({data: {data: {categories, morphology, substrate, stations}}}) => {
-                    this.activeStationKey = this.activeStationKey || stations[0].id;
+                    this.activeStationKey = this.activeStationKey || (stations[0]?.id ?? null);
                     this.morphologyChartOptions.xAxis.categories = categories;
                     this.morphologyChartOptions.series = morphology.map(m => {
 
