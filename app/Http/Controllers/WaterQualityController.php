@@ -164,6 +164,7 @@ class WaterQualityController extends Controller
             ->map(function ($records, $stationId) use ($target, $stations) {
                 $st = $stations[$stationId];
                 return [
+                    'station_id' => $stationId,
                     'name' => "$st->locality_chinese (#$stationId)",
                     'data' => $records->map(function ($record) use ($target) {
                         return [

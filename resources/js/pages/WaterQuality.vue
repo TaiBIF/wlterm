@@ -46,6 +46,8 @@
     import queryString from 'querystring';
     import Highcharts from 'highcharts';
 
+    const colors = ['#f5b7b1','#d2b4de','#a2d9ce','#fad7a0','#edbb99','#aeb6bf','#ffdddd','#1bbbd9','#f1948a','#bb8fce','#abebc6','#73c6b6','#85c1e9','#12e0aa','#f8c471','#e59866','#85929e','#ec7063','#a569bd','#5dade2','#45b39d','#d8d68d','#f5b041','#dc7633','#5d6d7e','#e74c3c','#8e44ad','#3498db','#16a085','#2efc71','#f39c12','#d35400','#34495e','#cb4335','#7d3c98','#2e86c1','#138d75','#28b463','#d68910','#ba4a00','#2e4053','#b03a2e','#6c3483','#2874a6','#117a65','#29b5e6','#b9770e','#a04000','#283747','#943126','#5b2c6f','#21618c','#0e6655','#1d8348','#9c640c','#873600','#212f3c','#78281f','#4a235a','#1b4f72','#0b5345','#186a3b','#7e5109','#6e2c00','#1b2631'];
+
     export default {
         name: 'WaterQuality',
         data() {
@@ -196,7 +198,12 @@
             fetchReportData() {
                 this.$http.get(`/api/water-quality-report?${queryString.stringify(this.sheetValues.searchParams)}&target=${this.activeTabKey}`)
                     .then(({ data: { dates, data } }) => {
-                        this.chartOptions.series = data;
+                        this.chartOptions.series = data.map((d) => {
+                            return {
+                                ...d,
+                                color: colors[d.station_id%66],
+                            }
+                        });
                         this.chartOptions.title.text = this.currentTab.name + '監測紀錄';
                         this.chartOptions.yAxis.title.text = this.currentTab.unit;
                     });
