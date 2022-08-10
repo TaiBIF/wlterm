@@ -51,6 +51,8 @@ const chartOption = {
     },
     yAxis: {
         min: 0,
+        max: 100,
+        tickInterval: 10,
         title: {
             text: '%'
         }
