@@ -93,7 +93,7 @@ const morphologyColorMap = (name) => {
 const substrateColorMap = (name) => {
     switch (name) {
         case '平坦表面':
-            return '#63af90';
+            return '#9be0c4';
         case '碎石':
             return '#2a9d8f';
         case '卵石':
