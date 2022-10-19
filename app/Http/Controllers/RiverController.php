@@ -135,6 +135,9 @@ class RiverController extends Controller
                     return Carbon::createFromFormat('Y-m-d', $date)->format('Y-m');
                 })->all(),
                 'morphology' => $habitateRecords->sortByDesc('morphology')->groupBy('morphology')
+                    ->filter(function($record, $key) {
+                        return !!$key;
+                    })
                     ->map(function ($record, $key) use ($morphology, $dates) {
                         $dateRecords = $record->groupBy('date')
                             ->map(function ($r) {
