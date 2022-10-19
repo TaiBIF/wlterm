@@ -126,7 +126,7 @@ class RiverController extends Controller
 
         $habitateRecords = $habitateQuery->get();
 
-        $dates = $habitateRecords->unique('date')->pluck('date');
+        $dates = $habitateRecords->unique('date')->pluck('date')->sort()->values();
 
         return response()->json([
             'data' => [
