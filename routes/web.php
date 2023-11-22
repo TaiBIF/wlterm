@@ -31,7 +31,10 @@ Route::get('/records/{id}', function () {
     return view('app');
 });
 
-
 Route::get('/river-sections/{id}/{date}', function () {
+    return view('app');
+});
+
+Route::get('/env-microplastics/{id}', function () {
     return view('app');
 });

@@ -135,6 +135,26 @@ const router = new VueRouter({
             name: 'river-section',
             component: () => import(/* webpackChunkName: "river-section" */'./pages/RiverSection'),
         },
+        {
+            path: '/microplastics',
+            name: 'microplastics',
+            component: () => import(/* webpackChunkName: "microplastics" */'./pages/Microplastics'),
+        },
+        {
+            path: '/microplastics',
+            name: 'microplastics',
+            component: () => import(/* webpackChunkName: "microplastics" */'./pages/Microplastics'),
+        },
+        {
+            path: '/env-microplastics',
+            name: 'env-microplastics',
+            component: () => import(/* webpackChunkName: "microplastics" */'./pages/EnvMicroplastics'),
+        },
+        {
+            path: '/env-microplastics/:recordId',
+            name: 'env-microplastics-record',
+            component: () => import(/* webpackChunkName: "microplastics" */'./pages/MicroplasticRecord'),
+        },
     ]
 });
 
