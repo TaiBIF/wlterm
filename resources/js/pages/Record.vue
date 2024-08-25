@@ -188,7 +188,7 @@
                     <td v-text="record.Sr"/>
                 </tr>
                 <tr>
-                    <td>氨</td>
+                    <td>氨 mg/L</td>
                     <td v-text="record.NH4"/>
                     <td>鋇 mg/L</td>
                     <td v-text="record.Ba"/>
