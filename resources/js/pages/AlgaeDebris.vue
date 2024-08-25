@@ -42,7 +42,11 @@
                     { type: 'text', title: '經度', width: '120', name: 'longitude' },
                     { type: 'text', title: '高度(公尺)', width: '80', name: 'maximum_elevation' },
                     { type: 'text', title: '深度(公尺)', width: '80', name: 'maximum_depth' },
-                    { type: 'text', title: '調查日期', width: '170', name: 'date', searchable: true },
+                    { type: 'text', title: '調查日期', width: '100', name: 'date', searchable: true },
+                    { type: 'text', title: '調查者', width: '100', name: 'collector_chinese', searchable: true },
+                    { type: 'text', title: '調查項目', width: '100', name: 'item_chinese', searchable: true },
+                    { type: 'text', title: '調查值', width: '100', name: 'biomass'},
+                    { type: 'text', title: '單位', width: '100', name: 'unit'},
                 ],
                 total: 0,
             }

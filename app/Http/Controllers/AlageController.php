@@ -16,10 +16,16 @@ class AlageController extends Controller
         $id = $request->get('station_id');
         $sort = $request->get('sort');
         $direction = $request->get('direction', 'asc');
+        $collectorChinese = $request->get('collector_chinese');
+        $itemChinese = $request->get('item_chinese');
 
         $recordsQuery = Alage::query()
             ->select([
                 'alage.id as alage_id',
+                'collector_chinese',
+                'item_chinese',
+                'biomass',
+                'unit',
                 'record_id',
                 'date',
                 'station.id as station_id',
@@ -41,6 +47,14 @@ class AlageController extends Controller
 
         if ($date) {
             $recordsQuery->where('date',  'like', '%' . $date . '%');
+        }
+
+        if ($collectorChinese) {
+            $recordsQuery->where('collector_chinese', 'like', '%' . $collectorChinese . '%');
+        }
+
+        if ($itemChinese) {
+            $recordsQuery->where('item_chinese', 'like', '%' . $itemChinese . '%');
         }
 
         if ($sort && $direction) {
