@@ -70,7 +70,7 @@
                 <td>{{ record.sample_size }}</td>
             </tr>
             <tr>
-                <td>總量</td>
+                <td>塑膠微粒數</td>
                 <td>{{ record.mp }}</td>
                 <td></td>
                 <td></td>
