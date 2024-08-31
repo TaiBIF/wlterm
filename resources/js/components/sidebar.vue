@@ -113,11 +113,16 @@
                     河道斷面
                 </li>
             </router-link>
-            <router-link to="/microplastics">
-                <li class="list-group-item">
+            <li  class="list-group-item pr-1">
+                <router-link to="/microplastics">
                     塑膠微粒
-                </li>
-            </router-link>
+                </router-link>
+                <ul class="sub-menu">
+                    <li>
+                        <router-link to="/env-microplastics">環境塑膠微粒</router-link>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
 </template>
