@@ -152,7 +152,6 @@ export default {
     name: 'MicroplasticRecord',
     data() {
         return {
-            type: 'env-microplastics',
             record: {
                 station: {},
                 project: {},
@@ -164,23 +163,15 @@ export default {
         title() {
             let word = '';
             let code = '';
-            switch (this.type) {
-                case 'env-microplastics':
-                    word = '環境微塑料調查記錄編號';
-                    break;
-                case 'bio-microplastics':
-                    word = '記錄編號';
-                    break;
-            }
+            word = '環境微塑料調查記錄編號';
 
             return `${ word }:urn:lsid:wlterm.biodiv.sinica.edu.tw:observation:${ code }${ this.record.record_id }`;
         },
     },
     mounted() {
         const {recordId} = this.$route.params;
-        this.type = this.$route.query.type;
 
-        this.$http.get(`/api/env-microplastics/${ recordId }?type=${ this.type }`)
+        this.$http.get(`/api/env-microplastics/${ recordId }`)
             .then(({data}) => {
                 this.record = data.record;
             });
