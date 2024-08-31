@@ -121,6 +121,9 @@
                     <li>
                         <router-link to="/env-microplastics">環境塑膠微粒</router-link>
                     </li>
+                    <li>
+                        <router-link to="/bio-microplastics">生物塑膠微粒</router-link>
+                    </li>
                 </ul>
             </li>
         </ul>
