@@ -155,6 +155,16 @@ const router = new VueRouter({
             name: 'env-microplastics-record',
             component: () => import(/* webpackChunkName: "microplastics" */'./pages/MicroplasticRecord'),
         },
+        {
+            path: '/bio-microplastics',
+            name: 'bio-microplastics',
+            component: () => import(/* webpackChunkName: "microplastics" */'./pages/BioMicroplastics'),
+        },
+        {
+            path: '/bio-microplastics/:recordId',
+            name: 'bio-microplastics-record',
+            component: () => import(/* webpackChunkName: "microplastics" */'./pages/BioMicroplasticRecord'),
+        },
     ]
 });
 

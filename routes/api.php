@@ -49,3 +49,5 @@ Route::get('/simpling-events', 'SimplingEventController@index');
 Route::get('/projects/{projectId}/stations/{stationId}/simpling-events', 'SimplingEventController@events');
 Route::get('/env-microplastics', 'MicroplasticController@index');
 Route::get('/env-microplastics/{id}', 'MicroplasticController@get');
+Route::get('/bio-microplastics', 'MicroplasticController@bioIndex');
+Route::get('/bio-microplastics/{id}', 'MicroplasticController@getBio');
