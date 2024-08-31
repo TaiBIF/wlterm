@@ -128,76 +128,79 @@
 </template>
 
 <script>
-    export default {
-        name: 'Sidebar'
-    }
+export default {
+    name: 'Sidebar'
+}
 </script>
 
 <style lang="scss" scoped>
+.blog-sidebar {
+    background: white;
+    z-index: 70;
+    width: 160px;
+    display: inline-block;
+    position: fixed;
+    left: 0;
+    height: calc(100vh - 4.2rem);
+    overflow-y: scroll;
+}
+
+@media(min-width: 768px) {
     .blog-sidebar {
-        background: white;
-        z-index: 70;
-        width: 160px;
-        display: inline-block;
-        position: fixed;
         left: 0;
-        height: calc(100vh - 4.2rem);
-        overflow-y: scroll;
+    }
+}
+
+.list-group {
+    color: #77757a;
+    height: 100vh;
+    border-right: 1px #eee solid;
+
+    .router-link-exact-active {
+        color: #007bff;
+    }
+}
+
+.list-group-item {
+    padding: .125rem 1.5rem;
+    border: 0;
+    font-size: 0.95rem;
+    line-height: 1.8rem;
+}
+
+a {
+    color: #77757a;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+ul {
+    .sub-menu {
+        padding: 0.125rem 1rem;
+    }
+}
+
+li {
+    .active {
+        border-left: 3px red solid;
     }
 
-    @media(min-width:768px) {
-        .blog-sidebar {
-            left: 0;
-        }
-    }
+    list-style-type: none;
+}
 
-    .list-group {
-        color: #77757a;
-        height: 100vh;
-        border-right: 1px #eee solid;
-        .router-link-exact-active {
-            color: #007bff;
-        }
-    }
+.scroll::-webkit-scrollbar {
+    width: 7px;
+}
 
-    .list-group-item {
-        padding: .125rem 1.5rem;
-        border: 0;
-        font-size: 0.95rem;
-        line-height: 1.8rem;
-    }
+.scroll::-webkit-scrollbar-thumb {
+    background: #666666b0;
+    border-radius: 20px;
+}
 
-    a {
-        color: #77757a;
-        &:hover {
-            text-decoration: none;
-        }
-    }
-
-    ul {
-        .sub-menu {
-            padding: 0.125rem 1rem;
-        }
-    }
-
-    li {
-        .active {
-            border-left: 3px red solid;
-        }
-        list-style-type: none;
-    }
-
-    .scroll::-webkit-scrollbar {
-        width: 7px;
-    }
-
-    .scroll::-webkit-scrollbar-thumb {
-        background: #666666b0;
-        border-radius: 20px;
-    }
-
-    .scroll::-webkit-scrollbar-track {
-        background: #dddddd70;
-        border-radius: 20px;
-    }
+.scroll::-webkit-scrollbar-track {
+    background: #dddddd70;
+    border-radius: 20px;
+}
 </style>
