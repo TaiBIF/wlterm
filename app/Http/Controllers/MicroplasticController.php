@@ -115,6 +115,9 @@ class MicroplasticController extends Controller
         $date = $request->get('date');
         $collectorChinese = $request->get('collector_chinese');
         $scientificName = $request->get('scientific_name');
+        $order = $request->get('order');
+        $family = $request->get('family');
+        $sampleSize = $request->get('sample_size');
 
         $recordsQuery = BioMicroplastics::query()
             ->select([
@@ -149,6 +152,18 @@ class MicroplasticController extends Controller
 
         if ($scientificName) {
             $recordsQuery->where('scientific_name', 'like', '%' . $scientificName . '%');
+        }
+
+        if ($order) {
+            $recordsQuery->where('order', 'like', '%' . $order . '%');
+        }
+
+        if ($family) {
+            $recordsQuery->where('family', 'like', '%' . $family . '%');
+        }
+
+        if ($sampleSize) {
+            $recordsQuery->where('sample_size', $sampleSize);
         }
 
         if ($sort && $direction) {
