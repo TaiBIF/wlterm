@@ -6,8 +6,12 @@ namespace App\Http\Controllers;
 
 use App\BioMicroplastics;
 use App\Microplastics;
+use Illuminate\Container\Container;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 
 class MicroplasticController extends Controller
 {
@@ -72,7 +76,11 @@ class MicroplasticController extends Controller
             $recordsQuery->orderBy('station.id');
         }
 
-        $records = $recordsQuery->paginate($this->perPage);
+        try {
+            $records = $recordsQuery->paginate($this->perPage);
+        } catch (\Exception $e) {
+            $records = new LengthAwarePaginator([], 0, $this->perPage);
+        }
 
         return response()->json([
             'total' => $records->total(),
@@ -149,7 +157,11 @@ class MicroplasticController extends Controller
             $recordsQuery->orderBy('record_id');
         }
 
-        $records = $recordsQuery->paginate($this->perPage);
+        try {
+            $records = $recordsQuery->paginate($this->perPage);
+        } catch (\Exception $e) {
+            $records = new LengthAwarePaginator([], 0, $this->perPage);
+        }
 
         return response()->json([
             'total' => $records->total(),
