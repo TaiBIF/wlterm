@@ -47,7 +47,7 @@
                     { type: 'text', title: '目', width: '130', name: 'order', searchable: true },
                     { type: 'text', title: '科', width: '130', name: 'family', searchable: true },
                     { type: 'text', title: '學名', width: '150', name: 'scientific_name', searchable: true },
-                    { type: 'text', title: '樣本數', width: '80', name: 'sample_size', searchable: true },
+                    { type: 'text', title: '樣本數', width: '80', name: 'sample_size', searchable: false },
                     { type: 'text', title: '塑膠微粒數', width: '80', name: 'mp', searchable: false },
                 ],
                 total: 0,
