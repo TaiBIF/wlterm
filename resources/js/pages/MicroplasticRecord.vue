@@ -161,9 +161,8 @@ export default {
     },
     computed: {
         title() {
-            let word = '';
-            let code = '';
-            word = '環境微塑料調查記錄編號';
+            let word = '環境塑膠微粒調查記錄編號';
+            let code = 'EM';
 
             return `${ word }:urn:lsid:wlterm.biodiv.sinica.edu.tw:observation:${ code }${ this.record.record_id }`;
         },

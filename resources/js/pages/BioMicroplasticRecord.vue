@@ -137,9 +137,8 @@ export default {
     },
     computed: {
         title() {
-            let word = '';
-            let code = '';
-            word = '生物微塑料調查記錄編號';
+            let word = '生物塑膠微粒調查記錄編號';
+            let code = 'BM';
 
             return `${ word }:urn:lsid:wlterm.biodiv.sinica.edu.tw:observation:${ code }${ this.record.record_id }`;
         },
