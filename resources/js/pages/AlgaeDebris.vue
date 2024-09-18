@@ -38,9 +38,9 @@
                 columns: [
                     { type: 'text', title: '測站', width: '50', name: 'station_id', searchable: true },
                     { type: 'text', title: '測站站名', width: '100', name: 'locality_chinese', searchable: true },
-                    { type: 'text', title: '調查日期', width: '100', name: 'date', searchable: true },
+                    { type: 'text', title: '調查日期', width: '160', name: 'date', searchable: true },
                     { type: 'text', title: '調查者', width: '100', name: 'collector_chinese', searchable: true },
-                    { type: 'text', title: '調查項目', width: '100', name: 'item_chinese', searchable: true },
+                    { type: 'text', title: '調查項目', width: '160', name: 'item_chinese', searchable: true },
                     { type: 'text', title: '調查值', width: '100', name: 'biomass'},
                     { type: 'text', title: '單位', width: '100', name: 'unit'},
                 ],

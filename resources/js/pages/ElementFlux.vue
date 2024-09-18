@@ -41,7 +41,7 @@
                     { type: 'text', title: '測站站名', width: '100', name: 'locality_chinese', searchable: true },
                     { type: 'text', title: '調查日期', width: '170', name: 'date', searchable: true },
                     { type: 'text', title: '硝酸鹽 (mg/L)', width: '90', name: 'Nitrate'},
-                    { type: 'text', title: '亞硝酸鹽 (mg/L)', width: '90', name: 'NO2'},
+                    { type: 'text', title: '亞硝酸鹽 (mg/L)', width: '110', name: 'NO2'},
                     { type: 'text', title: '氟 (mg/L)', width: '75', name: 'Fl'},
                     { type: 'text', title: '氨 (mg/L)', width: '75', name: 'NH4'},
                     { type: 'text', title: '鈉 (mg/L)', width: '75', name: 'Na'},
@@ -51,7 +51,7 @@
                     { type: 'text', title: '鍶 (mg/L)', width: '75', name: 'Sr'},
                     { type: 'text', title: '鋇 (mg/L)', width: '75', name: 'Ba'},
                     { type: 'text', title: '矽 (mg/L)', width: '75', name: 'Si'},
-                    { type: 'text', title: '溶解有機碳 (mg/L)', width: '100', name: 'DOC'},
+                    { type: 'text', title: '溶解有機碳 (mg/L)', width: '110', name: 'DOC'},
                 ],
                 total: 0,
             }
