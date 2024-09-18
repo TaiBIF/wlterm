@@ -117,7 +117,7 @@
                 <router-link to="/microplastics">
                     塑膠微粒
                 </router-link>
-                <ul class="sub-menu">
+                <ul class="sub-menu pr-0">
                     <li>
                         <router-link to="/env-microplastics">環境塑膠微粒</router-link>
                     </li>
