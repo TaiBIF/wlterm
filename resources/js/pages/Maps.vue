@@ -38,9 +38,9 @@
                     <option value="5">濱岸植群研究</option>
                     <option value="6,18,24">水棲昆蟲研究</option>
                     <option value="7">陸棲昆蟲研究</option>
-                    <option value="9,20">兩生類研究</option>
-                    <option value="10,19">魚類研究</option>
-                    <option value="11,21">鳥類研究</option>
+                    <option value="9,20,28">兩生類研究</option>
+                    <option value="10,19,27">魚類研究</option>
+                    <option value="11,21,26">鳥類研究</option>
                 </select>
             </div>
         </div>
