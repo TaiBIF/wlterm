@@ -23,6 +23,10 @@
                     <option value="藻類">藻類</option>
                     <option value="生態資料庫">生態資料庫</option>
                     <option value="鳥類">鳥類</option>
+                    <option value="兩生類">兩生類</option>
+                    <option value="塑膠微粒">塑膠微粒</option>
+                    <option value="濱岸植群">濱岸植群</option>
+                    <option value="計畫產出文獻">計畫產出文獻</option>
                 </select>
             </template>
         </sheet>
