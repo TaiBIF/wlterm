@@ -63,11 +63,11 @@ class OccurrenceController extends Controller
         }
 
         if ($collectorChinese) {
-            $occurrencesQuery->where('collector_chinese', 'like', '%' . $collectorChinese . '%');
+            $occurrencesQuery->where('table_forgrid.collector_chinese', 'like', '%' . $collectorChinese . '%');
         }
 
         if ($examWay) {
-            $occurrencesQuery->where('examine_way', 'like', '%' . $examWay . '%');
+            $occurrencesQuery->where('table_forgrid.examine_way', 'like', '%' . $examWay . '%');
         }
 
         if ($scientificName) {
@@ -167,11 +167,11 @@ class OccurrenceController extends Controller
         }
 
         if ($collectorChinese) {
-            $occurrencesQuery->where('collector_chinese', 'like', '%' . $collectorChinese . '%');
+            $occurrencesQuery->where('table_forgrid.collector_chinese', 'like', '%' . $collectorChinese . '%');
         }
 
         if ($examWay) {
-            $occurrencesQuery->where('examine_way', 'like', '%' . $examWay . '%');
+            $occurrencesQuery->where('table_forgrid.examine_way', 'like', '%' . $examWay . '%');
         }
 
         if ($scientificName) {
