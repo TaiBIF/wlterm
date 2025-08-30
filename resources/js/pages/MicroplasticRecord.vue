@@ -94,6 +94,18 @@
                 <td>{{ record.eea ? record.rayon : '-' }}</td>
             </tr>
             <tr>
+                <td>聚酯纖維</td>
+                <td>{{ record.polyester ? record.polyester : '-' }}</td>
+                <td>PMMA</td>
+                <td>{{ record.pmma ? record.pmma : '-' }}</td>
+            </tr>
+            <tr>
+                <td>PU</td>
+                <td>{{ record.pu ? record.pu : '-' }}</td>
+                <td>採樣量</td>
+                <td>{{ record.sample_size ? record.sample_size : '-' }}</td>
+            </tr>
+            <tr>
                 <td>總量</td>
                 <td>{{ record.mps }}</td>
                 <td>單位</td>

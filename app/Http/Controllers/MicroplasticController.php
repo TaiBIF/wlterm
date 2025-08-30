@@ -47,6 +47,10 @@ class MicroplasticController extends Controller
                 'eea',
                 'mps',
                 'unit',
+                'polyester',
+                'pmma',
+                'pu',
+                'sample_size'
             ])
             ->leftJoin('station', 'microplastic.sid', '=', 'station.id');
 
