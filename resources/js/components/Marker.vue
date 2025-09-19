@@ -32,6 +32,25 @@
                 <i class="fas fa-external-link-alt"></i>
             </router-link>
         </div>
+        <div class="section" v-if="riverHabitat">
+            河道棲地：
+            <router-link :to="`/river-habitats?station_id=${station.id}&locality_chinese=${station.locality_chinese}&date=${date}`" target="_blank">
+                <i class="fas fa-external-link-alt"></i>
+            </router-link>
+        </div>
+        <div class="section" v-if="envMicroplastic">
+            環境塑膠微粒：
+            <router-link :to="`/env-microplastics?station_id=${station.id}&locality_chinese=${station.locality_chinese}&date=${date}`" target="_blank">
+                <i class="fas fa-external-link-alt"></i>
+            </router-link>
+        </div>
+        <div class="section" v-if="bioMicroplastic">
+            生物塑膠微粒 ：
+            <router-link :to="`/bio-microplastics?station_id=${station.id}&locality_chinese=${station.locality_chinese}&date=${date}`" target="_blank">
+                <i class="fas fa-external-link-alt"></i>
+            </router-link>
+        </div>
+
     </div>
 </template>
 <script>
@@ -53,14 +72,28 @@
             fetchStation() {
                 const stationId = this.marker.stationId;
                 this.$http.get('/api/stations/' + stationId + `?date=${this.date}`)
-                    .then(({ data: { station, occurrences, water, temperature, elementFlux, algaeDebris }
-                    }) => {
+                    .then(({ data: {
+                        station,
+                        occurrences,
+                        water,
+                        temperature,
+                        elementFlux,
+                        algaeDebris,
+                        riverHabitat,
+                        envMicroplastic,
+                        bioMicroplastic,
+                        coastalPlant,
+                    }}) => {
                         this.station = station;
                         this.occurrences = occurrences;
                         this.water = water;
                         this.temperature = temperature;
                         this.elementFlux = elementFlux;
                         this.algaeDebris = algaeDebris;
+                        this.riverHabitat = riverHabitat;
+                        this.envMicroplastic = envMicroplastic;
+                        this.bioMicroplastic = bioMicroplastic;
+                        this.coastalPlant = coastalPlant;
                     });
             }
         },
@@ -72,6 +105,10 @@
                 temperature:false,
                 elementFlux: false,
                 algaeDebris: false,
+                riverHabitat: false,
+                envMicroplastic: false,
+                bioMicroplastic: false,
+                coastalPlant: false,
             }
         }
     }

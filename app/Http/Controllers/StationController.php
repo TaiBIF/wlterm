@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Alage;
+use App\BioMicroplastics;
 use App\Main;
+use App\Microplastics;
 use App\Occurrence;
+use App\RiverHabitat;
 use App\Station;
 use App\TableForGrid;
 use App\Temperature;
@@ -63,7 +66,7 @@ class StationController extends Controller
             ->first();
 
 
-        $hasWaterQuery = WaterQuality::where('id', $stationId)->where(function($query) {
+        $hasWaterQuery = WaterQuality::where('id', $stationId)->where(function ($query) {
             $query->where('project_id', 3)
                 ->orWhere('project_id', 17)
                 ->orWhere('project_id', 13)
@@ -72,7 +75,7 @@ class StationController extends Controller
         });
         $hasTemperatureQuery = Temperature::where('id', $stationId);
 
-        $hasElementFluxQuery =  WaterQuality::query()
+        $hasElementFluxQuery = WaterQuality::query()
             ->select(['water.id as water_id', 'date', 'locality_chinese', 'record_id'])
             ->where('project_id', 13)
             ->where('id', $stationId);
@@ -81,12 +84,22 @@ class StationController extends Controller
 
         $hasOccurrenceQuery = Occurrence::where('sid', $stationId);
 
+        $hasRiverHabitatQuery = RiverHabitat::where('river_section_number.station_id', $stationId)
+            ->leftJoin('river_section_number', 'river_section_number.section', '=', 'river_habitat.section');
+
+        $hasEnvMicroplasticQuery = Microplastics::where('sid', $stationId);
+
+        $hasBioMicroplasticQuery = BioMicroplastics::where('sid', $stationId);
+
         if ($date) {
             $hasTemperatureQuery->where('date', 'like', '%' . $date . '%');
             $hasWaterQuery->where('date', 'like', '%' . $date . '%');
             $hasElementFluxQuery->where('date', 'like', '%' . $date . '%');
             $hasAlgaeDebrisQuery->where('date', 'like', '%' . $date . '%');
             $hasOccurrenceQuery->where('date', 'like', '%' . $date . '%');
+            $hasRiverHabitatQuery->where('date', 'like', '%' . $date . '%');
+            $hasEnvMicroplasticQuery->where('date', 'like', '%' . $date . '%');
+            $hasBioMicroplasticQuery->where('date', 'like', '%' . $date . '%');
         }
 
         $hasOccurrence = $hasOccurrenceQuery->count();
@@ -94,6 +107,10 @@ class StationController extends Controller
         $hasWater = $hasWaterQuery->count();
         $hasElementFlux = $hasElementFluxQuery->count();
         $hasAlgaeDebris = $hasAlgaeDebrisQuery->count();
+        $hasRiverHabitat = $hasRiverHabitatQuery->limit(1)->count();
+        $hasEnvMicroplastic = $hasEnvMicroplasticQuery->limit(1)->count();
+        $hasBioMicroplastic = $hasBioMicroplasticQuery->limit(1)->count();
+
         return response()
             ->json([
                 'station' => $station,
@@ -102,6 +119,10 @@ class StationController extends Controller
                 'temperature' => $hasTemperature,
                 'elementFlux' => $hasElementFlux,
                 'algaeDebris' => $hasAlgaeDebris,
+                'riverHabitat' => $hasRiverHabitat,
+                'envMicroplastic' => $hasEnvMicroplastic,
+                'bioMicroplastic' => $hasBioMicroplastic,
+                'coastalPlant' => 0,
             ]);
     }
 
@@ -191,7 +212,7 @@ class StationController extends Controller
 
             if ($projectIdsString === '3,4,13,17,23') {
                 $subquery = WaterQuality::query()->select('id')
-                    ->where(function($query) {
+                    ->where(function ($query) {
                         $query->where('project_id', 3)
                             ->orWhere('project_id', 4)
                             ->orWhere('project_id', 13)
@@ -213,6 +234,25 @@ class StationController extends Controller
                 $subquery = Temperature::query()->select('id');
             } else if ($projectIdsString == '1,15') {
                 $subquery = Alage::query()->select('id');
+            } else if ($projectIdsString == '16,22') {
+                $subquery = RiverHabitat::query()->select('station.id as id')
+                    ->where(function ($query) {
+                        $query->where('Project_id', 16)
+                            ->orWhere('Project_id', 22);
+                    })
+                    ->leftJoin('river_section_number', 'river_section_number.section', '=', 'river_habitat.section')
+                    ->leftJoin('station', 'river_section_number.station_id', '=', 'station.id');
+            } else if ($projectIdsString == '30,31') {
+                $subquery = Microplastics::query()->select('sid as id')
+                    ->where(function ($query) {
+                        $query->where('project_id', 30)
+                            ->orWhere('project_id', 31);
+                    });
+            } else if ($projectIdsString == '32') {
+                $subquery = BioMicroplastics::query()->select('sid as id')
+                    ->where(function ($query) {
+                        $query->where('project_id', 32);
+                    });
             } else {
                 $subquery = Main::query()->select('main.id');
 
