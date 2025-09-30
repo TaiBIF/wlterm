@@ -108,8 +108,13 @@ class StationController extends Controller
         $hasElementFlux = $hasElementFluxQuery->count();
         $hasAlgaeDebris = $hasAlgaeDebrisQuery->count();
         $hasRiverHabitat = $hasRiverHabitatQuery->limit(1)->count();
-        $hasEnvMicroplastic = $hasEnvMicroplasticQuery->limit(1)->count();
-        $hasBioMicroplastic = $hasBioMicroplasticQuery->limit(1)->count();
+        try {
+            $hasEnvMicroplastic = $hasEnvMicroplasticQuery->limit(1)->count();
+            $hasBioMicroplastic = $hasBioMicroplasticQuery->limit(1)->count();
+        } catch (\Exception $e) {
+            $hasEnvMicroplastic = 0;
+            $hasBioMicroplastic = 0;
+        }
 
         return response()
             ->json([
@@ -267,15 +272,20 @@ class StationController extends Controller
 
             $subquery = $subquery->groupBy('id');
 
-            $markers = DB::table(DB::raw("({$subquery->toSql()}) as mystation"))
-                ->mergeBindings($subquery->getQuery())
-                ->join('station', 'station.id', '=', 'mystation.id')
-                ->select(['station.id', 'locality', 'locality_chinese', 'latitude', 'longitude'])
-                ->whereNotNull('station.latitude')
-                ->whereNotNull('station.longitude')
-                ->orderBy('station.latitude')
-                ->orderBy('station.longitude')
-                ->get();
+            try {
+                $markers = DB::table(DB::raw("({$subquery->toSql()}) as mystation"))
+                    ->mergeBindings($subquery->getQuery())
+                    ->join('station', 'station.id', '=', 'mystation.id')
+                    ->select(['station.id', 'locality', 'locality_chinese', 'latitude', 'longitude'])
+                    ->whereNotNull('station.latitude')
+                    ->whereNotNull('station.longitude')
+                    ->orderBy('station.latitude')
+                    ->orderBy('station.longitude')
+                    ->get();
+            } catch (\Exception) {
+                $markers = [];
+            }
+
         } else {
             // SELECT *  FROM station   where (not latitude is null) and id < 14 order by latitude,longitude
             $markersQuery = Station::query();
