@@ -35,7 +35,7 @@
                     <option value="13">元素通量</option>
                     <option value="14">溫度監測</option>
                     <option value="1,15">藻類與碎屑</option>
-                    <option value="5">濱岸植群研究</option>
+                    <option value="5,33">濱岸植群研究</option>
                     <option value="6,18,24">水棲昆蟲研究</option>
                     <option value="7">陸棲昆蟲研究</option>
                     <option value="9,20,28">兩生類研究</option>
@@ -44,7 +44,6 @@
                     <option value="16,22">河道棲地</option>
                     <option value="30,31">環境塑膠微粒</option>
                     <option value="32">生物塑膠微粒</option>
-                    <option value="33">濱岸植群研究</option>
                 </select>
             </div>
         </div>
